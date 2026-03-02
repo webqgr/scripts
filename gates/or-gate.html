@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Η πύλη OR</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0d1b2a;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: #fff;
+  }
+  .card {
+    background: #111e2e;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 2rem 2rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  .toggle-wrap { position: relative; width: 50px; height: 26px; cursor: pointer; display: block; }
+  .toggle-wrap input { opacity: 0; width: 0; height: 0; position: absolute; }
+  .slider {
+    position: absolute; inset: 0;
+    background: #1e3048;
+    border-radius: 30px;
+    border: 2px solid #2a4a6a;
+    transition: all 0.3s;
+  }
+  .slider::before {
+    content: '';
+    position: absolute;
+    width: 18px; height: 18px;
+    left: 2px; top: 2px;
+    background: #4a7a9b;
+    border-radius: 50%;
+    transition: all 0.3s;
+  }
+  .toggle-wrap input:checked + .slider {
+    background: #0d4a2e;
+    border-color: #1aaf6a;
+    box-shadow: 0 0 10px rgba(26,175,106,0.5);
+  }
+  .toggle-wrap input:checked + .slider::before {
+    transform: translateX(24px);
+    background: #fff;
+    box-shadow: 0 0 6px rgba(255,255,255,0.8);
+  }
+</style>
+</head>
+<body>
+
+<h1>Η πύλη OR</h1>
+
+<div class="card">
+  <svg id="main" width="420" height="175" viewBox="0 0 420 175" style="display:block;overflow:visible;">
+    <defs>
+      <linearGradient id="gateGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#2a3f5a"/>
+        <stop offset="100%" stop-color="#1a2a3e"/>
+      </linearGradient>
+      <radialGradient id="lampOff" cx="38%" cy="35%">
+        <stop offset="0%" stop-color="#2a2010"/>
+        <stop offset="100%" stop-color="#1a1508"/>
+      </radialGradient>
+      <radialGradient id="lampOn" cx="38%" cy="35%">
+        <stop offset="0%" stop-color="#fffbe0"/>
+        <stop offset="40%" stop-color="#ffd020"/>
+        <stop offset="100%" stop-color="#e89000"/>
+      </radialGradient>
+      <filter id="gY" x="-100%" y="-100%" width="300%" height="300%">
+        <feGaussianBlur stdDeviation="12" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+
+    <!-- Labels A / B -->
+    <text x="10" y="67"  font-family="JetBrains Mono,monospace" font-weight="700" font-size="16" fill="#8ab4d4">A</text>
+    <text x="10" y="105" font-family="JetBrains Mono,monospace" font-weight="700" font-size="16" fill="#8ab4d4">B</text>
+
+    <!-- Toggles -->
+    <foreignObject x="30" y="52" width="54" height="30">
+      <label xmlns="http://www.w3.org/1999/xhtml" class="toggle-wrap">
+        <input type="checkbox" id="switchA" onchange="update()"/>
+        <span class="slider"></span>
+      </label>
+    </foreignObject>
+    <foreignObject x="30" y="90" width="54" height="30">
+      <label xmlns="http://www.w3.org/1999/xhtml" class="toggle-wrap">
+        <input type="checkbox" id="switchB" onchange="update()"/>
+        <span class="slider"></span>
+      </label>
+    </foreignObject>
+
+    <!-- Bit values -->
+    <text id="bitA" x="96" y="67"  font-family="JetBrains Mono,monospace" font-weight="700" font-size="14" fill="#4a7a9b" text-anchor="middle">0</text>
+    <text id="bitB" x="96" y="105" font-family="JetBrains Mono,monospace" font-weight="700" font-size="14" fill="#4a7a9b" text-anchor="middle">0</text>
+
+    <!-- Input wires -->
+    <line id="wireA" x1="106" y1="62"  x2="192" y2="62"  stroke="#1e3a52" stroke-width="4" stroke-linecap="round"/>
+    <line id="wireB" x1="106" y1="100" x2="192" y2="100" stroke="#1e3a52" stroke-width="4" stroke-linecap="round"/>
+
+    <!-- Output wire -->
+    <line id="wireOut" x1="285" y1="81" x2="322" y2="81" stroke="#1e3a52" stroke-width="4" stroke-linecap="round"/>
+
+    <!--
+      OR Gate shape:
+      - Curved left edge (the characteristic OR bump)
+      - Pointed right tip
+      The standard OR gate: left side has a concave curve inward,
+      top and bottom curve to a point on the right.
+      Path: start bottom-left, curve left bump, up to top-left,
+            arc to right tip, arc back to bottom-left.
+    -->
+    <!--
+      OR gate: flat-ish left with concave bump, curves to a sharp point on the right
+      M = bottom-left corner
+      Concave left curve (inward bump)
+      Q top curves meeting at sharp right tip
+    -->
+    <path d="M188,118 Q208,118 228,118 Q285,100 285,81 Q285,62 228,44 Q208,44 188,44 Q207,62 207,81 Q207,100 188,118 Z"
+          fill="url(#gateGrad)" stroke="#3a5a7a" stroke-width="2"/>
+    <text x="238" y="87" text-anchor="middle"
+          font-family="Space Grotesk,sans-serif" font-weight="700" font-size="12" letter-spacing="2" fill="#8ab4d4">OR</text>
+
+    <!-- Input connector dots -->
+    <circle cx="194" cy="62"  r="4" fill="#1a2a3e" stroke="#4a7a9a" stroke-width="1.5"/>
+    <circle cx="194" cy="100" r="4" fill="#1a2a3e" stroke="#4a7a9a" stroke-width="1.5"/>
+    <!-- Output connector dot -->
+    <circle cx="285" cy="81"  r="4" fill="#1a2a3e" stroke="#4a7a9a" stroke-width="1.5"/>
+
+    <!-- Lamp -->
+    <circle id="lampGlow" cx="355" cy="81" r="38" fill="none" filter="url(#gY)"/>
+    <circle id="lampBody"  cx="355" cy="81" r="28" fill="url(#lampOff)" stroke="#3a3010" stroke-width="3"/>
+    <circle id="lampInner" cx="355" cy="81" r="12" fill="#2a2010"/>
+    <text x="355" y="123" text-anchor="middle"
+          font-family="JetBrains Mono,monospace" font-weight="700" font-size="11" letter-spacing="2" fill="#ffd020">LAMP</text>
+    <text id="lampVal" x="355" y="139" text-anchor="middle"
+          font-family="JetBrains Mono,monospace" font-weight="700" font-size="13" fill="#4a7a9b">0</text>
+  </svg>
+</div>
+
+<script>
+  function update() {
+    const a   = document.getElementById('switchA').checked ? 1 : 0;
+    const b   = document.getElementById('switchB').checked ? 1 : 0;
+    const out = a | b;
+
+    document.getElementById('bitA').textContent = a;
+    document.getElementById('bitB').textContent = b;
+    document.getElementById('bitA').style.fill = a ? '#22cc77' : '#4a7a9b';
+    document.getElementById('bitB').style.fill = b ? '#22cc77' : '#4a7a9b';
+
+    document.getElementById('wireA').style.stroke   = a   ? '#22cc77' : '#1e3a52';
+    document.getElementById('wireB').style.stroke   = b   ? '#22cc77' : '#1e3a52';
+    document.getElementById('wireOut').style.stroke = out ? '#22cc77' : '#1e3a52';
+
+    if (out) {
+      document.getElementById('lampBody').setAttribute('fill', 'url(#lampOn)');
+      document.getElementById('lampBody').setAttribute('stroke', '#f0a800');
+      document.getElementById('lampInner').setAttribute('fill', '#fffef5');
+      document.getElementById('lampGlow').setAttribute('fill', 'rgba(255,180,0,0.2)');
+      document.getElementById('lampVal').textContent = '1';
+      document.getElementById('lampVal').style.fill = '#22cc77';
+    } else {
+      document.getElementById('lampBody').setAttribute('fill', 'url(#lampOff)');
+      document.getElementById('lampBody').setAttribute('stroke', '#3a3010');
+      document.getElementById('lampInner').setAttribute('fill', '#2a2010');
+      document.getElementById('lampGlow').setAttribute('fill', 'none');
+      document.getElementById('lampVal').textContent = '0';
+      document.getElementById('lampVal').style.fill = '#4a7a9b';
+    }
+  }
+
+  update();
+</script>
+</body>
+</html>
