@@ -69,22 +69,35 @@
     <!-- Main Content Grid (Centered Single-Column Layout) -->
     <main class="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-8 py-8 flex flex-col gap-6">
         
-        <!-- Ancient Greek Text Card -->
+        <!-- Text Card with Tabs -->
         <section class="w-full">
             <div class="card border rounded-2xl p-6 sm:p-10 shadow-sm">
+                
+                <!-- Title & Information Header -->
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-6 pb-4 border-b border-black/10">
                     <h2 class="text-lg font-bold classical-title flex items-center gap-2 text-amber-900">
                         <svg class="w-5 h-5 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                         </svg>
-                        Αρχαίο Κείμενο
+                        Μελέτη Κειμένου
                     </h2>
                     <span class="text-xs font-semibold px-2.5 py-1 bg-amber-500/10 text-amber-800 rounded-full">
                         💡 Πατήστε στις υπογραμμισμένες λέξεις για ανάλυση
                     </span>
                 </div>
 
-                <article class="ancient-text text-lg sm:text-xl text-justify space-y-4">
+                <!-- Tab Switcher Navigation -->
+                <div class="flex border-b border-amber-800/20 mb-6 gap-2 sm:gap-4 text-xs sm:text-sm">
+                    <button id="tab-ancient" onclick="setTab('ancient')" class="px-4 py-2 font-bold classical-title border-b-2 border-amber-800 text-amber-900 focus:outline-none transition-all duration-200">
+                        Αρχαίο Κείμενο
+                    </button>
+                    <button id="tab-translation" onclick="setTab('translation')" class="px-4 py-2 font-semibold classical-title text-stone-600 hover:text-amber-900 focus:outline-none transition-all duration-200">
+                        Νεοελληνική Μετάφραση
+                    </button>
+                </div>
+
+                <!-- Ancient Greek Text Panel -->
+                <article id="content-ancient" class="ancient-text text-lg sm:text-xl text-justify space-y-4">
                     <p>
                         <span class="text-xs align-super opacity-60 font-mono">[76.1]</span> Ἐν δὲ ταῖς ἐφημερίσιν οὕτως γέγραπται «τὰ περὶ τὴν νόσον. ὀγδόῃ ἐπὶ δεκάτη Δαισίου μηνὸς ἐκάθευδεν ἐν τῷ λουτρῶνι διὰ τὸ πυρέξαι. 
                     </p>
@@ -138,6 +151,37 @@
                             κατὰ χώραν ἐᾶν ἀνεῖλε
                         </button>. 
                         τῇ δὲ τρίτη φθίνοντος πρὸς δείλην ἀπέθανε.
+                    </p>
+                </article>
+
+                <!-- Modern Greek Translation Panel -->
+                <article id="content-translation" class="ancient-text text-lg sm:text-xl text-justify space-y-4 hidden">
+                    <p>
+                        <span class="text-xs align-super opacity-60 font-mono">[76.1]</span> Και στα στρατιωτικά ημερολόγια τα σχετικά με την αρρώστια του έχουν γραφτεί ως εξής: στις 18 του μηνός Δαισίου, λόγω του πυρετού κοιμόταν στο λουτρό. 
+                    </p>
+                    <p>
+                        <span class="text-xs align-super opacity-60 font-mono">[76.2]</span> Την άλλην ημέρα, αφού λούστηκε, γύρισε στον θάλαμο και πέρασε όλες τις ώρες παίζοντας κύβους με τον Μήδιο. Εν συνεχεία, αργά το βράδυ, αφού λούστηκε και πρόσφερε θυσία στους θεούς, έφαγε, αλλά σε όλη τη διάρκεια της νύχτας ανέβασε πυρετό. 
+                    </p>
+                    <p>
+                        <span class="text-xs align-super opacity-60 font-mono">[76.3]</span> Στις 20 του μήνα λούστηκε πάλι και πρόσφερε την καθιερωμένη θυσία και, ξαπλωμένος στο λουτρό, <button onclick="openModal('ἐσχόλαζεν')" class="highlight-word cursor-pointer px-1 rounded font-semibold focus:outline-none" title="Κάντε κλικ για ανάλυση">αφιέρωσε τον χρόνο του</button> στο Νέαρχο και τους ανθρώπους του, ακούγοντας με μεγάλη προσοχή τα σχετικά με το ταξίδι και τη μεγάλη θάλασσα. 
+                    </p>
+                    <p>
+                        <span class="text-xs align-super opacity-60 font-mono">[76.4]</span> Στις 21 του μήνα, αφού έκανε τα ίδια, έκαιγε ακόμη περισσότερο από τον πυρετό· τη νύχτα ήταν πολύ άσχημα και την επόμενη ημέρα <button onclick="openModal('ἐπύρεττε σφόδρα')" class="highlight-word cursor-pointer px-1 rounded font-semibold focus:outline-none" title="Κάντε κλικ για ανάλυση">είχε πολύ υψηλό πυρετό</button>. 
+                    </p>
+                    <p>
+                        <span class="text-xs align-super opacity-60 font-mono">[76.5]</span> Μεταφέρθηκε από εκεί και ήταν ξαπλωμένος κοντά στη μεγάλη κολυμβήθρα και συζήτησε με τους αρχηγούς για τις κενές θέσεις στη διοίκηση του στρατού, με σκοπό να τις συμπληρώσουν, αφού δοκιμάσουν τους επικεφαλής. 
+                    </p>
+                    <p>
+                        <span class="text-xs align-super opacity-60 font-mono">[76.6]</span> Στις 24 του μήνα, αν και <button onclick="openModal('πυρέττων')" class="highlight-word cursor-pointer px-1 rounded font-semibold focus:outline-none" title="Κάντε κλικ για ανάλυση">ψηνόταν στον πυρετό</button>, σηκώθηκε πάλι και πρόσφερε θυσία. Διέταξε τους ανώτατους αξιωματικούς να βρίσκονται στην αυλή, ενώ οι ταξίαρχοι και οι πεντακοσίαρχοι να διανυκτερεύσουν έξω. 
+                    </p>
+                    <p>
+                        <span class="text-xs align-super opacity-60 font-mono">[76.7]</span> Στις 25 του μήνα μεταφέρθηκε στο απέναντι παλάτι και κοιμήθηκε για λίγο· ο πυρετός όμως δεν υποχώρησε. Όταν τον επισκέφτηκαν οι αρχηγοί, <button onclick="openModal('ἄφωνος')" class="highlight-word cursor-pointer px-1 rounded font-semibold focus:outline-none" title="Κάντε κλικ για ανάλυση">δεν μιλούσε καθόλου</button>· το ίδιο και στις 26 του μήνα. 
+                    </p>
+                    <p>
+                        <span class="text-xs align-super opacity-60 font-mono">[76.8]</span> Γι᾽ αυτό οι Μακεδόνες νόμισαν ότι είχε πεθάνει. Μαζεμένοι έξω από τις πύλες <button onclick="openModal('κατεβόων')" class="highlight-word cursor-pointer px-1 rounded font-semibold focus:outline-none" title="Κάντε κλικ για ανάλυση">διαμαρτύρονταν</button> και απειλούσαν τους εταίρους, ώσπου τις <button onclick="openModal('ἐβιάσαντο')" class="highlight-word cursor-pointer px-1 rounded font-semibold focus:outline-none" title="Κάντε κλικ για ανάλυση">παραβίασαν</button>. Και όταν άνοιξαν, πέρασαν από το κρεβάτι του ένας ένας όλοι μόνο με τους χιτώνες. 
+                    </p>
+                    <p>
+                        <span class="text-xs align-super opacity-60 font-mono">[76.9]</span> Στη διάρκεια αυτής της ημέρας άνθρωποι του Πύθωνα και του Σέλευκου στάλθηκαν στο Σεραπείο και ρωτούσαν αν έπρεπε να φέρουν εκεί τον Αλέξανδρο. Ο θεός όμως <button onclick="openModal('κατὰ χώραν ἐᾶν ἀνεῖλε')" class="highlight-word cursor-pointer px-1 rounded font-semibold focus:outline-none" title="Κάντε κλικ για ανάλυση">απάντησε να τον αφήσουν εκεί που ήταν</button>. Στις 28 προς το βράδυ πέθανε.
                     </p>
                 </article>
 
@@ -278,6 +322,34 @@
         const modal = document.getElementById('word-modal');
         const modalContainer = modal.querySelector('div');
 
+        // Function to toggle tabs smoothly
+        function setTab(tabName) {
+            const tabAncient = document.getElementById('tab-ancient');
+            const tabTranslation = document.getElementById('tab-translation');
+            const contentAncient = document.getElementById('content-ancient');
+            const contentTranslation = document.getElementById('content-translation');
+
+            if (tabName === 'ancient') {
+                tabAncient.classList.add('border-b-2', 'border-amber-800', 'text-amber-900', 'font-bold');
+                tabAncient.classList.remove('text-stone-600', 'font-semibold');
+                
+                tabTranslation.classList.remove('border-b-2', 'border-amber-800', 'text-amber-900', 'font-bold');
+                tabTranslation.classList.add('text-stone-600', 'font-semibold');
+
+                contentAncient.classList.remove('hidden');
+                contentTranslation.classList.add('hidden');
+            } else {
+                tabTranslation.classList.add('border-b-2', 'border-amber-800', 'text-amber-900', 'font-bold');
+                tabTranslation.classList.remove('text-stone-600', 'font-semibold');
+                
+                tabAncient.classList.remove('border-b-2', 'border-amber-800', 'text-amber-900', 'font-bold');
+                tabAncient.classList.add('text-stone-600', 'font-semibold');
+
+                contentTranslation.classList.remove('hidden');
+                contentAncient.classList.add('hidden');
+            }
+        }
+
         // Function to open the beautiful interactive modal
         function openModal(wordKey) {
             const data = vocabularyData[wordKey];
@@ -310,7 +382,7 @@
             }, 300);
         }
 
-        // Close on background click
+        // Close on backdrop click
         function closeModalOnBackdrop(event) {
             closeModal();
         }
