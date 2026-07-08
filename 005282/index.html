@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ισορροπία Θερμίδων & Υγεία | Mentorhub</title>
+    <meta name="description" content="Εκπαιδευτική ιστοσελίδα για τις θερμίδες, την ενεργειακή ισορροπία, τη διατροφή και τη σωματική δραστηριότητα.">
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    /* Beige Color Palette */
+    --bg-main: #fbfaf7;
+    --bg-sidebar: #f3efe6;
+    --bg-card: #ffffff;
+    --bg-card-hover: #fdfcfb;
+    --border-color: #e6dfd3;
+    
+    --accent-primary: #15803d; /* Warmer green for contrast on beige */
+    --accent-primary-hover: #166534;
+    --accent-secondary: #ea580c; /* Coral Orange */
+    --accent-blue: #1d4ed8; /* Darker blue for light theme */
+    
+    --text-primary: #292524; /* Stone-800 */
+    --text-secondary: #57534e; /* Stone-600 */
+    --text-muted: #8c8a82; /* Muted stone */
+    
+    --success: #15803d;
+    --warning: #b45309;
+    --danger: #dc2626;
+    
+    /* Layout */
+    --sidebar-width: 0px; /* Sidebar is removed */
+    --header-height: 70px;
+    --border-radius: 16px;
+    --transition-speed: 0.4s;
+    
+    /* Shadows & Glows */
+    --shadow-sm: 0 1px 3px rgba(40, 35, 30, 0.05), 0 1px 2px rgba(40, 35, 30, 0.05);
+    --shadow-md: 0 4px 20px rgba(40, 35, 30, 0.05), 0 2px 8px rgba(40, 35, 30, 0.04);
+    --shadow-lg: 0 12px 32px rgba(40, 35, 30, 0.08), 0 4px 12px rgba(40, 35, 30, 0.05);
+    --glow-green: 0 0 15px rgba(21, 128, 61, 0.12);
+    --glow-coral: 0 0 15px rgba(234, 88, 12, 0.12);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-main);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--text-muted);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+/* App Layout */
+.app-container {
+    display: flex;
+    flex: 1;
+    height: calc(100vh - var(--header-height));
+    overflow: hidden;
+    position: relative;
+    justify-content: center;
+}
+
+/* Header */
+header {
+    height: var(--header-height);
+    background-color: rgba(243, 239, 230, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.logo-icon {
+    font-size: 1.8rem;
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+}
+
+.logo-text {
+    font-weight: 800;
+    font-size: 1.4rem;
+    letter-spacing: -0.2px;
+    text-align: center;
+}
+
+/* Slide Tabs Navigation */
+.tabs-container {
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-bottom: 1.25rem;
+    background: var(--bg-sidebar);
+    padding: 0.5rem 0.75rem;
+    border-radius: 40px;
+    border: 1px solid var(--border-color);
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: var(--shadow-sm);
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    flex-shrink: 0;
+}
+
+.tabs-container::-webkit-scrollbar {
+    display: none; /* Hide tab scrollbar */
+}
+
+.tabs-container .nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    color: var(--text-secondary);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1.05rem;
+    font-family: inherit;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.tabs-container .nav-item:hover {
+    color: var(--text-primary);
+    background-color: rgba(0, 0, 0, 0.04);
+}
+
+.tabs-container .nav-item.active {
+    color: #ffffff;
+    background-color: var(--accent-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Main Content Area */
+.content-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.25rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.slides-wrapper {
+    height: 600px;
+    max-height: 600px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.75rem;
+    overflow-y: auto;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1.5rem 2rem;
+    box-shadow: var(--shadow-md);
+}
+
+.slides-wrapper::-webkit-scrollbar {
+    width: 6px;
+}
+.slides-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+.slides-wrapper::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+.slides-wrapper::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+.slide {
+    display: none;
+    animation: slideFadeIn var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    flex-direction: column;
+    gap: 1.5rem;
+    opacity: 0;
+}
+
+.slide.active {
+    display: flex;
+}
+
+@keyframes slideFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Typography & Content Layout */
+h1 {
+    font-size: 1.85rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.25rem;
+    background: linear-gradient(135deg, var(--text-primary) 30%, var(--text-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--accent-primary);
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+p {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    margin-bottom: 0.75rem;
+    font-weight: 400;
+}
+
+.highlight-box {
+    background: rgba(59, 130, 246, 0.05);
+    border-left: 4px solid var(--accent-blue);
+    padding: 1rem;
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    margin: 1rem 0;
+}
+
+.highlight-box p {
+    margin-bottom: 0;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+/* Cards & Grid Systems */
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin: 1rem 0;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin: 1rem 0;
+}
+
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1.25rem 1.5rem;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.card:hover {
+    background: var(--bg-card-hover);
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: var(--shadow-lg);
+}
+
+.card.highlight {
+    border-color: rgba(16, 185, 129, 0.3);
+    box-shadow: var(--glow-green);
+}
+
+.card.warning {
+    border-color: rgba(249, 115, 22, 0.3);
+    box-shadow: var(--glow-coral);
+}
+
+/* Slide-specific CSS */
+/* Intro Slide */
+.intro-hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    border-radius: var(--border-radius);
+    background: radial-gradient(circle at top right, rgba(16, 185, 129, 0.1), transparent 70%);
+    border: 1px solid var(--border-color);
+}
+
+.intro-hero h1 {
+    font-size: 3rem;
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+}
+
+.intro-hero p {
+    font-size: 1.25rem;
+    max-width: 700px;
+    color: var(--text-secondary);
+}
+
+/* Macro Nutrients Widget */
+.macro-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.carb-badge { background: rgba(29, 78, 216, 0.1); color: #1d4ed8; }
+.protein-badge { background: rgba(21, 128, 61, 0.1); color: #15803d; }
+.fat-badge { background: rgba(234, 88, 12, 0.1); color: #ea580c; }
+
+.macro-bar-outer {
+    height: 8px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    margin-top: 1rem;
+    overflow: hidden;
+}
+
+.macro-bar-inner {
+    height: 100%;
+    border-radius: 10px;
+}
+
+.carb-bar { width: 44.4%; background: var(--accent-blue); }
+.protein-bar { width: 44.4%; background: var(--accent-primary); }
+.fat-bar { width: 100%; background: var(--accent-secondary); }
+
+/* BMR breakdown visualizer */
+.expenditure-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 0.75rem 0;
+}
+
+.expenditure-item {
+    background: rgba(0, 0, 0, 0.015);
+    border: 1px solid var(--border-color);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+}
+
+.expenditure-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
+
+.expenditure-bar-outer {
+    height: 10px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.expenditure-bar-inner {
+    height: 100%;
+    border-radius: 10px;
+}
+
+/* Tables styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.75rem 0;
+    background: var(--bg-card);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+th, td {
+    padding: 0.65rem 0.85rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+th {
+    background-color: rgba(0, 0, 0, 0.02);
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover td {
+    background: rgba(0, 0, 0, 0.01);
+}
+
+/* Tags in Tables */
+.status-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.tag-unhealthy {
+    background: rgba(220, 38, 38, 0.08);
+    color: #b91c1c;
+    border: 1px solid rgba(220, 38, 38, 0.2);
+}
+
+.tag-moderate {
+    background: rgba(217, 119, 6, 0.08);
+    color: #b45309;
+    border: 1px solid rgba(217, 119, 6, 0.2);
+}
+
+.tag-healthy {
+    background: rgba(21, 128, 61, 0.08);
+    color: #15803d;
+    border: 1px solid rgba(21, 128, 61, 0.2);
+}
+
+.tag-very-healthy {
+    background: rgba(21, 128, 61, 0.15);
+    color: #166534;
+    border: 1px solid rgba(21, 128, 61, 0.3);
+    box-shadow: 0 0 8px rgba(21, 128, 61, 0.05);
+}
+
+.tag-empty {
+    background: rgba(234, 88, 12, 0.08);
+    color: #c2410c;
+    border: 1px solid rgba(234, 88, 12, 0.2);
+}
+
+/* Food Filter buttons */
+.filter-container {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.btn-filter {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 0.5rem 1rem;
+    border-radius: 30px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-filter:hover {
+    background: rgba(0, 0, 0, 0.06);
+    color: var(--text-primary);
+}
+
+.btn-filter.active {
+    background: var(--accent-primary);
+    color: var(--bg-main);
+    border-color: var(--accent-primary);
+    font-weight: 600;
+}
+
+/* Calorie Matcher Widget Styling */
+.matcher-container {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 2rem;
+    margin: 0.75rem 0;
+}
+
+.food-selector-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+select {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    padding: 0.8rem 1rem;
+    border-radius: var(--border-radius);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 1rem;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+select:focus {
+    border-color: var(--accent-primary);
+}
+
+.selected-food-details {
+    background: rgba(0, 0, 0, 0.015);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid var(--border-color);
+}
+
+.selected-calories-display {
+    text-align: right;
+}
+
+.selected-calories-val {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--accent-secondary);
+    line-height: 1;
+}
+
+.selected-calories-lbl {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+.matcher-results-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    max-height: 480px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+.exercise-result-row {
+    background: rgba(0, 0, 0, 0.015);
+    border: 1px solid var(--border-color);
+    padding: 0.65rem 0.85rem;
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.2s ease;
+}
+
+.exercise-result-row:hover {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.exercise-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.exercise-name {
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+
+.exercise-rate {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.exercise-time {
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+}
+
+.exercise-time-val {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--accent-primary);
+}
+
+.exercise-time-lbl {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* Guidelines slide / lists */
+ul.checklist {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 1rem 0;
+}
+
+ul.checklist li {
+    position: relative;
+    padding-left: 2rem;
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+}
+
+ul.checklist li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--accent-primary);
+    font-weight: 800;
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+/* 10 tips list - card format */
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.2rem;
+    margin: 0.75rem 0;
+}
+
+.tip-card {
+    background: rgba(0, 0, 0, 0.015);
+    border: 1px solid var(--border-color);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    transition: all 0.2s ease;
+}
+
+.tip-card:hover {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.tip-num {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--accent-primary);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+.tip-content {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* Footer / Control Bar */
+.control-bar {
+    height: 60px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+    margin-top: 1rem;
+}
+
+.btn-nav {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 0.75rem 1.5rem;
+    border-radius: 30px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.btn-nav:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--text-muted);
+}
+
+.btn-nav:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.btn-primary {
+    background: var(--accent-primary);
+    color: var(--bg-main);
+    border-color: var(--accent-primary);
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: #059669;
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.3);
+}
+
+.page-indicator {
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+/* Footer credit */
+.footer-citation {
+    margin-top: auto;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 0.75rem;
+    text-align: right;
+}
+
+/* Responsive Rules */
+@media (max-width: 1024px) {
+    .app-container {
+        flex-direction: column;
+        height: auto;
+        overflow: visible;
+    }
+    
+    body {
+        height: auto;
+        overflow-y: auto;
+    }
+    
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 0.75rem 1rem;
+        white-space: nowrap;
+        background-color: var(--bg-main);
+        position: sticky;
+        top: var(--header-height);
+        scroll-behavior: smooth;
+    }
+    
+    .nav-item {
+        padding: 0.5rem 0.8rem;
+    }
+    
+    .content-area {
+        padding: 1.5rem;
+        height: auto;
+        overflow: visible;
+    }
+    
+    .matcher-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    header {
+        padding: 0 1rem;
+        flex-direction: column;
+        height: auto;
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+        gap: 0.5rem;
+    }
+    
+    .progress-container {
+        width: 100%;
+        margin: 0;
+    }
+    
+    .sidebar {
+        top: 96px; /* Adjust header height dynamically */
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    .control-bar {
+        padding: 0;
+        margin-top: 1.5rem;
+    }
+}
+
+/* Image Styles */
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.75rem 0;
+}
+
+.lesson-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+}
+
+.lesson-image:hover {
+    transform: scale(1.015);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+
+
+
+</style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <span class="logo-icon">⚡</span>
+            <span class="logo-text">Διατρέφομαι υγιεινά και αθλούμαι καθημερινά</span>
+        </div>
+    </header>
+
+    <div class="app-container">
+        <!-- Main Content Panel -->
+        <main class="content-area">
+            <!-- Top Slide Tabs -->
+            <div class="tabs-container">
+                <button class="nav-item active" data-slide="0">1</button>
+                <button class="nav-item" data-slide="1">2</button>
+                <button class="nav-item" data-slide="2">3</button>
+                <button class="nav-item" data-slide="3">4</button>
+                <button class="nav-item" data-slide="4">5</button>
+                <button class="nav-item" data-slide="5">6</button>
+                <button class="nav-item" data-slide="6">7</button>
+                <button class="nav-item" data-slide="7">8</button>
+            </div>
+
+            <div class="slides-wrapper">
+                
+                <!-- SLIDE 1: ΕΙΣΑΓΩΓΗ -->
+                <section class="slide active" id="slide-0">
+                    <div class="intro-hero">
+                        <h1>Εισαγωγή</h1>
+                        <p>Κάθε μέρα τρως, πίνεις και κινείσαι. Αυτές οι τρεις απλές πράξεις κρύβουν πίσω τους έναν αόρατο «υπολογισμό» που το σώμα σου κάνει αδιάκοπα: πόση ενέργεια παίρνεις από τις τροφές και πόση ενέργεια ξοδεύεις με τις δραστηριότητές σου. Όταν αυτή η ισορροπία διαταράσσεται για μεγάλο χρονικό διάστημα, το σωματικό σου βάρος αλλάζει.</p>
+                        <p style="margin-top: 1.5rem; font-weight: 500; color: var(--accent-primary);">Σε αυτό το μάθημα θα ανακαλύψεις τι είναι οι θερμίδες, πώς τις προσλαμβάνεις από τα τρόφιμα, πώς τις δαπανάς μέσα από την καθημερινή σου ζωή και το πιο εκπληκτικό πόση άσκηση χρειάζεται για να «κάψεις» αυτά που τρως.</p>
+                    </div>
+                </section>
+
+                <!-- SLIDE 2: ΤΙ ΕΙΝΑΙ ΟΙ ΘΕΡΜΙΔΕΣ; -->
+                <section class="slide" id="slide-1">
+                    <h1>Τι είναι οι Θερμίδες;</h1>
+                    
+                    <div class="grid-2">
+                        <div class="card">
+                            <h2>Definition / Ορισμός</h2>
+                            <p>Η θερμίδα (kcal) είναι η μονάδα μέτρησης της ενέργειας που περιέχεται στα τρόφιμα και που δαπανά ο οργανισμός κατά τη λειτουργία του. Στην καθημερινή ζωή, όταν λέμε «θερμίδα», εννοούμε στην πραγματικότητα «χιλιοθερμίδα» (kcal) δηλαδή την ποσότητα ενέργειας που χρειάζεται για να θερμανθεί 1 λίτρο νερού κατά 1°C.</p>
+                            <div class="highlight-box">
+                                <p>Στις ετικέτες τροφίμων και στις διατροφικές οδηγίες, οι τιμές που βλέπεις αναφέρονται πάντα σε kcal (χιλιοθερμίδες).</p>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <h2>Τι είναι «κενές θερμίδες»;</h2>
+                            <p>Μερικά τρόφιμα και ποτά (π.χ. αναψυκτικά, γλυκά, τσιπς) έχουν πολλές θερμίδες, αλλά ελάχιστα θρεπτικά συστατικά, καθώς δεν προσφέρουν βιταμίνες, μέταλλα ή φυτικές ίνες. Αυτές οι θερμίδες ονομάζονται «κενές θερμίδες» (empty calories). Το πρόβλημα δεν είναι μόνο το βάρος είναι ότι ταυτόχρονα στερείσαι θρεπτικά συστατικά που χρειάζεται ο οργανισμός σου για να αναπτυχθεί σωστά.</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2>Από πού προέρχονται οι θερμίδες;</h2>
+                        <p>Τα τρόφιμα αποδίδουν ενέργεια μέσα από τρία μακροθρεπτικά συστατικά:</p>
+                        
+                        <div class="grid-3" style="margin-top: 1.5rem;">
+                            <div class="card highlight" style="background: rgba(59, 130, 246, 0.05); border-color: rgba(59, 130, 246, 0.25);">
+                                <span class="macro-badge carb-badge">Υδατάνθρακες</span>
+                                <h3 style="margin-top: 1rem; font-size: 1.8rem; font-weight: 800;">4 <span style="font-size: 1rem; font-weight: 500;">kcal/g</span></h3>
+                                <p style="font-size: 0.9rem; margin-bottom: 0;">Κύρια πηγή άμεσης ενέργειας</p>
+                                <div class="macro-bar-outer"><div class="macro-bar-inner carb-bar"></div></div>
+                            </div>
+                            <div class="card highlight" style="background: rgba(16, 185, 129, 0.05); border-color: rgba(16, 185, 129, 0.25);">
+                                <span class="macro-badge protein-badge">Πρωτεΐνες</span>
+                                <h3 style="margin-top: 1rem; font-size: 1.8rem; font-weight: 800;">4 <span style="font-size: 1rem; font-weight: 500;">kcal/g</span></h3>
+                                <p style="font-size: 0.9rem; margin-bottom: 0;">Δομικά υλικά για τους μύες και τους ιστούς</p>
+                                <div class="macro-bar-outer"><div class="macro-bar-inner protein-bar"></div></div>
+                            </div>
+                            <div class="card highlight" style="background: rgba(249, 115, 22, 0.05); border-color: rgba(249, 115, 22, 0.25);">
+                                <span class="macro-badge fat-badge">Λίπη</span>
+                                <h3 style="margin-top: 1rem; font-size: 1.8rem; font-weight: 800;">9 <span style="font-size: 1rem; font-weight: 500;">kcal/g</span></h3>
+                                <p style="font-size: 0.9rem; margin-bottom: 0;">Πυκνή πηγή ενέργειας και αποθήκευσης</p>
+                                <div class="macro-bar-outer"><div class="macro-bar-inner fat-bar"></div></div>
+                            </div>
+                        </div>
+
+                        <p style="margin-top: 1.5rem; font-style: italic; font-size: 0.95rem;">Παρατήρησε ότι τα λίπη αποδίδουν διπλάσια και πλέον ενέργεια σε σχέση με τους υδατάνθρακες και τις πρωτεΐνες. Αυτός είναι ένας βασικός λόγος που τα λιπαρά τρόφιμα έχουν τόσο υψηλή θερμιδική αξία.</p>
+                        
+                        <div class="image-container">
+                            <img src="images/image1.png" alt="Διατροφικά μακροθρεπτικά συστατικά και η ενεργειακή τους απόδοση" class="lesson-image">
+                        </div>
+                        <div class="footer-citation">
+                            Mentorhub. (2026, Μάρτιος). Διατροφικά μακροθρεπτικά συστατικά και η ενεργειακή τους απόδοση [Εκπαιδευτικό infographic].
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SLIDE 3: ΕΝΕΡΓΕΙΑΚΗ ΙΣΟΡΡΟΠΙΑ -->
+                <section class="slide" id="slide-2">
+                    <h1>Ενεργειακή Ισορροπία</h1>
+
+                    <div class="grid-2">
+                        <div class="card">
+                            <h2>Η βασική αρχή</h2>
+                            <p>Η ενεργειακή ισορροπία είναι η σχέση μεταξύ της ενέργειας που προσλαμβάνεις (μέσω τροφής) και της ενέργειας που δαπανάς (μέσω βασικού μεταβολισμού και σωματικής δραστηριότητας):</p>
+                            
+                            <div style="display: flex; flex-direction: column; gap: 0.75rem; margin: 1.5rem 0;">
+                                <div class="card" style="padding: 1rem; background: rgba(59, 130, 246, 0.1); border-left: 5px solid var(--accent-blue);">
+                                    <strong style="color: var(--text-primary);">Ενεργειακή πρόσληψη = Ενεργειακή δαπάνη → Σταθερό βάρος</strong>
+                                </div>
+                                <div class="card" style="padding: 1rem; background: rgba(239, 68, 68, 0.1); border-left: 5px solid var(--danger);">
+                                    <strong style="color: var(--text-primary);">Ενεργειακή πρόσληψη &gt; Ενεργειακή δαπάνη → Αύξηση βάρους</strong>
+                                </div>
+                                <div class="card" style="padding: 1rem; background: rgba(16, 185, 129, 0.1); border-left: 5px solid var(--success);">
+                                    <strong style="color: var(--text-primary);">Ενεργειακή πρόσληψη &lt; Ενεργειακή δαπάνη → Μείωση βάρους</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <h2>Πού πηγαίνει η ενέργεια που προσλαμβάνεις;</h2>
+                            <p>Η ενέργεια που παίρνεις από το φαγητό κατανέμεται σε τρεις μεγάλες κατηγορίες δαπάνης:</p>
+                            
+                            <div class="expenditure-container">
+                                <div class="expenditure-item">
+                                    <div class="expenditure-header">
+                                        <span>α) Βασικός Μεταβολικός Ρυθμός (BMR)</span>
+                                        <span style="color: var(--accent-blue);">60–75%</span>
+                                    </div>
+                                    <p style="font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--text-secondary);">Είναι η ενέργεια που χρειάζεται το σώμα σου απλώς για να λειτουργεί, να χτυπά η καρδιά, να αναπνέεις, να λειτουργεί ο εγκέφαλος, να ρυθμίζεται η θερμοκρασία σου. Ακόμα και αν ξαπλώσεις όλη μέρα, χωρίς να κουνηθείς, ο οργανισμός σου συνεχίζει να καίει θερμίδες.</p>
+                                    <div class="expenditure-bar-outer"><div class="expenditure-bar-inner" style="width: 70%; background: var(--accent-blue);"></div></div>
+                                </div>
+                                
+                                <div class="expenditure-item">
+                                    <div class="expenditure-header">
+                                        <span>β) Θερμική επίδραση τροφής</span>
+                                        <span style="color: var(--accent-secondary);">~10%</span>
+                                    </div>
+                                    <p style="font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--text-secondary);">Το ίδιο το φαγητό χρειάζεται ενέργεια για να χωνευτεί. Αντιπροσωπεύει περίπου 10% της ημερήσιας δαπάνης.</p>
+                                    <div class="expenditure-bar-outer"><div class="expenditure-bar-inner" style="width: 10%; background: var(--accent-secondary);"></div></div>
+                                </div>
+
+                                <div class="expenditure-item">
+                                    <div class="expenditure-header">
+                                        <span>γ) Σωματική δραστηριότητα</span>
+                                        <span style="color: var(--accent-primary);">15–30%</span>
+                                    </div>
+                                    <p style="font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--text-secondary);">Κάθε κίνηση που κάνεις από το να σηκωθείς από την καρέκλα μέχρι να παίξεις ποδόσφαιρο καίει θερμίδες. Αυτό το μέρος είναι το πιο ελεγχόμενο από εσένα.</p>
+                                    <div class="expenditure-bar-outer"><div class="expenditure-bar-inner" style="width: 20%; background: var(--accent-primary);"></div></div>
+                                </div>
+                            </div>
+                            
+                            <div class="image-container">
+                                <img src="images/image2.png" alt="Διάγραμμα κατανομής ενεργειακής δαπάνης" class="lesson-image">
+                            </div>
+                            <div class="footer-citation">
+                                Mentorhub. (2026, Μάρτιος). Διάγραμμα κατανομής ενεργειακής δαπάνης [Εκπαιδευτικό γράφημα πίτας].
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2>Πόσες θερμίδες χρειάζεσαι την ημέρα;</h2>
+                        <p>Οι ημερήσιες ενεργειακές ανάγκες εξαρτώνται από την ηλικία, το φύλο, το βάρος, το ύψος και το επίπεδο δραστηριότητας. Για έναν/μία έφηβο/η 12–15 ετών οι συστάσεις είναι κατά προσέγγιση:</p>
+                        
+                        <div style="overflow-x: auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Επίπεδο Δραστηριότητας</th>
+                                        <th>Κορίτσια</th>
+                                        <th>Αγόρια</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Καθιστική ζωή</strong></td>
+                                        <td>~1.800 kcal/ημέρα</td>
+                                        <td>~2.000 kcal/ημέρα</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Μέτρια δραστηριότητα</strong></td>
+                                        <td>~2.000 kcal/ημέρα</td>
+                                        <td>~2.200 kcal/ημέρα</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Έντονη δραστηριότητα</strong></td>
+                                        <td>~2.200 kcal/ημέρα</td>
+                                        <td>~2.600 kcal/ημέρα</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p style="font-style: italic; font-size: 0.95rem; margin-top: 0.5rem;">Αυτές είναι εκτιμήσεις — κάθε άνθρωπος είναι διαφορετικός. Για ακριβή αξιολόγηση χρειάζεται ειδικός (διαιτολόγος ή γιατρός).</p>
+                    </div>
+                </section>
+
+                <!-- SLIDE 4: ΘΕΡΜΙΔΕΣ ΣΤΑ ΤΡΟΦΙΜΑ -->
+                <section class="slide" id="slide-3">
+                    <h1>Θερμίδες στα Τρόφιμα: Υγιεινά vs Ανθυγιεινά Γεύματα</h1>
+                    
+                    <div class="card">
+                        <h2>Τι κρύβεται στο πιάτο σου;</h2>
+                        <p>Παρακάτω βλέπεις τη θερμιδική αξία συνηθισμένων τροφίμων που ίσως καταναλώνεις καθημερινά. Μερικά από αυτά είναι υγιεινές επιλογές, άλλα λιγότερο. Πρόσεξε τη διαφορά.</p>
+                        
+                        <div class="filter-container">
+                            <button class="btn-filter active" data-filter="all">Όλα τα Τρόφιμα</button>
+                            <button class="btn-filter" data-filter="healthy">✅ Υγιεινά</button>
+                            <button class="btn-filter" data-filter="unhealthy">⚠️ Ανθυγιεινά / Κενές</button>
+                            <button class="btn-filter" data-filter="moderate">⚖️ Με Μέτρο</button>
+                        </div>
+
+                        <div style="overflow-x: auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Τρόφιμο</th>
+                                        <th>Μερίδα</th>
+                                        <th>kcal (κατά προσέγγιση)</th>
+                                        <th>Χαρακτηρισμός</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="food-table-body">
+                                    <tr data-category="unhealthy">
+                                        <td><strong>Burger με τυρί + πατάτες</strong></td>
+                                        <td>350 g</td>
+                                        <td>~850</td>
+                                        <td><span class="status-tag tag-unhealthy">⚠️ Ανθυγιεινό</span></td>
+                                    </tr>
+                                    <tr data-category="unhealthy">
+                                        <td><strong>Πίτσα μαργαρίτα</strong></td>
+                                        <td>2 κομμάτια / 200 g</td>
+                                        <td>~530</td>
+                                        <td><span class="status-tag tag-unhealthy">⚠️ Ανθυγιεινό</span></td>
+                                    </tr>
+                                    <tr data-category="unhealthy">
+                                        <td><strong>Χωριάτικο λουκάνικο (ψητό)</strong></td>
+                                        <td>100 g</td>
+                                        <td>~320</td>
+                                        <td><span class="status-tag tag-unhealthy">⚠️ Ανθυγιεινό</span></td>
+                                    </tr>
+                                    <tr data-category="moderate">
+                                        <td><strong>Παγωτό βανίλιας</strong></td>
+                                        <td>120 g</td>
+                                        <td>~280</td>
+                                        <td><span class="status-tag tag-moderate">⚠️ Με μέτρο</span></td>
+                                    </tr>
+                                    <tr data-category="unhealthy">
+                                        <td><strong>Πάστα σοκολάτας</strong></td>
+                                        <td>100 g</td>
+                                        <td>~400</td>
+                                        <td><span class="status-tag tag-unhealthy">⚠️ Ανθυγιεινό</span></td>
+                                    </tr>
+                                    <tr data-category="empty">
+                                        <td><strong>Αναψυκτικό (κόλα)</strong></td>
+                                        <td>330 ml</td>
+                                        <td>~139</td>
+                                        <td><span class="status-tag tag-empty">⚠️ Κενές θερμίδες</span></td>
+                                    </tr>
+                                    <tr data-category="healthy">
+                                        <td><strong>Ομελέτα 2 αβγών</strong></td>
+                                        <td>150 g</td>
+                                        <td>~220</td>
+                                        <td><span class="status-tag tag-healthy">✅ Υγιεινό</span></td>
+                                    </tr>
+                                    <tr data-category="very-healthy">
+                                        <td><strong>Ψητό ψάρι (τσιπούρα)</strong></td>
+                                        <td>200 g</td>
+                                        <td>~200</td>
+                                        <td><span class="status-tag tag-very-healthy">✅ Πολύ υγιεινό</span></td>
+                                    </tr>
+                                    <tr data-category="very-healthy">
+                                        <td><strong>Χωριάτικη σαλάτα</strong></td>
+                                        <td>300 g</td>
+                                        <td>~180</td>
+                                        <td><span class="status-tag tag-very-healthy">✅ Πολύ υγιεινό</span></td>
+                                    </tr>
+                                    <tr data-category="healthy">
+                                        <td><strong>Μπανάνα</strong></td>
+                                        <td>1 μεγάλη / 150 g</td>
+                                        <td>~135</td>
+                                        <td><span class="status-tag tag-healthy">✅ Υγιεινό</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="highlight-box" style="margin-top: 1rem;">
+                            <p>Παρατήρησε ότι ένα burger με πατάτες έχει σχεδόν 5 φορές περισσότερες θερμίδες από μία χωριάτικη σαλάτα και σε πολύ μικρότερο όγκο!</p>
+                        </div>
+                        
+                        <div class="image-container">
+                            <img src="images/image3.png" alt="Σύγκριση θερμιδικής αξίας διαφορετικών γευμάτων" class="lesson-image">
+                        </div>
+                        <div class="footer-citation">
+                            Mentorhub. (2026, Μάρτιος). Σύγκριση θερμιδικής αξίας διαφορετικών γευμάτων [Εκπαιδευτικό infographic].
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top: 1.5rem;">
+                        <h2>Γιατί η ποιότητα της τροφής μετράει εξίσου με τις θερμίδες;</h2>
+                        <p>Δύο γεύματα με ίδιες θερμίδες μπορεί να είναι πολύ διαφορετικά στη θρεπτική τους αξία. Το ψητό ψάρι των 200 kcal σου δίνει υψηλής ποιότητας πρωτεΐνη, ωμέγα-3 λιπαρά οξέα και βιταμίνες. Ένα αναψυκτικό με παρόμοιες θερμίδες δεν σου δίνει τίποτα από αυτά. Ο οργανισμός σου χρειάζεται και τα δύο: ποσότητα ενέργειας και ποιότητα θρεπτικών συστατικών.</p>
+                    </div>
+                </section>
+
+                <!-- SLIDE 5: ΘΕΡΜΙΔΕΣ ΚΑΙ ΣΩΜΑΤΙΚΗ ΔΡΑΣΤΗΡΙΟΤΗΤΑ -->
+                <section class="slide" id="slide-4">
+                    <h1>Θερμίδες και Σωματική Δραστηριότητα</h1>
+
+                    <div class="card">
+                        <h2>Πόσες θερμίδες «καίει» η άσκηση;</h2>
+                        <p>Η ενέργεια που δαπανάς κατά την άσκηση εξαρτάται από: το είδος της δραστηριότητας (ένταση), τη διάρκεια (χρόνος) και το σωματικό βάρος (ένα βαρύτερο σώμα καίει περισσότερο για την ίδια κίνηση).</p>
+                        <p>Οι παρακάτω τιμές αφορούν άτομο ~60 kg (κατά προσέγγιση, βάσει MET values):</p>
+                        
+                        <div style="overflow-x: auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Αθλητική Δραστηριότητα</th>
+                                        <th>Διάρκεια</th>
+                                        <th>kcal (~60 kg άτομο)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Κολύμβηση (έντονη)</strong></td>
+                                        <td>85 λεπτά</td>
+                                        <td>~850</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Τρέξιμο (~10 km/h)</strong></td>
+                                        <td>50 λεπτά</td>
+                                        <td>~530</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Κολύμβηση (μέτρια)</strong></td>
+                                        <td>40 λεπτά</td>
+                                        <td>~400</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Αερόβια γυμναστική</strong></td>
+                                        <td>40 λεπτά</td>
+                                        <td>~320</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Ποδηλασία (μέτρια)</strong></td>
+                                        <td>25 λεπτά</td>
+                                        <td>~220</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Βάρη (μέτρια ένταση)</strong></td>
+                                        <td>30 λεπτά</td>
+                                        <td>~180</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Ποδόσφαιρο</strong></td>
+                                        <td>30 λεπτά</td>
+                                        <td>~280</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Μπάσκετ</strong></td>
+                                        <td>15 λεπτά</td>
+                                        <td>~139</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Άλμα σε σχοινάκι</strong></td>
+                                        <td>12 λεπτά</td>
+                                        <td>~135</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Περπάτημα αργό</strong></td>
+                                        <td>30 λεπτά</td>
+                                        <td>~85</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card warning" style="margin-top: 1.5rem;">
+                        <h2>Το «παράδοξο» της ενεργειακής ισορροπίας</h2>
+                        <p>Διάβασε προσεκτικά τα παρακάτω παραδείγματα είναι αποκαλυπτικά:</p>
+                        <ul class="checklist">
+                            <li><strong>Για να «ξοδέψεις» τις θερμίδες ενός burger με πατάτες (~850 kcal) χρειάζεσαι:</strong> Σχεδόν 1 ώρα και 25 λεπτά έντονης κολύμβησης ή Περίπου 1 ώρα και 20 λεπτά τρεξίματος.</li>
+                            <li><strong>Για να «ξοδέψεις» τις θερμίδες ενός κουτιού αναψυκτικού (~139 kcal) χρειάζεσαι:</strong> Περίπου 15 λεπτά μπάσκετ ή Περίπου 50 λεπτά αργού περπατήματος.</li>
+                        </ul>
+                        
+                        <p style="margin-top: 1.5rem; font-weight: 500;">Το βασικό συμπέρασμα: Χρειάζονται μόλις λεπτά για να καταναλώσεις τρόφιμα με πολλές θερμίδες, αλλά ώρες άσκησης για να τις αντισταθμίσεις. Αυτός είναι ο λόγος που η πρόληψη, δηλαδή η επιλογή, υγιεινών τροφίμων είναι σαφώς πιο αποτελεσματική από την προσπάθεια να «αποτοξινωθείς» με άσκηση.</p>
+                        
+                        <div class="image-container">
+                            <img src="images/image4.png" alt="Σύγκριση θερμίδων τροφίμων και φυσικής δραστηριότητας" class="lesson-image">
+                        </div>
+                        <div class="footer-citation">
+                            Mentorhub. (2026, Μάρτιος). Σύγκριση θερμίδων τροφίμων και ισοδύναμης φυσικής δραστηριότητας [Εκπαιδευτικό infographic].
+                        </div>
+                    </div>
+
+
+                </section>
+
+                <!-- SLIDE 6: ΠΡΑΚΤΙΚΕΣ ΣΥΜΒΟΥΛΕΣ -->
+                <section class="slide" id="slide-5">
+                    <h1>Πρακτικές Συμβουλές για Υγιεινό Σωματικό Βάρος</h1>
+
+                    <div class="grid-2">
+                        <div class="card">
+                            <h2>Οδηγίες ΠΟΥ για Φυσική Δραστηριότητα</h2>
+                            <p>Σύμφωνα με τον Παγκόσμιο Οργανισμό Υγείας (ΠΟΥ, 2020), τα παιδιά και οι έφηβοι/ες ηλικίας 5–17 ετών πρέπει:</p>
+                            <ul class="checklist">
+                                <li>Να κάνουν τουλάχιστον 60 λεπτά μέτριας έως έντονης σωματικής δραστηριότητας κάθε μέρα.</li>
+                                <li>Να περιλαμβάνουν ασκήσεις ενδυνάμωσης (π.χ. βάρη, calisthenics) τουλάχιστον 3 φορές την εβδομάδα.</li>
+                                <li>Να περιορίζουν τον καθιστικό χρόνο (οθόνες, καναπές).</li>
+                            </ul>
+                        </div>
+
+                        <!-- Balanced Plate Graphic -->
+                        <div class="card">
+                            <h2>Ισορροπημένο Πιάτο Διατροφής</h2>
+                            <p>Η σωστή κατανομή των τροφικών ομάδων σε κάθε κύριο γεύμα βοηθά στη λήψη όλων των απαραίτητων συστατικών.</p>
+                            
+                            <!-- Image Balanced Plate Diagram -->
+                            <div class="image-container">
+                                <img src="images/image5.png" alt="Ισορροπημένο πιάτο διατροφής με κατανομή τροφικών ομάδων" class="lesson-image" style="max-height: 250px;">
+                            </div>
+                            
+                            <div class="footer-citation">
+                                Mentorhub. (2026, Μάρτιος). Ισορροπημένο πιάτο διατροφής με κατανομή τροφικών ομάδων [Εκπαιδευτικό infographic].
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2>Δέκα πρακτικές συμβουλές για εσένα</h2>
+                        <p>Ακολουθώντας τις παρακάτω συμβουλές μπορείς να διατηρείς εύκολα ένα υγιές σωματικό βάρος:</p>
+                        
+                        <div class="tips-grid">
+                            <div class="tip-card">
+                                <span class="tip-num">1</span>
+                                <div class="tip-content">Φάε πρωινό κάθε μέρα, δίνει ενέργεια και μειώνει την υπερφαγία αργότερα.</div>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-num">2</span>
+                                <div class="tip-content">Προτίμησε νερό αντί για αναψυκτικά εξαλείφεις εκατοντάδες «κενές» θερμίδες.</div>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-num">3</span>
+                                <div class="tip-content">Φάε αργά και με προσοχή ο κορεσμός χρειάζεται ~20 λεπτά για να φτάσει στον εγκέφαλο.</div>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-num">4</span>
+                                <div class="tip-content">Γέμισε το μισό πιάτο σου με λαχανικά σε κάθε κυρίως γεύμα.</div>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-num">5</span>
+                                <div class="tip-content">Κινήσου κάθε μέρα έστω με γρήγορο περπάτημα 30 λεπτών.</div>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-num">6</span>
+                                <div class="tip-content">Μαγείρεψε ή επίλεξε ψητές παρασκευές, αντί για τηγανητές.</div>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-num">7</span>
+                                <div class="tip-content">Διάβασε τις ετικέτες τροφίμων, με τον τρόπο αυτόν μαθαίνεις πόσες θερμίδες έχει αυτό που αγοράζεις.</div>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-num">8</span>
+                                <div class="tip-content">Απόφυγε το φαγητό μπροστά στην οθόνη, ο αποσπασμένος νους τρώει περισσότερο.</div>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-num">9</span>
+                                <div class="tip-content">Φάε σε τακτά γεύματα (3 κύρια + 1–2 σνακ) και απόφυγε το τσιμπολόγημα.</div>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-num">10</span>
+                                <div class="tip-content">Συνδύασε αερόβια άσκηση με ενδυνάμωση, ο μυϊκός ιστός καίει περισσότερες θερμίδες και σε ηρεμία.</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SLIDE 7: ΔΕΙΚΤΗΣ ΜΑΖΑΣ ΣΩΜΑΤΟΣ -->
+                <section class="slide" id="slide-6">
+                    <h1>Ο Δείκτης Μάζας Σώματος (ΔΜΣ)</h1>
+
+                    <div class="grid-2">
+                        <div class="card">
+                            <h2>Τι είναι ο ΔΜΣ;</h2>
+                            <p>Ο Δείκτης Μάζας Σώματος (ΔΜΣ) είναι ένας απλός υπολογισμός που εκτιμά αν το σωματικό βάρος είναι αναλογικό με το ύψος:</p>
+                            
+                            <div class="highlight-box" style="background: rgba(16, 185, 129, 0.05); border-left-color: var(--accent-primary); text-align: center; padding: 1.5rem;">
+                                <strong style="font-size: 1.4rem; color: var(--accent-primary); display: block; margin-bottom: 0.5rem;">ΔΜΣ = Βάρος (kg) ÷ [Ύψος (m)]²</strong>
+                            </div>
+
+                            <div class="card" style="background: rgba(255, 255, 255, 0.02); margin-top: 1rem; border-color: rgba(255, 255, 255, 0.05);">
+                                <h3>Παράδειγμα</h3>
+                                <p style="margin-bottom: 0;">Αν ζυγίζεις 55 kg και έχεις ύψος 1,65 m:</p>
+                                <p style="font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-top: 0.5rem; text-align: center;">ΔΜΣ = 55 ÷ (1,65 × 1,65) = 55 ÷ 2,72 ≈ 20,2</p>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <h2>Ερμηνεία ΔΜΣ για Ενήλικες</h2>
+                            <div style="overflow-x: auto;">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>ΔΜΣ</th>
+                                            <th>Κατηγορία</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Κάτω από 18,5</strong></td>
+                                            <td><span class="status-tag tag-moderate">Ελλιποβαρής</span></td>
+                                        </tr>
+                                        <tr style="background: rgba(16, 185, 129, 0.05);">
+                                            <td><strong>18,5 – 24,9</strong></td>
+                                            <td><span class="status-tag tag-healthy" style="background: var(--accent-primary); color: var(--bg-main);">Φυσιολογικό βάρος</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>25 – 29,9</strong></td>
+                                            <td><span class="status-tag tag-unhealthy">Υπέρβαρος</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>30 και πάνω</strong></td>
+                                            <td><span class="status-tag tag-unhealthy" style="background: var(--danger); color: white;">Παχυσαρκία</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card warning">
+                        <h3>⚠️ Σημαντική σημείωση</h3>
+                        <p style="margin-bottom: 0;">Για παιδιά και εφήβου/ες ο ΔΜΣ ερμηνεύεται διαφορετικά συγκρίνεται με ειδικά εκατοστιαία τεταρτημόρια για ηλικία και φύλο. Ο ΔΜΣ δεν μετρά απευθείας το σωματικό λίπος και δεν λαμβάνει υπόψη τη μυϊκή μάζα. Πάντα συμβουλεύεσαι έναν/μία ειδικό για αξιολόγηση.</p>
+                    </div>
+                </section>
+
+                <!-- SLIDE 8: ΣΥΝΟΨΗ -->
+                <section class="slide" id="slide-7">
+                    <h1>Σύνοψη όσων έμαθες</h1>
+                    
+                    <div class="card highlight">
+                        <p style="font-size: 1.15rem; margin-bottom: 1.5rem; font-weight: 500;">Ανακεφαλαίωση των βασικών σημείων του μαθήματος:</p>
+                        
+                        <ul class="checklist" style="gap: 1.25rem;">
+                            <li>Η θερμίδα (kcal) είναι η μονάδα ενέργειας στα τρόφιμα και στην άσκηση.</li>
+                            <li>Τα τρόφιμα αποδίδουν ενέργεια μέσω υδατανθράκων, πρωτεϊνών και λιπών. Τα λίπη έχουν τη μεγαλύτερη ενεργειακή πυκνότητα.</li>
+                            <li>Η ενεργειακή ισορροπία (πρόσληψη vs δαπάνη) καθορίζει αν το βάρος σου αυξάνεται, μειώνεται ή παραμένει σταθερό.</li>
+                            <li>Ο Βασικός Μεταβολικός Ρυθμός καταναλώνει τη μεγαλύτερη μερίδα ενέργειας ακόμα και σε ηρεμία.</li>
+                            <li>Οι θερμίδες προσλαμβάνονται εύκολα από ανθυγιεινά τρόφιμα, αλλά δαπανώνται δύσκολα μέσω άσκησης.</li>
+                            <li>Ο ΠΟΥ συστήνει 60 λεπτά μέτριας-έντονης δραστηριότητας κάθε μέρα για εφήβους/ες.</li>
+                            <li>Η καλύτερη στρατηγική για υγιές βάρος είναι ο συνδυασμός ισορροπημένης διατροφής και τακτικής άσκησης.</li>
+                        </ul>
+                    </div>
+                </section>
+
+            </div>
+
+
+            <!-- Lower Control Navigation Bar -->
+            <div class="control-bar">
+                <button id="btn-prev" class="btn-nav" disabled>
+                    <span class="nav-arrow">←</span> Προηγούμενο
+                </button>
+                <div class="page-indicator">
+                    Σελίδα <span class="page-num-val">1</span> από <span class="page-num-total">8</span>
+                </div>
+                <button id="btn-next" class="btn-nav btn-primary">
+                    Επόμενο <span class="nav-arrow">→</span>
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    // --- SLIDES NAVIGATION ---
+    const slides = document.querySelectorAll('.slide');
+    const navItems = document.querySelectorAll('.nav-item');
+    const btnPrev = document.getElementById('btn-prev');
+    const btnNext = document.getElementById('btn-next');
+    const progressBar = document.getElementById('progress-bar');
+    const progressText = document.getElementById('progress-text');
+    const pageNumVals = document.querySelectorAll('.page-num-val');
+    const pageNumTotals = document.querySelectorAll('.page-num-total');
+    
+    let currentSlide = 0;
+    const totalSlides = slides.length;
+    
+    pageNumTotals.forEach(el => {
+        el.textContent = totalSlides;
+    });
+
+    function showSlide(index) {
+        // Clamp index
+        if (index < 0) index = 0;
+        if (index >= totalSlides) index = totalSlides - 1;
+        
+        currentSlide = index;
+        
+        // Update slides visibility
+        slides.forEach((slide, idx) => {
+            if (idx === index) {
+                slide.classList.add('active');
+            } else {
+                slide.classList.remove('active');
+            }
+        });
+        
+        // Update navigation tab items
+        navItems.forEach((item, idx) => {
+            if (idx === index) {
+                item.classList.add('active');
+                // Scroll tabs container on mobile if item is out of view
+                item.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            } else {
+                item.classList.remove('active');
+            }
+        });
+        
+        // Update buttons state
+        if (btnPrev) btnPrev.disabled = (index === 0);
+        if (btnNext) {
+            if (index === totalSlides - 1) {
+                btnNext.style.visibility = 'hidden';
+            } else {
+                btnNext.style.visibility = 'visible';
+                btnNext.innerHTML = 'Επόμενο <span class="nav-arrow">→</span>';
+                btnNext.classList.add('btn-primary');
+            }
+        }
+        
+        // Update progress bar
+        const progressPercent = Math.round(((index + 1) / totalSlides) * 100);
+        if (progressBar) progressBar.style.width = `${progressPercent}%`;
+        if (progressText) progressText.textContent = `${progressPercent}% Ολοκληρώθηκε`;
+        pageNumVals.forEach(el => {
+            el.textContent = index + 1;
+        });
+        
+        // Scroll content area back to top
+        const contentArea = document.querySelector('.content-area');
+        if (contentArea) contentArea.scrollTop = 0;
+    }
+    
+    // Bind navigation buttons
+    if (btnPrev) {
+        btnPrev.addEventListener('click', () => {
+            showSlide(currentSlide - 1);
+        });
+    }
+    
+    if (btnNext) {
+        btnNext.addEventListener('click', () => {
+            if (currentSlide === totalSlides - 1) {
+                // Last slide: display completion message or visual effect
+                alert('Συγχαρητήρια! Ολοκληρώσατε το μάθημα για τις Θερμίδες και την Ενεργειακή Ισορροπία.');
+            } else {
+                showSlide(currentSlide + 1);
+            }
+        });
+    }
+    
+    // Bind sidebar clicks
+    navItems.forEach((item, idx) => {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSlide(idx);
+        });
+    });
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') {
+            if (currentSlide < totalSlides - 1) {
+                showSlide(currentSlide + 1);
+            }
+        } else if (e.key === 'ArrowLeft') {
+            if (currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        }
+    });
+
+    // Initialize first slide
+    showSlide(0);
+
+    // --- FOOD FILTER (SLIDE 4) ---
+    const filterButtons = document.querySelectorAll('.btn-filter');
+    const foodRows = document.querySelectorAll('#food-table-body tr');
+    
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Update active button styling
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            
+            const filterValue = button.getAttribute('data-filter');
+            
+            foodRows.forEach(row => {
+                const category = row.getAttribute('data-category');
+                
+                if (filterValue === 'all') {
+                    row.style.display = '';
+                } else if (filterValue === 'healthy') {
+                    if (category === 'healthy' || category === 'very-healthy') {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                } else if (filterValue === 'unhealthy') {
+                    if (category === 'unhealthy' || category === 'empty') {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                } else if (filterValue === 'moderate') {
+                    if (category === 'moderate') {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                }
+            });
+        });
+    });
+
+});
+
+</script>
+</body>
+</html>
