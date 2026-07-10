@@ -4,108 +4,711 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Απαρέμφατα Μέσης Φωνής Αφωνόληκτων Ρημάτων</title>
-    <!-- Tailwind CSS for high quality design -->
-    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght=0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght=0,600;0,700;1,600&display=swap');
-        
+        /* CSS reset & variables for premium light-theme palette */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --slate-50: #f8fafc;
+            --slate-100: #f1f5f9;
+            --slate-200: #e2e8f0;
+            --slate-300: #cbd5e1;
+            --slate-400: #94a3b8;
+            --slate-500: #64748b;
+            --slate-600: #475569;
+            --slate-700: #334155;
+            --slate-800: #1e293b;
+            --slate-900: #0f172a;
+            
+            --indigo-50: #f5f3ff;
+            --indigo-100: #e0e7ff;
+            --indigo-600: #4f46e5;
+            --indigo-700: #4338ca;
+            
+            --emerald-50: #ecfdf5;
+            --emerald-100: #d1fae5;
+            --emerald-200: #a7f3d0;
+            --emerald-700: #047857;
+            --emerald-800: #065f46;
+            --emerald-900: #064e3b;
+
+            --amber-50: #fffbeb;
+            --amber-100: #fef3c7;
+            --amber-200: #fde68a;
+            --amber-700: #b45309;
+            --amber-800: #92400e;
+            --amber-900: #78350f;
+
+            --purple-50: #f5f3ff;
+            --purple-100: #ede9fe;
+            --purple-200: #ddd6fe;
+            --purple-700: #6d28d9;
+            --purple-800: #5b21b6;
+            --purple-900: #4c1d95;
+
+            --rose-50: #fff1f2;
+            --rose-100: #ffe4e6;
+            --rose-200: #fecdd3;
+            --rose-700: #be123c;
+            --rose-800: #9f1239;
+            --rose-900: #881337;
+        }
+
+        /* Using clean and robust local system fonts */
         body {
-            font-family: 'Fira Sans', sans-serif;
+            background-color: var(--slate-50);
+            color: var(--slate-800);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         
         .accent-title {
-            font-family: 'Playfair Display', serif;
+            font-family: "Times New Roman", Georgia, serif;
+            letter-spacing: -0.5px;
         }
 
-        /* Slide transition animations */
-        .slide-transition {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        /* Main structure layout styles */
+        .workspace {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            padding: 16px;
+            max-width: 1024px; /* max-w-5xl equivalent */
+            width: 100%;
+            margin: 16px auto;
         }
 
-        /* Custom scrollbar for horizontal tabs on mobile devices */
-        #tabs-navigation::-webkit-scrollbar {
+        @media (min-width: 768px) {
+            .workspace {
+                padding: 24px;
+            }
+        }
+
+        /* Horizontal Top Navigation styling */
+        .navigation-tabs {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            border-bottom: 1px solid var(--slate-200);
+            overflow-x: auto;
+            white-space: nowrap;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            padding: 0 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .navigation-tabs::-webkit-scrollbar {
             height: 4px;
         }
-        #tabs-navigation::-webkit-scrollbar-track {
-            background: #f1f5f9;
+        .navigation-tabs::-webkit-scrollbar-track {
+            background: var(--slate-100);
         }
-        #tabs-navigation::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
+        .navigation-tabs::-webkit-scrollbar-thumb {
+            background: var(--slate-300);
             border-radius: 2px;
         }
 
+        .tab-button {
+            flex: 1;
+            min-width: 110px;
+            padding: 14px 12px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 700;
+            border: none;
+            background: transparent;
+            border-bottom: 2px solid transparent;
+            color: var(--slate-500);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tab-button:hover {
+            color: var(--slate-800);
+            background-color: rgba(241, 245, 249, 0.6);
+        }
+
+        .tab-button.active {
+            border-bottom: 2px solid var(--indigo-600);
+            color: var(--indigo-600);
+            background-color: rgba(245, 243, 255, 0.5);
+        }
+
+        /* Presentation Frame / Viewport with Max Height 850px and Scrollbar support */
+        .presentation-frame {
+            background-color: #ffffff;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            position: relative;
+            max-height: 850px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
         /* Custom scrollbar for slide container when content overflows 850px */
-        #slide-container::-webkit-scrollbar {
+        .slide-container {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow-y: auto;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @media (min-width: 768px) {
+            .slide-container {
+                padding: 32px;
+            }
+        }
+
+        .slide-container::-webkit-scrollbar {
             width: 6px;
         }
-        #slide-container::-webkit-scrollbar-track {
+        .slide-container::-webkit-scrollbar-track {
             background: transparent;
         }
-        #slide-container::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
+        .slide-container::-webkit-scrollbar-thumb {
+            background: var(--slate-300);
             border-radius: 3px;
         }
-        #slide-container::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
+        .slide-container::-webkit-scrollbar-thumb:hover {
+            background: var(--slate-400);
+        }
+
+        /* Presentation Live Navigation Footer */
+        .navigation-footer {
+            background-color: var(--slate-50);
+            border-top: 1px solid var(--slate-100);
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .nav-arrow {
+            padding: 8px;
+            background-color: #ffffff;
+            border: 1px solid var(--slate-200);
+            border-radius: 8px;
+            color: var(--slate-600);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-arrow:hover:not(:disabled) {
+            background-color: var(--slate-100);
+            color: var(--slate-800);
+        }
+
+        .nav-arrow:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .nav-dots-container {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .dot-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: none;
+            background-color: var(--slate-200);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot-indicator:hover {
+            background-color: var(--slate-300);
+        }
+
+        .dot-indicator.active {
+            background-color: var(--indigo-600);
+            width: 20px;
+            border-radius: 5px;
+        }
+
+        /* Generic dynamic utility classes replacement */
+        .text-center { text-align: center; }
+        .mb-2 { margin-bottom: 8px; }
+        .mb-4 { margin-bottom: 16px; }
+        .mb-6 { margin-bottom: 24px; }
+        .inline-block { display: inline-block; }
+
+        /* Responsive Grid layouts */
+        .grid-intro-diagram {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin: 16px auto;
+            width: 100%;
+        }
+
+        @media (min-width: 640px) {
+            .grid-intro-diagram {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .grid-intro-diagram {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .grid-conjugations {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin: 12px auto;
+            width: 100%;
+            align-items: stretch;
+        }
+
+        @media (min-width: 768px) {
+            .grid-conjugations {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Styled Card Systems with custom-built light thematic borders and backgrounds */
+        .time-box {
+            border-width: 1px;
+            border-style: solid;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .time-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Integrated subframes for unified suffix + description boxes */
+        .sub-frame {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            padding: 14px;
+            text-align: center;
+            border: 1px solid rgba(226, 232, 240, 0.5);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 110px;
+            gap: 10px;
+        }
+
+        .sub-frame-divider {
+            width: 32px;
+            height: 1px;
+            background-color: rgba(226, 232, 240, 0.85);
+            margin: 0 auto;
+        }
+
+        /* Explicit Light Theme styling variants */
+        .color-emerald-theme { border-color: var(--emerald-200); background-color: rgba(236, 253, 245, 0.5); color: var(--emerald-900); }
+        .color-amber-theme { border-color: var(--amber-200); background-color: rgba(255, 251, 235, 0.5); color: var(--amber-900); }
+        .color-purple-theme { border-color: var(--purple-200); background-color: rgba(245, 243, 255, 0.5); color: var(--purple-900); }
+        .color-rose-theme { border-color: var(--rose-200); background-color: rgba(255, 241, 242, 0.5); color: var(--rose-900); }
+
+        .badge-emerald-theme { background-color: var(--emerald-100); border: 1px solid var(--emerald-200); color: var(--emerald-800); }
+        .badge-amber-theme { background-color: var(--amber-100); border: 1px solid var(--amber-200); color: var(--amber-800); }
+        .badge-purple-theme { background-color: var(--purple-100); border: 1px solid var(--purple-200); color: var(--purple-800); }
+        .badge-rose-theme { background-color: var(--rose-100); border: 1px solid var(--rose-200); color: var(--rose-800); }
+
+        /* General presentation components */
+        .intro-slide-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--slate-800);
+            border-bottom: 2px solid var(--indigo-100);
+            padding-bottom: 12px;
+            margin-bottom: 8px;
+        }
+        @media (min-width: 768px) {
+            .intro-slide-title { font-size: 30px; }
+        }
+
+        .slide-main-title {
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--slate-800);
+            padding-bottom: 6px;
+        }
+        @media (min-width: 768px) {
+            .slide-main-title { font-size: 24px; }
+        }
+
+        /* Footer Slide Rules checklist */
+        .footer-checklist-container {
+            margin-top: 16px;
+            background-color: var(--slate-50);
+            border: 1px solid rgba(226, 232, 240, 0.6);
+            border-radius: 12px;
+            padding: 16px;
+            width: 100%;
+            max-width: 1024px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .checklist-title {
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--indigo-600);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        @media (min-width: 768px) {
+            .checklist-title { font-size: 14px; }
+        }
+
+        .checklist-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            list-style-type: none;
+        }
+        @media (min-width: 768px) {
+            .checklist-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            background-color: #ffffff;
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px solid rgba(226, 232, 240, 0.55);
+            font-size: 12px;
+            color: var(--slate-600);
+        }
+
+        .checklist-bullet {
+            color: var(--indigo-600);
+            font-weight: 700;
+        }
+
+        /* Compact columns (Mute cards) layout */
+        .mute-card {
+            background-color: rgba(248, 250, 252, 0.55);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: border-color 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mute-card:hover {
+            border-color: var(--slate-300);
+        }
+
+        .mute-card-decorative-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background-color: var(--slate-200);
+            transition: background-color 0.3s;
+        }
+
+        .mute-card:hover .mute-card-decorative-bar {
+            background-color: var(--indigo-600);
+        }
+
+        .mute-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            border-bottom: 1px solid var(--slate-200);
+            padding-bottom: 8px;
+        }
+
+        .mute-card-title {
+            font-size: 16px;
+            font-weight: 900;
+            color: var(--slate-800);
+        }
+        @media (min-width: 768px) {
+            .mute-card-title { font-size: 18px; }
+        }
+
+        /* Highly increased font sizes for grammar characters and example states */
+        .character-badge {
+            font-family: monospace;
+            font-weight: 900;
+            font-size: 14px;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            border-width: 1px;
+            border-style: solid;
+        }
+        @media (min-width: 768px) {
+            .character-badge { font-size: 16px; }
+        }
+
+        .formation-label {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--slate-400);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .formation-text {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--slate-600);
+            line-height: 1.5;
+        }
+        @media (min-width: 768px) {
+            .formation-text { font-size: 14px; }
+        }
+
+        .examples-label {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--slate-400);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .examples-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .example-pill {
+            background-color: #ffffff;
+            border: 1px solid var(--slate-200);
+            border-radius: 8px;
+            padding: 8px;
+            font-family: monospace;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+        @media (min-width: 768px) {
+            .example-pill { font-size: 14px; }
+        }
+
+        .example-base {
+            color: var(--slate-500);
+        }
+
+        .example-arrow {
+            width: 14px;
+            height: 14px;
+            color: var(--slate-400);
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .example-step {
+            color: var(--amber-700);
+            font-size: 10px;
+            font-weight: 700;
+        }
+        @media (min-width: 768px) {
+            .example-step { font-size: 12px; }
+        }
+
+        .example-result {
+            color: var(--slate-900);
+            font-weight: 700;
+            text-decoration: underline;
+            text-decoration-color: #818cf8;
+            text-decoration-thickness: 2px;
+        }
+
+        /* Grammar warning details & helper cards */
+        .grammar-attentions-box {
+            margin-top: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .note-block {
+            background-color: rgba(241, 245, 249, 0.8);
+            border-left: 2px solid var(--slate-400);
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: var(--slate-600);
+            line-height: 1.4;
+        }
+
+        .warning-block {
+            background-color: var(--amber-50);
+            border-left: 2px solid #fbbf24;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: var(--slate-700);
+            line-height: 1.4;
+        }
+        @media (min-width: 768px) {
+            .warning-block { font-size: 14px; }
+        }
+
+        .warning-tag {
+            color: var(--amber-700);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        /* Footer Slide Rules Rules panel (Perfect / Aorist notes) */
+        .bottom-notes-bar {
+            margin-top: 16px;
+            background-color: var(--slate-50);
+            border: 1px solid var(--slate-200);
+            border-radius: 8px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            max-width: 1024px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        @media (min-width: 768px) {
+            .bottom-notes-bar {
+                flex-direction: row;
+                align-items: center;
+                gap: 16px;
+                font-size: 14px;
+            }
+        }
+
+        .bottom-note-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background-color: #ffffff;
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--slate-200);
+            font-size: 12px;
+            color: var(--slate-600);
+            font-weight: 600;
+        }
+        @media (min-width: 768px) {
+            .bottom-note-badge { font-size: 14px; }
+        }
+
+        .info-icon {
+            width: 16px;
+            height: 16px;
+            color: var(--slate-500);
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-indigo-100 selection:text-indigo-900">
+<body>
 
-    <!-- Main Workspace (Direct start without header) -->
-    <main class="flex-1 flex flex-col gap-6 p-4 md:p-6 max-w-5xl mx-auto w-full mt-4">
+    <!-- Main Workspace -->
+    <main class="workspace">
         
-        <!-- Top Horizontal Navigation Tabs (Clean design, no slide numbers) -->
-        <nav id="tabs-navigation" class="w-full flex flex-row border-b border-slate-200 overflow-x-auto shrink-0 whitespace-nowrap bg-white/80 backdrop-blur rounded-t-xl px-2 shadow-sm">
-            <!-- Slide 1 Tab Button -->
-            <button onclick="goToSlide(1)" id="thumb-1" class="flex-1 min-w-[120px] py-3.5 px-3 text-center text-xs font-bold border-b-2 border-indigo-600 text-indigo-600 bg-indigo-50/50 transition-all rounded-t-lg">
-                Οδηγίες & Δομή
-            </button>
-            <!-- Slide 2 Tab Button -->
-            <button onclick="goToSlide(2)" id="thumb-2" class="flex-1 min-w-[100px] py-3.5 px-3 text-center text-xs font-medium border-b border-transparent text-slate-500 hover:text-slate-800 hover:bg-slate-100/60 transition-all rounded-t-lg">
-                Ενεστώτας
-            </button>
-            <!-- Slide 3 Tab Button -->
-            <button onclick="goToSlide(3)" id="thumb-3" class="flex-1 min-w-[100px] py-3.5 px-3 text-center text-xs font-medium border-b border-transparent text-slate-500 hover:text-slate-800 hover:bg-slate-100/60 transition-all rounded-t-lg">
-                Μέλλοντας
-            </button>
-            <!-- Slide 4 Tab Button -->
-            <button onclick="goToSlide(4)" id="thumb-4" class="flex-1 min-w-[100px] py-3.5 px-3 text-center text-xs font-medium border-b border-transparent text-slate-500 hover:text-slate-800 hover:bg-slate-100/60 transition-all rounded-t-lg">
-                Αόριστος
-            </button>
-            <!-- Slide 5 Tab Button -->
-            <button onclick="goToSlide(5)" id="thumb-5" class="flex-1 min-w-[110px] py-3.5 px-3 text-center text-xs font-medium border-b border-transparent text-slate-500 hover:text-slate-800 hover:bg-slate-100/60 transition-all rounded-t-lg">
-                Παρακείμενος
-            </button>
+        <!-- Top Horizontal Navigation Tabs (No slide numbers, native layouts) -->
+        <nav id="tabs-navigation" class="navigation-tabs">
+            <!-- Dynamic Tab Buttons populated from JS state -->
         </nav>
 
-        <!-- Slide Presentation / Content Area -->
-        <section class="flex-1 flex flex-col gap-4">
+        <!-- Presentation Slide Content -->
+        <section style="display: flex; flex-direction: column; gap: 16px;">
             
-            <!-- Presentation Frame (Light Theme with Max Height 850px and Scrollbar) -->
-            <div id="presentation-viewport" class="bg-white border border-slate-200/80 rounded-b-2xl rounded-t-none shadow-xl overflow-hidden relative max-h-[850px] flex flex-col justify-between">
+            <!-- Presentation Frame (Light Theme with Max Height 850px) -->
+            <div id="presentation-viewport" class="presentation-frame">
                 
                 <!-- Current Slide Canvas -->
-                <div id="slide-container" class="p-5 md:p-8 flex-1 flex flex-col justify-center slide-transition overflow-y-auto">
-                    <!-- Dynamic content will be injected here -->
+                <div id="slide-container" class="slide-container">
+                    <!-- Dynamic content injected here -->
                 </div>
 
-                <!-- Live Navigation Footer inside presentation frame (No keyboard guide) -->
-                <div id="presentation-nav" class="bg-slate-50 border-t border-slate-100 px-6 py-3.5 flex items-center justify-between gap-4">
-                    <div class="flex items-center gap-2">
-                        <button onclick="prevSlide()" class="p-2 bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 rounded-lg transition disabled:opacity-40 disabled:hover:bg-white" id="btn-prev">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                <!-- Live Navigation Footer inside presentation frame -->
+                <div id="presentation-nav" class="navigation-footer">
+                    <div>
+                        <button onclick="prevSlide()" class="nav-arrow" id="btn-prev" aria-label="Προηγούμενη διαφάνεια">
+                            <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
+                            </svg>
                         </button>
                     </div>
 
                     <!-- Slide Dots Indicator -->
-                    <div class="flex items-center gap-1.5" id="nav-dots">
+                    <div class="nav-dots-container" id="nav-dots">
                         <!-- Dots populated dynamically -->
                     </div>
 
-                    <div class="flex items-center gap-2">
-                        <button onclick="nextSlide()" class="p-2 bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 rounded-lg transition disabled:opacity-40 disabled:hover:bg-white" id="btn-next">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    <div>
+                        <button onclick="nextSlide()" class="nav-arrow" id="btn-next" aria-label="Επόμενη διαφάνεια">
+                            <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
+                            </svg>
                         </button>
                     </div>
                 </div>
@@ -116,7 +719,7 @@
 
     <!-- JS Presenter App State & Dynamic Content -->
     <script>
-        // Data Structure matching presentation_2.pdf text exactly, now structured for a gorgeous Light Theme
+        // Data Structure matching presentation_2.pdf text exactly, tailored for strict native CSS templates
         const slidesData = [
             {
                 id: 1,
@@ -129,29 +732,29 @@
                             title: "Ενεστώτας",
                             desc: "θέμα του Ενεστώτα",
                             suffix: "με την κατάληξη -εσθαι",
-                            color: "border-emerald-200 bg-emerald-50/50 text-emerald-900",
-                            badge: "bg-emerald-100 text-emerald-800 border border-emerald-200"
+                            color: "color-emerald-theme",
+                            badge: "badge-emerald-theme"
                         },
                         {
                             title: "Μέλλοντας",
                             desc: "θέμα του Μέλλοντα",
                             suffix: "Με την κατάληξη -εσθαι",
-                            color: "border-amber-200 bg-amber-50/50 text-amber-900",
-                            badge: "bg-amber-100 text-amber-800 border border-amber-200"
+                            color: "color-amber-theme",
+                            badge: "badge-amber-theme"
                         },
                         {
                             title: "Αόριστος",
                             desc: "θέμα του αορίστου",
                             suffix: "με την κατάληξη -άσθαι",
-                            color: "border-purple-200 bg-purple-50/50 text-purple-900",
-                            badge: "bg-purple-100 text-purple-800 border border-purple-200"
+                            color: "color-purple-theme",
+                            badge: "badge-purple-theme"
                         },
                         {
                             title: "Παρακείμενος",
                             desc: "Θέμα του Παρακειμένου",
                             suffix: "με τις καταλήξεις -φθαι / -χθαι / -σθαι",
-                            color: "border-rose-200 bg-rose-50/50 text-rose-900",
-                            badge: "bg-rose-100 text-rose-800 border border-rose-200"
+                            color: "color-rose-theme",
+                            badge: "badge-rose-theme"
                         }
                     ],
                     footerListTitle: "Τι να προσέχεις κάθε φορά:",
@@ -219,7 +822,7 @@
                         formation: "Σχηματισμός με το θέμα του μέλλοντα και την κατάληξη -εσθαι.",
                         examples: [
                             { base: "τρέπομαι", step: "τρέψομαι", result: "τρέψεσθαι" },
-                            { base: "τρίβομαι", step: "τρίψομαι", result: "tρίψεσθαι" },
+                            { base: "τρίβομαι", step: "tρίψομαι", result: "tρίψεσθαι" },
                             { base: "γράφομαι", step: "γράψομαι", result: "γράψεσθαι" }
                         ],
                         note: "Ο χειλικός χαρακτήρας (π, β, φ) ενώνεται με το χρονικό χαρακτήρα σ σε ψ."
@@ -331,43 +934,66 @@
 
         let currentSlideIndex = 1;
 
-        // Dynamic rendering of slides matching visual PDF cues
+        // Populate Static Tabs inside modern top layout
+        function buildTabsHeader() {
+            const tabsNav = document.getElementById('tabs-navigation');
+            const tabTitles = [
+                "Οδηγίες & Δομή",
+                "Ενεστώτας",
+                "Μέλλοντας",
+                "Αόριστος",
+                "Παρακείμενος"
+            ];
+
+            tabsNav.innerHTML = tabTitles.map((title, i) => {
+                const index = i + 1;
+                return `
+                    <button onclick="goToSlide(${index})" id="thumb-${index}" class="tab-button ${index === currentSlideIndex ? 'active' : ''}">
+                        ${title}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        // Dynamic rendering of slides matching visual PDF cues without external dependencies
         function renderSlideHTML(slide) {
             if (slide.isIntro) {
                 return `
-                    <div class="flex-1 flex flex-col justify-between">
-                        <div class="text-center mb-6">
-                            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800 accent-title border-b-2 border-indigo-100 pb-3 inline-block mb-2">${slide.title}</h2>
+                    <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div class="text-center" style="margin-bottom: 24px;">
+                            <h2 class="intro-slide-title accent-title">${slide.title}</h2>
                         </div>
 
                         <!-- 4 Time Boxes (Optimized Widths, combined description + suffix blocks) -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 my-4 max-w-5xl mx-auto w-full">
+                        <div class="grid-intro-diagram">
                             ${slide.content.diagram.map((box, i) => `
-                                <div class="border rounded-xl p-5 flex flex-col justify-between transition duration-200 hover:shadow-md ${box.color}">
-                                    <div class="text-center">
-                                        <h3 class="text-lg md:text-xl font-black mb-3 border-b border-current/20 pb-2">${box.title}</h3>
+                                <div class="time-box ${box.color}">
+                                    <div class="text-center" style="margin-bottom: 12px;">
+                                        <h3 style="font-size: 18px; font-weight: 900; margin-bottom: 8px; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 8px;">${box.title}</h3>
                                     </div>
                                     
                                     <!-- Unified frame containing both details inside each box -->
-                                    <div class="bg-white/90 rounded-lg p-3.5 text-center border border-slate-200/50 shadow-sm flex flex-col justify-center min-h-[110px] gap-2.5">
-                                        <p class="text-xs md:text-sm text-slate-700 font-semibold leading-relaxed">${box.desc}</p>
-                                        <div class="w-8 h-[1px] bg-slate-200/85 mx-auto"></div>
-                                        <p class="text-xs md:text-sm text-slate-900 font-black">${box.suffix}</p>
+                                    <div class="sub-frame">
+                                        <p style="font-size: 13px; color: var(--slate-700); font-weight: 600; line-height: 1.4;">${box.desc}</p>
+                                        <div class="sub-frame-divider"></div>
+                                        <p style="font-size: 13px; color: var(--slate-900); font-weight: 900;">${box.suffix}</p>
                                     </div>
                                 </div>
                             `).join('')}
                         </div>
 
                         <!-- Slide Footnote Instructions Checklist -->
-                        <div class="mt-4 bg-slate-50 border border-slate-200/60 rounded-xl p-4 max-w-5xl mx-auto w-full">
-                            <h4 class="font-bold text-xs md:text-sm text-indigo-700 mb-2 flex items-center gap-2">
-                                <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <div class="footer-checklist-container">
+                            <h4 class="checklist-title">
+                                <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
                                 ${slide.content.footerListTitle}
                             </h4>
-                            <ul class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-600">
+                            <ul class="checklist-grid">
                                 ${slide.content.footerItems.map(item => `
-                                    <li class="flex items-start gap-1.5 bg-white p-2 rounded-lg border border-slate-200/55">
-                                        <span class="text-indigo-600 font-bold">•</span>
+                                    <li class="checklist-item">
+                                        <span class="checklist-bullet">•</span>
                                         <span>${item}</span>
                                     </li>
                                 `).join('')}
@@ -377,62 +1003,71 @@
                 `;
             } else {
                 // Determine theme classes based on colorTheme
-                let badgeClass = "bg-slate-100 border-slate-200 text-slate-600";
-                let topHeadingClass = "text-indigo-600 border-indigo-200";
+                let badgeClass = "badge-slate-theme";
+                let topHeadingClass = "border-indigo-500";
                 
                 if (slide.colorTheme === 'emerald') {
-                    badgeClass = "bg-emerald-50 border-emerald-200 text-emerald-700";
-                    topHeadingClass = "text-emerald-700 border-emerald-200";
+                    badgeClass = "badge-emerald-theme";
+                    topHeadingClass = "border-emerald-200";
                 } else if (slide.colorTheme === 'amber') {
-                    badgeClass = "bg-amber-50 border-amber-200 text-amber-700";
-                    topHeadingClass = "text-amber-700 border-amber-200";
+                    badgeClass = "badge-amber-theme";
+                    topHeadingClass = "border-amber-200";
                 } else if (slide.colorTheme === 'purple') {
-                    badgeClass = "bg-purple-50 border-purple-200 text-purple-700";
-                    topHeadingClass = "text-purple-700 border-purple-200";
+                    badgeClass = "badge-purple-theme";
+                    topHeadingClass = "border-purple-200";
                 } else if (slide.colorTheme === 'rose') {
-                    badgeClass = "bg-rose-50 border-rose-200 text-rose-700";
-                    topHeadingClass = "text-rose-700 border-rose-200";
+                    badgeClass = "badge-rose-theme";
+                    topHeadingClass = "border-rose-200";
                 }
 
                 return `
-                    <div class="flex-1 flex flex-col justify-between">
+                    <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
                         
                         <!-- Slide Title -->
-                        <div class="text-center mb-4">
-                            <h2 class="text-lg md:text-2xl font-black text-slate-800 leading-snug inline-block border-b-2 ${topHeadingClass} pb-1.5">${slide.title}</h2>
+                        <div class="text-center" style="margin-bottom: 16px;">
+                            <h2 class="slide-main-title" style="display: inline-block; border-bottom: 2px solid; border-color: inherit; padding-bottom: 6px;">
+                                ${slide.title}
+                            </h2>
                         </div>
 
                         <!-- 3 Column Conjugations (Mute Types) - Compact width constraint with enlarged texts -->
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-3 max-w-5xl mx-auto w-full items-stretch">
+                        <div class="grid-conjugations">
                             ${slide.sections.map(section => `
-                                <div class="bg-slate-50/55 border border-slate-200/80 rounded-xl p-4 flex flex-col justify-between transition hover:border-slate-300 shadow-sm relative overflow-hidden group">
+                                <div class="mute-card">
                                     
                                     <!-- Simple clean top colored bar -->
-                                    <div class="absolute top-0 left-0 right-0 h-[3px] bg-slate-200 group-hover:bg-indigo-500 transition-all duration-300"></div>
+                                    <div class="mute-card-decorative-bar"></div>
                                     
                                     <div>
-                                        <div class="flex items-center justify-between mb-3 border-b border-slate-200 pb-2">
-                                            <h3 class="text-base md:text-lg font-black text-slate-800">${section.type}</h3>
-                                            <!-- Character badges (e.g. π, β, φ) scaled up to text-sm/text-base -->
-                                            <span class="text-sm md:text-base font-mono font-black px-3 py-1 rounded-full border ${badgeClass}">${section.chars}</span>
+                                        <div class="mute-card-header">
+                                            <h3 class="mute-card-title">${section.type}</h3>
+                                            <!-- Character badges scaled up to text-sm/text-base -->
+                                            <span class="character-badge ${badgeClass}">${section.chars}</span>
                                         </div>
 
                                         <!-- Formation Block -->
-                                        <div class="mb-3">
-                                            <span class="text-[10px] font-bold text-slate-400 tracking-wider uppercase block mb-0.5">Σχηματισμός</span>
-                                            <p class="text-xs md:text-sm text-slate-600 leading-relaxed font-medium">${section.formation}</p>
+                                        <div style="margin-bottom: 12px;">
+                                            <span class="formation-label">Σχηματισμός</span>
+                                            <p class="formation-text">${section.formation}</p>
                                         </div>
 
                                         <!-- Examples Block -->
-                                        <div class="mb-3">
-                                            <span class="text-[10px] font-bold text-slate-400 tracking-wider uppercase block mb-1.5">Παραδείγματα</span>
-                                            <div class="space-y-1.5">
+                                        <div style="margin-bottom: 12px;">
+                                            <span class="examples-label">Παραδείγματα</span>
+                                            <div class="examples-list">
                                                 ${section.examples.map(ex => `
-                                                    <div class="bg-white border border-slate-200 rounded-lg p-2 font-mono text-xs md:text-sm flex items-center justify-between gap-1 shadow-sm">
-                                                        <span class="text-slate-500">${ex.base}</span>
-                                                        <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                                                        ${ex.step ? `<span class="text-amber-600 text-[10px] md:text-xs font-bold">${ex.step}</span> <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>` : ''}
-                                                        <span class="text-slate-900 font-bold underline decoration-indigo-400 decoration-2">${ex.result}</span>
+                                                    <div class="example-pill">
+                                                        <span class="example-base">${ex.base}</span>
+                                                        <svg class="example-arrow" viewBox="0 0 24 24">
+                                                            <path d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                                        </svg>
+                                                        ${ex.step ? `
+                                                            <span class="example-step">${ex.step}</span> 
+                                                            <svg class="example-arrow" viewBox="0 0 24 24">
+                                                                <path d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                                            </svg>
+                                                        ` : ''}
+                                                        <span class="example-result">${ex.result}</span>
                                                     </div>
                                                 `).join('')}
                                             </div>
@@ -440,17 +1075,17 @@
                                     </div>
 
                                     <!-- Notes/Attentions inside the column (Tighter & Compact) -->
-                                    <div class="mt-2 space-y-1.5">
+                                    <div class="grammar-attentions-box">
                                         ${section.note ? `
-                                            <div class="bg-slate-100/80 border-l-2 border-slate-400 p-2 rounded text-xs text-slate-600 leading-normal">
-                                                <strong class="text-slate-700 text-[10px] uppercase block tracking-wider mb-0.5">Σημείωση</strong>
+                                            <div class="note-block">
+                                                <strong style="color: var(--slate-700); font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 2px;">Σημείωση</strong>
                                                 ${section.note}
                                             </div>
                                         ` : ''}
 
                                         ${section.warning ? `
-                                            <div class="bg-amber-50 border-l-2 border-amber-400 p-2.5 rounded text-xs md:text-sm text-slate-700 leading-normal">
-                                                <strong class="text-amber-700 text-[10px] uppercase block tracking-wider mb-0.5">Προσοχή</strong>
+                                            <div class="warning-block">
+                                                <strong class="warning-tag">Προσοχή</strong>
                                                 ${section.warning}
                                             </div>
                                         ` : ''}
@@ -462,10 +1097,12 @@
 
                         <!-- Footer slide rules (Aorist / Perfect extra rules) -->
                         ${slide.footerNotes ? `
-                            <div class="mt-4 bg-slate-50 border border-slate-200 rounded-lg p-2.5 flex flex-col md:flex-row md:items-center justify-center gap-2 md:gap-4 text-xs md:text-sm text-slate-600 font-semibold max-w-5xl mx-auto w-full shadow-sm">
+                            <div class="bottom-notes-bar">
                                 ${slide.footerNotes.map(note => `
-                                    <div class="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-md border border-slate-200 shadow-xs">
-                                        <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <div class="bottom-note-badge">
+                                        <svg class="info-icon" viewBox="0 0 24 24">
+                                            <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
                                         <span>${note}</span>
                                     </div>
                                 `).join('')}
@@ -498,14 +1135,14 @@
 
         // Update states for tabs, buttons, and visual pagination dots
         function updateControls() {
-            // Update Horizontal Tab Buttons
+            // Update Horizontal Tab Buttons active states
             for (let i = 1; i <= 5; i++) {
                 const thumb = document.getElementById(`thumb-${i}`);
                 if (thumb) {
                     if (i === currentSlideIndex) {
-                        thumb.className = "flex-1 min-w-[100px] py-3.5 px-3 text-center text-xs font-bold border-b-2 border-indigo-600 text-indigo-600 bg-indigo-50/40 transition-all rounded-t-lg";
+                        thumb.classList.add('active');
                     } else {
-                        thumb.className = "flex-1 min-w-[100px] py-3.5 px-3 text-center text-xs font-medium border-b border-transparent text-slate-500 hover:text-slate-800 hover:bg-slate-100/60 transition-all rounded-t-lg";
+                        thumb.classList.remove('active');
                     }
                 }
             }
@@ -521,7 +1158,7 @@
             if (dotsContainer) {
                 dotsContainer.innerHTML = slidesData.map(slide => `
                     <button onclick="goToSlide(${slide.id})" 
-                            class="w-2.5 h-2.5 rounded-full transition-all duration-300 ${slide.id === currentSlideIndex ? 'bg-indigo-600 w-5' : 'bg-slate-200 hover:bg-slate-300'}"
+                            class="dot-indicator ${slide.id === currentSlideIndex ? 'active' : ''}"
                             title="Διαφάνεια ${slide.id}">
                     </button>
                 `).join('');
@@ -561,6 +1198,7 @@
 
         // Initialize App on load
         window.onload = function() {
+            buildTabsHeader();
             renderActiveSlide();
         };
     </script>
