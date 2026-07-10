@@ -33,6 +33,21 @@
             background: #cbd5e1;
             border-radius: 2px;
         }
+
+        /* Custom scrollbar for slide container when content overflows 700px */
+        #slide-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        #slide-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        #slide-container::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        #slide-container::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-indigo-100 selection:text-indigo-900">
@@ -67,18 +82,11 @@
         <!-- Slide Presentation / Content Area -->
         <section class="flex-1 flex flex-col gap-4">
             
-            <!-- Presentation Frame (Light Theme) -->
-            <div id="presentation-viewport" class="bg-white border border-slate-200/80 rounded-b-2xl rounded-t-none shadow-xl overflow-hidden relative min-h-[560px] flex flex-col justify-between">
+            <!-- Presentation Frame (Light Theme with Max Height and Scrollbar) -->
+            <div id="presentation-viewport" class="bg-white border border-slate-200/80 rounded-b-2xl rounded-t-none shadow-xl overflow-hidden relative max-h-[700px] flex flex-col justify-between">
                 
-                <!-- Fullscreen Toggle Button overlay -->
-                <button onclick="toggleFullscreen()" class="absolute top-4 right-4 z-20 p-2 bg-white/95 hover:bg-slate-50 border border-slate-200 text-slate-500 rounded-lg shadow-sm transition" title="Προβολή Πλήρους Οθόνης">
-                    <svg id="fullscreen-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>
-                    </svg>
-                </button>
-
                 <!-- Current Slide Canvas -->
-                <div id="slide-container" class="p-5 md:p-8 flex-1 flex flex-col justify-center slide-transition">
+                <div id="slide-container" class="p-5 md:p-8 flex-1 flex flex-col justify-center slide-transition overflow-y-auto">
                     <!-- Dynamic content will be injected here -->
                 </div>
 
@@ -324,7 +332,7 @@
         let currentSlideIndex = 1;
 
         // Dynamic rendering of slides matching visual PDF cues
-    function renderSlideHTML(slide) {
+        function renderSlideHTML(slide) {
         if (slide.isIntro) {
             return `
                 <div class="flex-1 flex flex-col justify-between">
@@ -537,22 +545,6 @@
             if (num >= 1 && num <= slidesData.length) {
                 currentSlideIndex = num;
                 renderActiveSlide();
-            }
-        }
-
-        // Toggle Fullscreen Mode
-        function toggleFullscreen() {
-            const viewport = document.getElementById('presentation-viewport');
-            const icon = document.getElementById('fullscreen-icon');
-            
-            if (!document.fullscreenElement) {
-                viewport.requestFullscreen().catch(err => {
-                    console.log("Error going fullscreen: ", err);
-                });
-                icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>`; // Change to Close icon
-            } else {
-                document.exitFullscreen();
-                icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>`;
             }
         }
 
