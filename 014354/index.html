@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Απαρέμφατα Μέσης Φωνής Αφωνόληκτων Ρημάτων</title>
+    <!-- Tailwind CSS for high quality design -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght=0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght=0,600;0,700;1,600&display=swap');
+        
+        body {
+            font-family: 'Fira Sans', sans-serif;
+        }
+        
+        .accent-title {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Slide transition animations */
+        .slide-transition {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Custom scrollbar for horizontal tabs on mobile devices */
+        #tabs-navigation::-webkit-scrollbar {
+            height: 4px;
+        }
+        #tabs-navigation::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        #tabs-navigation::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-indigo-100 selection:text-indigo-900">
+
+    <!-- Main Workspace (Direct start without header) -->
+    <main class="flex-1 flex flex-col gap-6 p-4 md:p-6 max-w-5xl mx-auto w-full mt-4">
+        
+        <!-- Top Horizontal Navigation Tabs (Clean design, no slide numbers) -->
+        <nav id="tabs-navigation" class="w-full flex flex-row border-b border-slate-200 overflow-x-auto shrink-0 whitespace-nowrap bg-white/80 backdrop-blur rounded-t-xl px-2 shadow-sm">
+            <!-- Slide 1 Tab Button -->
+            <button onclick="goToSlide(1)" id="thumb-1" class="flex-1 min-w-[120px] py-3.5 px-3 text-center text-xs font-bold border-b-2 border-indigo-600 text-indigo-600 bg-indigo-50/50 transition-all rounded-t-lg">
+                Οδηγίες & Δομή
+            </button>
+            <!-- Slide 2 Tab Button -->
+            <button onclick="goToSlide(2)" id="thumb-2" class="flex-1 min-w-[100px] py-3.5 px-3 text-center text-xs font-medium border-b border-transparent text-slate-500 hover:text-slate-800 hover:bg-slate-100/60 transition-all rounded-t-lg">
+                Ενεστώτας
+            </button>
+            <!-- Slide 3 Tab Button -->
+            <button onclick="goToSlide(3)" id="thumb-3" class="flex-1 min-w-[100px] py-3.5 px-3 text-center text-xs font-medium border-b border-transparent text-slate-500 hover:text-slate-800 hover:bg-slate-100/60 transition-all rounded-t-lg">
+                Μέλλοντας
+            </button>
+            <!-- Slide 4 Tab Button -->
+            <button onclick="goToSlide(4)" id="thumb-4" class="flex-1 min-w-[100px] py-3.5 px-3 text-center text-xs font-medium border-b border-transparent text-slate-500 hover:text-slate-800 hover:bg-slate-100/60 transition-all rounded-t-lg">
+                Αόριστος
+            </button>
+            <!-- Slide 5 Tab Button -->
+            <button onclick="goToSlide(5)" id="thumb-5" class="flex-1 min-w-[110px] py-3.5 px-3 text-center text-xs font-medium border-b border-transparent text-slate-500 hover:text-slate-800 hover:bg-slate-100/60 transition-all rounded-t-lg">
+                Παρακείμενος
+            </button>
+        </nav>
+
+        <!-- Slide Presentation / Content Area -->
+        <section class="flex-1 flex flex-col gap-4">
+            
+            <!-- Presentation Frame (Light Theme) -->
+            <div id="presentation-viewport" class="bg-white border border-slate-200/80 rounded-b-2xl rounded-t-none shadow-xl overflow-hidden relative min-h-[560px] flex flex-col justify-between">
+                
+                <!-- Fullscreen Toggle Button overlay -->
+                <button onclick="toggleFullscreen()" class="absolute top-4 right-4 z-20 p-2 bg-white/95 hover:bg-slate-50 border border-slate-200 text-slate-500 rounded-lg shadow-sm transition" title="Προβολή Πλήρους Οθόνης">
+                    <svg id="fullscreen-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>
+                    </svg>
+                </button>
+
+                <!-- Current Slide Canvas -->
+                <div id="slide-container" class="p-5 md:p-8 flex-1 flex flex-col justify-center slide-transition">
+                    <!-- Dynamic content will be injected here -->
+                </div>
+
+                <!-- Live Navigation Footer inside presentation frame (No keyboard guide) -->
+                <div id="presentation-nav" class="bg-slate-50 border-t border-slate-100 px-6 py-3.5 flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-2">
+                        <button onclick="prevSlide()" class="p-2 bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 rounded-lg transition disabled:opacity-40 disabled:hover:bg-white" id="btn-prev">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        </button>
+                    </div>
+
+                    <!-- Slide Dots Indicator -->
+                    <div class="flex items-center gap-1.5" id="nav-dots">
+                        <!-- Dots populated dynamically -->
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <button onclick="nextSlide()" class="p-2 bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 rounded-lg transition disabled:opacity-40 disabled:hover:bg-white" id="btn-next">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- JS Presenter App State & Dynamic Content -->
+    <script>
+        // Data Structure matching presentation.pdf text exactly, now structured for a gorgeous Light Theme
+        const slidesData = [
+            {
+                id: 1,
+                title: "Απαρέμφατα Μέσης Φωνής Αφωνόληκτων ρημάτων",
+                isIntro: true,
+                content: {
+                    mainHeader: "Οδηγίες",
+                    diagram: [
+                        {
+                            title: "Ενεστώτας",
+                            desc: "θέμα του Ενεστώτα",
+                            suffix: "με την κατάληξη -εσθαι",
+                            color: "border-emerald-200 bg-emerald-50/50 text-emerald-900",
+                            badge: "bg-emerald-100 text-emerald-800 border border-emerald-200"
+                        },
+                        {
+                            title: "Μέλλοντας",
+                            desc: "θέμα του Μέλλοντα",
+                            suffix: "Με την κατάληξη -εσθαι",
+                            color: "border-amber-200 bg-amber-50/50 text-amber-900",
+                            badge: "bg-amber-100 text-amber-800 border border-amber-200"
+                        },
+                        {
+                            title: "Αόριστος",
+                            desc: "θέμα του αορίστου",
+                            suffix: "με την κατάληξη -άσθαι",
+                            color: "border-purple-200 bg-purple-50/50 text-purple-900",
+                            badge: "bg-purple-100 text-purple-800 border border-purple-200"
+                        },
+                        {
+                            title: "Παρακείμενος",
+                            desc: "Θέμα του Παρακειμένου",
+                            suffix: "με τις καταλήξεις -φθαι / -χθαι / -σθαι",
+                            color: "border-rose-200 bg-rose-50/50 text-rose-900",
+                            badge: "bg-rose-100 text-rose-800 border border-rose-200"
+                        }
+                    ],
+                    footerListTitle: "Τι να προσέχεις κάθε φορά:",
+                    footerItems: [
+                        "τον χρόνο",
+                        "το θέμα του ρήματος",
+                        "τον χαρακτήρα του ρήματος (χειλικόληκτο, ουρανικόληκτο, οδοντικόληκτο)",
+                        "την κατάληξη του απαρεμφάτου"
+                    ]
+                }
+            },
+            {
+                id: 2,
+                title: "Ενεστώτας Μέσης Φωνής Αφωνόληκτων Ρημάτων",
+                isIntro: false,
+                colorTheme: "emerald",
+                sections: [
+                    {
+                        type: "Χειλικόληκτα",
+                        chars: "π, β, φ",
+                        formation: "Σχηματισμός με το θέμα του ενεστώτα και την κατάληξη -εσθαι.",
+                        examples: [
+                            { base: "γράφομαι", result: "γράφεσθαι" },
+                            { base: "κόπτομαι", result: "κόπτεσθαι" }
+                        ],
+                        note: "Χειλικόληκτα: π, β, φ",
+                        warning: "Κάποια χειλικόληκτα ρήματα παίρνουν στο τέλος του ρηματικού θέματος το πρόσφυμα τ και έτσι, με την τροπή του χαρακτήρα β ή φ σε π, λήγουν σε -πτομαι."
+                    },
+                    {
+                        type: "Ουρανικόληκτα",
+                        chars: "κ, γ, χ",
+                        formation: "Σχηματισμός με το θέμα του ενεστώτα και την κατάληξη -εσθαι.",
+                        examples: [
+                            { base: "δέχομαι", result: "δέχεσθαι" },
+                            { base: "διώκομαι", result: "διώκεσθαι" },
+                            { base: "φυλάττομαι", result: "φυλάττεσθαι" },
+                            { base: "ταράττομαι", result: "ταράττεσθαι" }
+                        ],
+                        note: "Ουρανικόληκτα: κ, γ, χ",
+                        warning: "Κάποια ουρανικόληκτα ρήματα, για να σχηματίσουν το χρονικό θέμα του ενεστώτα μέσης φωνής, παίρνουν στο τέλος του ρηματικού θέματος το πρόσφυμα j και συγχωνεύουν τον ουρανικό χαρακτήρα κ, γ, χ με το j σε ττ ή σσ, έτσι λήγουν σε -ττομαι (π.χ. ταράττομαι, φυλάττομαι, ἀλλάττ-ομαι)."
+                    },
+                    {
+                        type: "Οδοντικόληκτα",
+                        chars: "τ, δ, θ",
+                        formation: "Σχηματισμός με το θέμα του ενεστώτα και την κατάληξη -εσθαι.",
+                        examples: [
+                            { base: "πείθομαι", result: "πείθεσθαι" },
+                            { base: "πλάττομαι", result: "πλάττεσθαι" },
+                            { base: "ψηφίζομαι", result: "ψηφίζεσθαι" }
+                        ],
+                        note: "Οδοντικόληκτα: τ, δ, θ",
+                        warning: "Κάποια οδοντικόληκτα ρήματα, για να σχηματίσουν το χρονικό θέμα του ενεστώτα στη μέση φωνή, παίρνουν στο τέλος του ρηματικού θέματος το πρόσφυμα j και έπειτα όσα έχουν ρηματικό χαρακτήρα θ ή τ τον συγχωνεύουν με το j σε ττ (ή σσ). Όσα έχουν ρηματικό χαρακτήρα δ τον συγχωνεύουν με το j σε ζ."
+                    }
+                ]
+            },
+            {
+                id: 3,
+                title: "Μέλλοντας Μέσης Φωνής Αφωνόληκτων Ρημάτων",
+                isIntro: false,
+                colorTheme: "amber",
+                sections: [
+                    {
+                        type: "Χειλικόληκτα",
+                        chars: "π, β, φ",
+                        formation: "Σχηματισμός με το θέμα του μέλλοντα και την κατάληξη -εσθαι.",
+                        examples: [
+                            { base: "τρέπομαι", step: "τρέψομαι", result: "τρέψεσθαι" },
+                            { base: "τρίβομαι", step: "τρίψομαι", result: "τρίψεσθαι" },
+                            { base: "γράφομαι", step: "γράψομαι", result: "γράψεσθαι" }
+                        ],
+                        note: "Ο χειλικός χαρακτήρας (π, β, φ) ενώνεται με το χρονικό χαρακτήρα σ σε ψ."
+                    },
+                    {
+                        type: "Ουρανικόληκτα",
+                        chars: "κ, γ, χ",
+                        formation: "Σχηματισμός με το θέμα του μέλλοντα και την κατάληξη -εσθαι.",
+                        examples: [
+                            { base: "δέχομαι", step: "δέξομαι", result: "δέξεσθαι" },
+                            { base: "φυλάττομαι", step: "φυλάξομαι", result: "φυλάξεσθαι" }
+                        ],
+                        note: "Ο ουρανικός χαρακτήρας (κ, γ, χ) ενώνεται με το χρονικό χαρακτήρα σ σε ξ."
+                    },
+                    {
+                        type: "Οδοντικόληκτα",
+                        chars: "τ, δ, θ",
+                        formation: "Σχηματισμός με το θέμα του μέλλοντα και την κατάληξη -εσθαι.",
+                        examples: [
+                            { base: "πείθομαι", step: "πείσομαι", result: "πείσεσθαι" },
+                            { base: "ψεύδομαι", step: "ψεύσομαι", result: "ψεύσεσθαι" },
+                            { base: "πλάττομαι", step: "πλάσομαι", result: "πλάσεσθαι" }
+                        ],
+                        note: "Ο οδοντικός χαρακτήρας (τ, δ, θ) εμπρός από το χρονικό χαρακτήρα σ αποβάλλεται."
+                    }
+                ]
+            },
+            {
+                id: 4,
+                title: "Αόριστος Μέσης Φωνής Αφωνόληκτων Ρημάτων",
+                isIntro: false,
+                colorTheme: "purple",
+                footerNotes: [
+                    "Το απαρέμφατο του αορίστου δεν έχει αύξηση."
+                ],
+                sections: [
+                    {
+                        type: "Χειλικόληκτα",
+                        chars: "π, β, φ",
+                        formation: "Σχηματισμός με το θέμα του αορίστου και την κατάληξη -ασθαι.",
+                        examples: [
+                            { base: "γράφομαι", step: "έγραψάμην", result: "γράψασθαι" }
+                        ],
+                        note: "Ο χειλικός χαρακτήρας (π, β, φ) ενώνεται με το χρονικό χαρακτήρα σ σε ψ."
+                    },
+                    {
+                        type: "Ουρανικόληκτα",
+                        chars: "κ, γ, χ",
+                        formation: "Σχηματισμός με το θέμα του αορίστου και την κατάληξη -ασθαι.",
+                        examples: [
+                            { base: "δέχομαι", step: "έδεξάμην", result: "δέξασθαι" },
+                            { base: "φυλάττομαι", step: "έφυλαξάμην", result: "φυλάξασθαι" }
+                        ],
+                        note: "Ο ουρανικός χαρακτήρας (κ, γ. χ) ενώνεται με το χρονικό χαρακτήρα σ σε ξ."
+                    },
+                    {
+                        type: "Οδοντικόληκτα",
+                        chars: "τ, δ, θ",
+                        formation: "Σχηματισμός με το θέμα του αορίστου και την κατάληξη -ασθαι.",
+                        examples: [
+                            { base: "πείθομαι", step: "έπεισάμην", result: "πείσασθαι" },
+                            { base: "ψεύδομαι", step: "έψευσάμην", result: "ψεύσασθαι" },
+                            { base: "πλάττομαι", step: "έπλασάμην", result: "πλάσασθαι" }
+                        ],
+                        note: "Ο οδοντικός χαρακτήρας (τ, δ, θ) εμπρός από το χρονικό χαρακτήρα σ αποβάλλεται."
+                    }
+                ]
+            },
+            {
+                id: 5,
+                title: "Παρακείμενος Μέσης Φωνής Αφωνόληκτων Ρημάτων",
+                isIntro: false,
+                colorTheme: "rose",
+                footerNotes: [
+                    "Το απαρέμφατο του παρακειμένου διατηρεί τον αναδιπλασιασμό.",
+                    "Το απαρέμφατο του παρακειμένου τονίζεται πάντοτε στην παραλήγουσα."
+                ],
+                sections: [
+                    {
+                        type: "Χειλικόληκτα",
+                        chars: "π, β, φ",
+                        formation: "Σχηματισμός με το θέμα του παρακειμένου και -θαι (-φθαι).",
+                        examples: [
+                            { base: "γράφομαι", result: "γεγράφθαι" }
+                        ],
+                        note: "Συχνός τύπος: -φθαι"
+                    },
+                    {
+                        type: "Ουρανικόληκτα",
+                        chars: "κ, γ, χ",
+                        formation: "Σχηματισμός με το θέμα του παρακειμένου και -θαι (-χθαι).",
+                        examples: [
+                            { base: "δέχομαι", result: "δεδέχθαι" }
+                        ],
+                        note: "Συχνός τύπος: -χθαι"
+                    },
+                    {
+                        type: "Οδοντικόληκτα",
+                        chars: "τ, δ, θ",
+                        formation: "Σχηματισμός με το θέμα του παρακειμένου και -θαι (-σθαι).",
+                        examples: [
+                            { base: "πείθομαι", result: "πεπεῖσθαι" }
+                        ],
+                        note: "Συχνός τύπος: -σθαι"
+                    }
+                ]
+            }
+        ];
+
+        let currentSlideIndex = 1;
+
+        // Dynamic rendering of slides matching visual PDF cues
+    function renderSlideHTML(slide) {
+        if (slide.isIntro) {
+            return `
+                <div class="flex-1 flex flex-col justify-between">
+                    <div class="text-center mb-6">
+                        <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800 accent-title border-b-2 border-indigo-100 pb-3 inline-block mb-2">${slide.title}</h2>
+                    </div>
+
+                    <!-- 4 Time Boxes (Optimized Widths) -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 my-4 max-w-5xl mx-auto w-full">
+                            ${slide.content.diagram.map((box, i) => `
+                                <div class="border rounded-xl p-4 flex flex-col justify-between transition duration-200 hover:shadow-md ${box.color}">
+                                    <div>
+                                        <span class="text-[10px] uppercase tracking-wider font-extrabold opacity-60">Χρόνος ${i+1}</span>
+                                        <h3 class="text-lg font-black mt-1 mb-1">${box.title}</h3>
+                                        <p class="text-xs opacity-90 leading-relaxed font-semibold">${box.desc}</p>
+                                    </div>
+                                    <div class="mt-3">
+                                        <span class="text-[11px] font-bold block bg-white/80 rounded-lg py-1 px-1.5 text-center border border-slate-200">${box.suffix}</span>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <!-- Slide Footnote Instructions Checklist -->
+                        <div class="mt-4 bg-slate-50 border border-slate-200/60 rounded-xl p-4 max-w-5xl mx-auto w-full">
+                            <h4 class="font-bold text-xs md:text-sm text-indigo-700 mb-2 flex items-center gap-2">
+                                <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                ${slide.content.footerListTitle}
+                            </h4>
+                            <ul class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-600">
+                                ${slide.content.footerItems.map(item => `
+                                    <li class="flex items-start gap-1.5 bg-white p-2 rounded-lg border border-slate-200/55">
+                                        <span class="text-indigo-600 font-bold">•</span>
+                                        <span>${item}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Determine theme classes based on colorTheme
+                let badgeClass = "bg-slate-100 border-slate-200 text-slate-600";
+                let topHeadingClass = "text-indigo-600 border-indigo-200";
+                
+                if (slide.colorTheme === 'emerald') {
+                    badgeClass = "bg-emerald-50 border-emerald-200 text-emerald-700";
+                    topHeadingClass = "text-emerald-700 border-emerald-200";
+                } else if (slide.colorTheme === 'amber') {
+                    badgeClass = "bg-amber-50 border-amber-200 text-amber-700";
+                    topHeadingClass = "text-amber-700 border-amber-200";
+                } else if (slide.colorTheme === 'purple') {
+                    badgeClass = "bg-purple-50 border-purple-200 text-purple-700";
+                    topHeadingClass = "text-purple-700 border-purple-200";
+                } else if (slide.colorTheme === 'rose') {
+                    badgeClass = "bg-rose-50 border-rose-200 text-rose-700";
+                    topHeadingClass = "text-rose-700 border-rose-200";
+                }
+
+                return `
+                    <div class="flex-1 flex flex-col justify-between">
+                        
+                        <!-- Slide Title -->
+                        <div class="text-center mb-4">
+                            <h2 class="text-lg md:text-2xl font-black text-slate-800 leading-snug inline-block border-b-2 ${topHeadingClass} pb-1.5">${slide.title}</h2>
+                        </div>
+
+                        <!-- 3 Column Conjugations (Mute Types) - Compact width constraint with enlarged texts -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-3 max-w-5xl mx-auto w-full items-stretch">
+                            ${slide.sections.map(section => `
+                                <div class="bg-slate-50/55 border border-slate-200/80 rounded-xl p-4 flex flex-col justify-between transition hover:border-slate-300 shadow-sm relative overflow-hidden group">
+                                    
+                                    <!-- Simple clean top colored bar -->
+                                    <div class="absolute top-0 left-0 right-0 h-[3px] bg-slate-200 group-hover:bg-indigo-500 transition-all duration-300"></div>
+                                    
+                                    <div>
+                                        <div class="flex items-center justify-between mb-3 border-b border-slate-200 pb-2">
+                                            <h3 class="text-base md:text-lg font-black text-slate-800">${section.type}</h3>
+                                            <!-- Character badges (e.g. π, β, φ) scaled up to text-sm/text-base -->
+                                            <span class="text-sm md:text-base font-mono font-black px-3 py-1 rounded-full border ${badgeClass}">${section.chars}</span>
+                                        </div>
+
+                                        <!-- Formation Block -->
+                                        <div class="mb-3">
+                                            <span class="text-[10px] font-bold text-slate-400 tracking-wider uppercase block mb-0.5">Σχηματισμός</span>
+                                            <p class="text-xs md:text-sm text-slate-600 leading-relaxed font-medium">${section.formation}</p>
+                                        </div>
+
+                                        <!-- Examples Block -->
+                                        <div class="mb-3">
+                                            <span class="text-[10px] font-bold text-slate-400 tracking-wider uppercase block mb-1.5">Παραδείγματα</span>
+                                            <div class="space-y-1.5">
+                                                ${section.examples.map(ex => `
+                                                    <div class="bg-white border border-slate-200 rounded-lg p-2 font-mono text-xs md:text-sm flex items-center justify-between gap-1 shadow-sm">
+                                                        <span class="text-slate-500">${ex.base}</span>
+                                                        <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                                        ${ex.step ? `<span class="text-amber-600 text-[10px] md:text-xs font-bold">${ex.step}</span> <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>` : ''}
+                                                        <span class="text-slate-900 font-bold underline decoration-indigo-400 decoration-2">${ex.result}</span>
+                                                    </div>
+                                                `).join('')}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Notes/Attentions inside the column (Tighter & Compact) -->
+                                    <div class="mt-2 space-y-1.5">
+                                        ${section.note ? `
+                                            <div class="bg-slate-100/80 border-l-2 border-slate-400 p-2 rounded text-xs text-slate-600 leading-normal">
+                                                <strong class="text-slate-700 text-[10px] uppercase block tracking-wider mb-0.5">Σημείωση</strong>
+                                                ${section.note}
+                                            </div>
+                                        ` : ''}
+
+                                        ${section.warning ? `
+                                            <div class="bg-amber-50 border-l-2 border-amber-400 p-2.5 rounded text-xs md:text-sm text-slate-700 leading-normal">
+                                                <strong class="text-amber-700 text-[10px] uppercase block tracking-wider mb-0.5">Προσοχή</strong>
+                                                ${section.warning}
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                    
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <!-- Footer slide rules (Aorist / Perfect extra rules) -->
+                        ${slide.footerNotes ? `
+                            <div class="mt-4 bg-slate-50 border border-slate-200 rounded-lg p-2.5 flex flex-col md:flex-row md:items-center justify-center gap-2 md:gap-4 text-xs md:text-sm text-slate-600 font-semibold max-w-5xl mx-auto w-full shadow-sm">
+                                ${slide.footerNotes.map(note => `
+                                    <div class="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-md border border-slate-200 shadow-xs">
+                                        <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        <span>${note}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+
+                    </div>
+                `;
+            }
+        }
+
+        // Render active slide with quick transitions
+        function renderActiveSlide() {
+            const activeSlide = slidesData.find(s => s.id === currentSlideIndex);
+            const container = document.getElementById('slide-container');
+            
+            // Fade out, switch content, fade in smoothly
+            container.style.opacity = '0';
+            container.style.transform = 'translateY(4px)';
+            
+            setTimeout(() => {
+                container.innerHTML = renderSlideHTML(activeSlide);
+                container.style.opacity = '1';
+                container.style.transform = 'translateY(0)';
+                
+                // Update navigation and tab buttons
+                updateControls();
+            }, 120);
+        }
+
+        // Update states for tabs, buttons, and visual pagination dots
+        function updateControls() {
+            // Update Horizontal Tab Buttons
+            for (let i = 1; i <= 5; i++) {
+                const thumb = document.getElementById(`thumb-${i}`);
+                if (thumb) {
+                    if (i === currentSlideIndex) {
+                        thumb.className = "flex-1 min-w-[100px] py-3.5 px-3 text-center text-xs font-bold border-b-2 border-indigo-600 text-indigo-600 bg-indigo-50/40 transition-all rounded-t-lg";
+                    } else {
+                        thumb.className = "flex-1 min-w-[100px] py-3.5 px-3 text-center text-xs font-medium border-b border-transparent text-slate-500 hover:text-slate-800 hover:bg-slate-100/60 transition-all rounded-t-lg";
+                    }
+                }
+            }
+
+            // Update Pagination Arrow State
+            const prevBtn = document.getElementById('btn-prev');
+            const nextBtn = document.getElementById('btn-next');
+            if (prevBtn) prevBtn.disabled = (currentSlideIndex === 1);
+            if (nextBtn) nextBtn.disabled = (currentSlideIndex === 5);
+
+            // Redraw navigation dots
+            const dotsContainer = document.getElementById('nav-dots');
+            if (dotsContainer) {
+                dotsContainer.innerHTML = slidesData.map(slide => `
+                    <button onclick="goToSlide(${slide.id})" 
+                            class="w-2.5 h-2.5 rounded-full transition-all duration-300 ${slide.id === currentSlideIndex ? 'bg-indigo-600 w-5' : 'bg-slate-200 hover:bg-slate-300'}"
+                            title="Διαφάνεια ${slide.id}">
+                    </button>
+                `).join('');
+            }
+        }
+
+        // Interactive Slide Navigation Handlers
+        function prevSlide() {
+            if (currentSlideIndex > 1) {
+                currentSlideIndex--;
+                renderActiveSlide();
+            }
+        }
+
+        function nextSlide() {
+            if (currentSlideIndex < slidesData.length) {
+                currentSlideIndex++;
+                renderActiveSlide();
+            }
+        }
+
+        function goToSlide(num) {
+            if (num >= 1 && num <= slidesData.length) {
+                currentSlideIndex = num;
+                renderActiveSlide();
+            }
+        }
+
+        // Toggle Fullscreen Mode
+        function toggleFullscreen() {
+            const viewport = document.getElementById('presentation-viewport');
+            const icon = document.getElementById('fullscreen-icon');
+            
+            if (!document.fullscreenElement) {
+                viewport.requestFullscreen().catch(err => {
+                    console.log("Error going fullscreen: ", err);
+                });
+                icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>`; // Change to Close icon
+            } else {
+                document.exitFullscreen();
+                icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>`;
+            }
+        }
+
+        // Key Listener for Slides Navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "ArrowLeft") {
+                prevSlide();
+            } else if (event.key === "ArrowRight") {
+                nextSlide();
+            }
+        });
+
+        // Initialize App on load
+        window.onload = function() {
+            renderActiveSlide();
+        };
+    </script>
+</body>
+</html>
