@@ -1368,13 +1368,7 @@
         </button>
       </div>
 
-      <div class="footer-right">
-        <button id="fullscreen-btn" class="btn btn-icon" title="Πλήρης Οθόνη">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
-          </svg>
-        </button>
-      </div>
+      <div class="footer-right"></div>
     </footer>
 
   </div>
@@ -1417,7 +1411,6 @@
     const slideCounter = document.getElementById('slide-counter');
     const progressBar = document.getElementById('progress-bar');
     const categoryBadge = document.getElementById('category-badge');
-    const fullscreenBtn = document.getElementById('fullscreen-btn');
     const container = document.getElementById('presentation');
 
     // Modal DOM Elements
@@ -1548,24 +1541,6 @@
       }
     }
 
-    // Fullscreen Mode
-    fullscreenBtn.addEventListener('click', () => {
-      if (!document.fullscreenElement) {
-        container.requestFullscreen().catch(err => {
-          console.error(`Error attempting to enable fullscreen: ${err.message}`);
-        });
-      } else {
-        document.exitFullscreen();
-      }
-    });
-
-    // Watch fullscreen changes to update icon style
-    document.addEventListener('fullscreenchange', () => {
-      const isFullscreen = !!document.fullscreenElement;
-      fullscreenBtn.innerHTML = isFullscreen 
-        ? `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14h6v6m10-6h-6v6M4 10h6V4m10 6h-6V4"></path></svg>`
-        : `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>`;
-    });
 
     // Initialize Presentation
     buildTabs();
