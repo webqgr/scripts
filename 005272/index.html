@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Αγωνίσματα Ρίψεων - Σχολικό Μάθημα</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* CSS variables defining the light Greek sand & terracotta design system */
+    :root {
+      --bg-page: #f5f4f0;
+      --bg-card: #ffffff;
+      --text-main: #1c1917;
+      --text-secondary: #44403c;
+      --text-muted: #78716c;
+      --primary: #c2410c;       /* Terracotta Burnt Orange */
+      --primary-hover: #9a3412;
+      --primary-light: #ffedd5;
+      --primary-glow: rgba(194, 65, 12, 0.04);
+      --secondary: #1e3a8a;     /* Olympic Deep Blue */
+      --secondary-light: #dbeafe;
+      --accent: #15803d;        /* Olive/Laurel Green */
+      --accent-light: #dcfce7;
+      --border: #e7e5e4;
+      --shadow: 0 12px 40px rgba(28, 25, 23, 0.08);
+      --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: var(--bg-page);
+      font-family: var(--font-sans);
+      color: var(--text-main);
+      overflow: hidden;
+    }
+
+    /* Presentation Container (strict max height constraint of 800px) */
+    .presentation-container {
+      width: 95vw;
+      max-width: 1150px;
+      height: 90vh;
+      max-height: 800px;
+      background-color: var(--bg-card);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Fullscreen adjustment */
+    .presentation-container:fullscreen {
+      width: 100vw;
+      max-width: 100%;
+      height: 100vh;
+      max-height: 100%;
+      border-radius: 0;
+      border: none;
+    }
+
+    /* Header */
+    .header {
+      height: 64px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background-color: var(--bg-card);
+      z-index: 10;
+      flex-shrink: 0;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-title {
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--text-main);
+      letter-spacing: -0.01em;
+    }
+
+    .header-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-left: 1.5px solid var(--border);
+      padding-left: 16px;
+      display: inline-block;
+    }
+
+    .category-badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--primary);
+      background-color: var(--primary-light);
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.05em;
+    }
+
+    /* Top Tabs Navigation (Replaces Sidebar) */
+    .tabs-container {
+      display: flex;
+      gap: 6px;
+      padding: 10px 24px;
+      background-color: #fafaf9;
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+      white-space: nowrap;
+      scroll-behavior: smooth;
+      flex-shrink: 0;
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+    }
+
+    .tabs-container::-webkit-scrollbar {
+      display: none; /* Hide scrollbar for Chrome/Safari/Opera */
+    }
+
+    .tab-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      padding: 0 8px;
+    }
+
+    .tab-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background-color: var(--primary-glow);
+    }
+
+    .tab-btn.active {
+      background-color: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 10px rgba(194, 65, 12, 0.15);
+    }
+
+    /* Main Section */
+    .main-body {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Slides Window and Track */
+    .slides-window {
+      flex: 1;
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+      background-color: var(--bg-card);
+    }
+
+    .slides-track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    /* Slide Styles */
+    .slide {
+      flex: 0 0 100%;
+      height: 100%;
+      box-sizing: border-box;
+      padding: 30px 48px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Beautiful custom scrollbars inside slides */
+    .slide::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .slide::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .slide::-webkit-scrollbar-thumb {
+      background-color: rgba(120, 113, 108, 0.2);
+      border-radius: 10px;
+    }
+
+    .slide::-webkit-scrollbar-thumb:hover {
+      background-color: rgba(120, 113, 108, 0.4);
+    }
+
+    /* Typography & Hierarchy */
+    .slide-title-wrapper {
+      margin-bottom: 20px;
+      border-left: 4px solid var(--primary);
+      padding-left: 16px;
+      flex-shrink: 0;
+    }
+
+    .slide-main-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin: 0;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .slide-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      margin-bottom: 0;
+      font-weight: 400;
+    }
+
+    .slide-content {
+      flex: 1;
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+
+    .slide-p {
+      margin-bottom: 14px;
+      color: var(--text-secondary);
+    }
+
+    .slide-section-title {
+      font-size: 1.02rem;
+      font-weight: 600;
+      margin-top: 0;
+      margin-bottom: 10px;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .slide-section-title svg {
+      flex-shrink: 0;
+      color: var(--primary);
+    }
+
+    /* Grids & Columns for slide layout */
+    .slide-grid-2 {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 32px;
+      height: 100%;
+      align-items: start;
+    }
+
+    @media (max-width: 850px) {
+      .slide-grid-2 {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+    }
+
+    /* List styling */
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+      margin-bottom: 14px;
+    }
+
+    ul li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+
+    ul li::before {
+      content: "•";
+      color: var(--primary);
+      font-weight: bold;
+      font-size: 1.2rem;
+      position: absolute;
+      left: 2px;
+      top: -2px;
+    }
+
+    ol {
+      padding-left: 20px;
+      margin-bottom: 14px;
+    }
+
+    ol li {
+      margin-bottom: 8px;
+      line-height: 1.5;
+      padding-left: 4px;
+    }
+
+    .intro-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+      background: var(--primary-glow);
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px dashed rgba(194, 65, 12, 0.2);
+    }
+
+    /* Media/Figures */
+    figure {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      background-color: #fafaf9;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      width: 100%;
+    }
+
+    figure img {
+      max-width: 100%;
+      height: auto;
+      max-height: 180px;
+      object-fit: contain;
+      border-radius: 6px;
+      transition: var(--transition);
+    }
+
+    .clickable-image {
+      cursor: zoom-in;
+    }
+
+    .clickable-image:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 12px rgba(194, 65, 12, 0.1);
+    }
+
+    figcaption {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-align: center;
+      line-height: 1.4;
+      max-width: 95%;
+    }
+
+    /* Modal Styling */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background-color: rgba(28, 25, 23, 0.5);
+      backdrop-filter: blur(8px);
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-content {
+      margin: auto;
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: 85%;
+      max-height: 75vh;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+      border: 4px solid var(--bg-card);
+      transform: scale(0.9);
+      transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .modal.active .modal-content {
+      transform: scale(1);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 24px;
+      right: 32px;
+      color: #ffffff;
+      font-size: 36px;
+      font-weight: 700;
+      transition: var(--transition);
+      cursor: pointer;
+      z-index: 1010;
+      background: rgba(28, 25, 23, 0.3);
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+
+    .modal-close:hover {
+      color: var(--primary-light);
+      background: rgba(28, 25, 23, 0.6);
+    }
+
+    .modal-caption {
+      position: absolute;
+      bottom: 24px;
+      width: 80%;
+      max-width: 800px;
+      text-align: center;
+      color: #ffffff;
+      font-size: 0.8rem;
+      line-height: 1.4;
+      background: rgba(28, 25, 23, 0.6);
+      padding: 12px 20px;
+      border-radius: 8px;
+    }
+
+    /* Callout Boxes */
+    .alert-box {
+      background-color: var(--primary-light);
+      border-left: 4px solid var(--primary);
+      padding: 14px 16px;
+      border-radius: 6px;
+      margin-top: 16px;
+      font-size: 0.85rem;
+      color: var(--text-main);
+      line-height: 1.5;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .alert-box svg {
+      flex-shrink: 0;
+      color: var(--primary);
+      margin-top: 2px;
+    }
+
+    .note-box {
+      background-color: var(--accent-light);
+      border-left: 4px solid var(--accent);
+      padding: 14px 16px;
+      border-radius: 6px;
+      margin-top: 16px;
+      font-size: 0.85rem;
+      color: var(--text-main);
+      line-height: 1.5;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .note-box svg {
+      flex-shrink: 0;
+      color: var(--accent);
+      margin-top: 2px;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      margin-bottom: 14px;
+      font-size: 0.8rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    th {
+      background-color: #fafaf9;
+      color: var(--text-main);
+      font-weight: 600;
+      padding: 8px 10px;
+      border-bottom: 2px solid var(--border);
+      text-align: left;
+      font-size: 0.75rem;
+      letter-spacing: 0.02em;
+    }
+
+    td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:nth-child(even) {
+      background-color: #fcfbfb;
+    }
+
+    tr:hover {
+      background-color: var(--primary-glow);
+    }
+
+    /* Buttons & Controls */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-main);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-family: var(--font-sans);
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      gap: 8px;
+      outline: none;
+    }
+
+    .btn:hover {
+      background: #fafaf9;
+      border-color: #d6d3d1;
+      color: var(--text-main);
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn-icon {
+      width: 38px;
+      height: 38px;
+      padding: 0;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    /* Footer & Navigation Controls */
+    .footer {
+      height: 60px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background-color: var(--bg-card);
+      z-index: 10;
+      flex-shrink: 0;
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .footer-center {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .slide-counter {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      min-width: 60px;
+      text-align: center;
+    }
+
+    .footer-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Progress Bar */
+    .progress-container {
+      position: absolute;
+      bottom: 60px;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background-color: var(--border);
+      z-index: 10;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background-color: var(--primary);
+      width: 0%;
+      transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    /* Key navigation helper hint */
+    .nav-hint {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .key-badge {
+      background-color: var(--bg-page);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-family: monospace;
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+    }
+
+    /* Extra styles for links */
+    .records-link:hover {
+      border-color: var(--primary) !important;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="presentation-container" id="presentation">
+    
+    <!-- Top Header -->
+    <header class="header">
+      <div class="header-left">
+        <span class="header-title">Αγωνίσματα Ρίψεων</span>
+        <span class="header-subtitle">Κλασικός Αθλητισμός</span>
+      </div>
+      <div class="header-right">
+        <span class="category-badge" id="category-badge">Εισαγωγή</span>
+      </div>
+    </header>
+
+    <!-- Slide Tabs Row (Scrollable) -->
+    <nav class="tabs-container" id="tabs-container">
+      <!-- Populated by JavaScript -->
+    </nav>
+
+    <!-- Main View Area -->
+    <div class="main-body">
+      
+      <!-- Slides Window (No Sidebar) -->
+      <main class="slides-window">
+        <div class="slides-track" id="slides-track">
+          
+          <!-- Slide 1: Εισαγωγή -->
+          <div class="slide" id="slide-0">
+            <div class="slide-title-wrapper">
+              <h1 class="slide-main-title">Εισαγωγή</h1>
+            </div>
+            <div class="slide-content">
+              <p class="slide-p">Οι ρίψεις αποτελούν μία από τις παλαιότερες και πιο θεμελιώδεις κατηγορίες αγωνισμάτων του κλασικού αθλητισμού. Από την αρχαιότητα ως σήμερα, ο άνθρωπος συναγωνίζεται στην απόσταση που μπορεί να εκτοξεύσει ένα αντικείμενο χρησιμοποιώντας τη δύναμη, την τεχνική και τον συντονισμό του σώματός του.</p>
+              
+              <div style="margin-top: 24px;">
+                <h3 class="slide-section-title">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                  Στους σύγχρονους Ολυμπιακούς Αγώνες, τα αγωνίσματα ρίψεων περιλαμβάνουν:
+                </h3>
+                <ul class="intro-list">
+                  <li>Δίσκο</li>
+                  <li>Σφαίρα</li>
+                  <li>Σφύρα</li>
+                  <li>Ακόντιο</li>
+                </ul>
+              </div>
+              
+              <p class="slide-p" style="margin-top: 28px; font-style: italic; color: var(--text-muted);">Σε αυτό το μάθημα θα εξερευνήσεις την ιστορία, τους κανονισμούς, την τεχνική και τις αθλητικές ικανότητες που απαιτεί κάθε αγώνισμα.</p>
+            </div>
+          </div>
+
+          <!-- Slide 2: Ιστορική Αναδρομή - Αρχαιότητα -->
+          <div class="slide" id="slide-1">
+            <div class="slide-title-wrapper">
+              <h1 class="slide-main-title">Ιστορική Αναδρομή</h1>
+              <h2 class="slide-subtitle">Αρχαιότητα</h2>
+            </div>
+            <div class="slide-content">
+              <div class="slide-grid-2">
+                <div class="slide-text">
+                  <p class="slide-p">Οι ρίψεις έχουν βαθιές ρίζες στον αρχαίο ελληνικό πολιτισμό. Ο δίσκος ήταν ένα από τα πέντε αγωνίσματα του Πεντάθλου στους Αρχαίους Ολυμπιακούς Αγώνες (από το 708 π.Χ.) μαζί με το άλμα εις μήκος, το ακόντιο, τον δρόμο και την πάλη. Το ακόντιο χρησιμοποιούνταν αρχικά ως εργαλείο κυνηγιού και πολέμου πριν γίνει αγώνισμα.</p>
+                  <p class="slide-p">Ο περίφημος «Δισκοβόλος» του γλύπτη Μύρωνα (περ. 450 π.Χ.) αποτελεί ένα από τα πιο εμβληματικά έργα τέχνης της αρχαίας Ελλάδας και απεικονίζει την τεχνική της ρίψης δίσκου.</p>
+                </div>
+                <div class="slide-media">
+                  <figure>
+                    <img src="images/image1.jpg" alt="Δισκοβόλος" class="clickable-image" title="Κλικ για μεγέθυνση">
+                    <figcaption>Mentorhub. (2026, Φεβρουάριος). Discobolus (Δισκοβόλος): Κλασική απεικόνιση της αθλητικής αρμονίας στην αρχαία ελληνική γλυπτική [Εικόνα].</figcaption>
+                  </figure>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 3: Ιστορική Αναδρομή - Σύγχρονη Εποχή -->
+          <div class="slide" id="slide-2">
+            <div class="slide-title-wrapper">
+              <h1 class="slide-main-title">Ιστορική Αναδρομή</h1>
+              <h2 class="slide-subtitle">Σύγχρονη Εποχή</h2>
+            </div>
+            <div class="slide-content">
+              <p class="slide-p">Κατά την αναβίωση των Ολυμπιακών Αγώνων (Αθήνα, 1896) ο δίσκος και το ακόντιο επανήλθαν στους αγώνες. Η σφαίρα εισήχθη, επίσης, το 1896 για τους άνδρες, ενώ η σφύρα προστέθηκε το 1900. Για τις γυναίκες, τα αγωνίσματα ρίψεων εισήχθησαν σταδιακά: σφαίρα και δίσκος το 1948, ακόντιο το 1932, σφύρα το 2000.</p>
+            </div>
+          </div>
+
+          <!-- Slide 4: Ρίψη Δίσκου - Περιγραφή & Κανονισμοί -->
+          <div class="slide" id="slide-3">
+            <div class="slide-title-wrapper">
+              <h1 class="slide-main-title">Ρίψη Δίσκου (Discus Throw)</h1>
+            </div>
+            <div class="slide-content">
+              <div class="slide-grid-2">
+                <div>
+                  <h3 class="slide-section-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></svg>
+                    Περιγραφή Αγωνίσματος
+                  </h3>
+                  <p class="slide-p">Ο/Η αθλητής/τρια εκτοξεύει έναν κυκλικό δίσκο από έναν κύκλο ρίψης, προσπαθώντας να επιτύχει τη μεγαλύτερη δυνατή απόσταση. Ο δίσκος φτιάχνεται από μέταλλο και πλαστικό ή ξύλο.</p>
+                </div>
+                <div>
+                  <h3 class="slide-section-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    Βασικοί Κανονισμοί
+                  </h3>
+                  <p class="slide-p" style="font-weight: 500; margin-bottom: 6px;">Σύμφωνα με τους κανονισμούς της World Athletics (2023a):</p>
+                  <ul>
+                    <li>Διάμετρος κύκλου ρίψης: 2,50 μ.</li>
+                    <li>Βάρος δίσκου: 2 kg (άνδρες), 1 kg (γυναίκες)</li>
+                    <li>Kάθε αθλητής/τρια δικαιούται 6 προσπάθειες στον τελικό (3 + 3 για τους 8 καλύτερους).</li>
+                    <li>Η ρίψη μετράται από το κοντινότερο σημείο πτώσης του δίσκου έως την εσωτερική περιφέρεια του κύκλου.</li>
+                    <li>Ο/Η αθλητής/τρια δεν πρέπει να εξέλθει από τον κύκλο πριν ο δίσκος αγγίξει το έδαφος.</li>
+                    <li>Ο δίσκος πρέπει να πέσει εντός του 34,92° τομέα.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 5: Ρίψη Δίσκου - Τεχνική & Ικανότητες -->
+          <div class="slide" id="slide-4">
+            <div class="slide-title-wrapper">
+              <h1 class="slide-main-title">Ρίψη Δίσκου (Discus Throw)</h1>
+            </div>
+            <div class="slide-content">
+              <div class="slide-grid-2">
+                <div>
+                  <h3 class="slide-section-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                    Βασική Τεχνική
+                  </h3>
+                  <p class="slide-p" style="font-weight: 500; margin-bottom: 6px;">Η τεχνική της ρίψης δίσκου αποτελείται από τα εξής στάδια:</p>
+                  <ol>
+                    <li><strong>Αρχική θέση:</strong> Ο/Η αθλητής/τρια κρατά τον δίσκο με τα δάχτυλα να απλώνονται στην άνω επιφάνεια, στηρίζοντάς τον με τα άκρα των δαχτύλων. Στέκεται στο πίσω μέρος του κύκλου, με την πλάτη στη διεύθυνση ρίψης.</li>
+                    <li><strong>Στροφή:</strong> Εκτελεί 1,5 στροφή γύρω από τον κάθετο άξονα του σώματος, μεταφέρει το βάρος από το πίσω πόδι στο μπροστά, δημιουργώντας φυγόκεντρη δύναμη.</li>
+                    <li><strong>Τελική Ώση:</strong> Το σώμα «ξετυλίγεται» από κάτω προς τα πάνω (πόδια &rarr; κορμός &rarr; χέρι). Ο δίσκος αφήνεται από τον δείκτη σε γωνία περίπου 35° ως προς το οριζόντιο επίπεδο.</li>
+                    <li><strong>Ισορροπία μετά τη ρίψη:</strong> Ο/Η αθλητής/τρια ανακτά την ισορροπία του/της εντός του κύκλου.</li>
+                  </ol>
+                </div>
+                <div>
+                  <h3 class="slide-section-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                    Απαιτούμενες Αθλητικές Ικανότητες
+                  </h3>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Ικανότητα</th>
+                        <th>Σημασία για τη Ρίψη Δίσκου</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>Δύναμη</strong></td>
+                        <td>Μυϊκή ισχύς για τη μεγιστοποίηση της ταχύτητας αφής.</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Ευλυγισία</strong></td>
+                        <td>Πλήρης εύρος κίνησης στους ώμους και τη μέση.</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Ισορροπία</strong></td>
+                        <td>Σταθερότητα εντός του κύκλου κατά τη στροφή.</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Συντονισμός</strong></td>
+                        <td>Σωστή χρονική αλληλουχία κινήσεων.</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Ταχύτητα</strong></td>
+                        <td>Γρήγορη ανάπτυξη ισχύος κατά τη στιγμή αφής.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 6: Ρίψη Σφαίρας - Περιγραφή & Κανονισμοί -->
+          <div class="slide" id="slide-5">
+            <div class="slide-title-wrapper">
+              <h1 class="slide-main-title">Ρίψη Σφαίρας</h1>
+            </div>
+            <div class="slide-content">
+              <div class="slide-grid-2">
+                <div>
+                  <h3 class="slide-section-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></svg>
+                    Περιγραφή Αγωνίσματος
+                  </h3>
+                  <p class="slide-p">O/H αθλητής/τρια σπρώχνει (δεν πετά) μία βαριά μεταλλική σφαίρα όσο το δυνατό μακρύτερα από έναν κύκλο ρίψης.</p>
+                  
+                  <div class="alert-box">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                      <line x1="12" y1="9" x2="12" y2="13"></line>
+                      <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                    <div>
+                      <strong>⚠️ Προσοχή:</strong> Η σφαίρα σπρώχνεται και δεν εκτοξεύεται πίσω από τον ώμο &mdash; αυτό αποτελεί παράβαση κανονισμού!
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <h3 class="slide-section-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    Βασικοί Κανονισμοί
+                  </h3>
+                  <p class="slide-p" style="font-weight: 500; margin-bottom: 6px;">Σύμφωνα με τη World Athletics:</p>
+                  <ul>
+                    <li>Διάμετρος κύκλου: 2,135 μ.</li>
+                    <li>Βάρος σφαίρας: 7,260 kg (άνδρες), 4 kg (γυναίκες).</li>
+                    <li>Το αγώνισμα διεξάγεται είτε από κύκλο (με στροφή) είτε με γλίστρημα.</li>
+                    <li>Η σφαίρα κατά τη ρίψη δεν πρέπει να κατεβεί κάτω από το ύψος του ώμου.</li>
+                    <li>Χρησιμοποιείται τάβλα στο μπροστά μέρος του κύκλου.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 7: Ρίψη Σφαίρας - Τεχνική & Ικανότητες -->
+          <div class="slide" id="slide-6">
+            <div class="slide-title-wrapper">
+              <h1 class="slide-main-title">Ρίψη Σφαίρας</h1>
+            </div>
+            <div class="slide-content">
+              <div class="slide-grid-2">
+                <div>
+                  <h3 class="slide-section-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                    Βασική Τεχνική
+                  </h3>
+                  <p class="slide-p" style="font-weight: 500; margin-bottom: 6px;">Υπάρχουν δύο κύριες τεχνικές:</p>
+                  
+                  <div style="margin-bottom: 12px;">
+                    <p style="font-weight: 600; margin-bottom: 4px; color: var(--primary);">α) Τεχνική Γλιστρήματος (Glide / O'Brien Technique):</p>
+                    <ol>
+                      <li>Αρχική θέση στο πίσω μέρος του κύκλου, πλάτη προς τη διεύθυνση ρίψης.</li>
+                      <li>Οπισθόβαση (glide) με χαμηλό κέντρο βάρους.</li>
+                      <li>Τελική ώση με επέκταση ποδιών-κορμού-χεριού.</li>
+                      <li>Αφή σφαίρας από τα άκρα των δαχτύλων σε γωνία ~40°.</li>
+                    </ol>
+                  </div>
+
+                  <div>
+                    <p style="font-weight: 600; margin-bottom: 4px; color: var(--primary);">β) Τεχνική Στροφής (Rotational / Spin Technique):</p>
+                    <ul>
+                      <li>Παρόμοια με τη ρίψη δίσκου: ο/η αθλητής/τρια εκτελεί 1,5 στροφή.</li>
+                      <li>Απαιτεί υψηλότερο επίπεδο τεχνικής δεξιότητας.</li>
+                      <li>Οδηγεί συνήθως σε μεγαλύτερες αποστάσεις σε υψηλό επίπεδο.</li>
+                    </ul>
+                  </div>
+                </div>
+                <div>
+                  <h3 class="slide-section-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                    Απαιτούμενες Αθλητικές Ικανότητες
+                  </h3>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Ικανότητα</th>
+                        <th>Σημασία για τη Ρίψη Σφαίρας</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>Μέγιστη Δύναμη</strong></td>
+                        <td>Κυρίαρχη ικανότητα &mdash; απαιτείται μεγάλη μυϊκή ισχύς.</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Εκρηκτική Δύναμη</strong></td>
+                        <td>Ταχύτατη ανάπτυξη δύναμης κατά την ώση.</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Ισορροπία</strong></td>
+                        <td>Στήριξη βαρέως αντικειμένου σε περιορισμένο χώρο.</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Συντονισμός</strong></td>
+                        <td>Αλληλουχία κίνησης ποδιών-κορμού-χεριού.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 8: Ρίψη Σφύρας - Περιγραφή & Κανονισμοί -->
+          <div class="slide" id="slide-7">
+            <div class="slide-title-wrapper">
+              <h1 class="slide-main-title">Ρίψη Σφύρας (Hammer Throw)</h1>
+            </div>
+            <div class="slide-content">
+              <div class="slide-grid-2">
+                <div>
+                  <h3 class="slide-section-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></svg>
+                    Περιγραφή Αγωνίσματος
+                  </h3>
+                  <p class="slide-p">Ο/Η αθλητής/τρια εκτοξεύει μία μεταλλική σφαίρα που είναι συνδεδεμένη με καλώδιο και λαβή (σύνολο: η «σφύρα»). Είναι το αγώνισμα που απαιτεί τη μεγαλύτερη φυγόκεντρη δύναμη από όλες τις ρίψεις.</p>
+                </div>
+                <div>
+                  <h3 class="slide-section-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    Βασικοί Κανονισμοί
+                  </h3>
+                  <p class="slide-p" style="font-weight: 500; margin-bottom: 6px;">Σύμφωνα με τη World Athletics:</p>
+                  <ul>
+                    <li>Διάμετρος κύκλου: 2,135 μ.</li>
+                    <li>Συνολικό βάρος σφύρας: 7,260 kg (άνδρες), 4 kg (γυναίκες).</li>
+                    <li>Μήκος καλωδίου + σφαίρας: max 121,5 cm (άνδρες), max 119,5 cm (γυναίκες).</li>
+                    <li>Ο/Η αθλητής/τρια φοράει γάντια για την προστασία των χεριών (επιτρέπεται).</li>
+                    <li>Χρησιμοποιείται προστατευτικό κλουβί για λόγους ασφαλείας.</li>
+                    <li>Η σφύρα πρέπει να πέσει εντός του 34,92° τομέα.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 9: Ρίψη Σφύρας - Τεχνική & Ικανότητες -->
+          <div class="slide" id="slide-8">
+            <div class="slide-title-wrapper">
+              <h1 class="slide-main-title">Ρίψη Σφύρας (Hammer Throw)</h1>
+            </div>
+            <div class="slide-content">
+              <div class="slide-grid-2">
+                <div>
+                  <h3 class="slide-section-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                    Βασική Τεχνική
+                  </h3>
+                  <ol>
+                    <li><strong>Προκαταρκτικές στροφές:</strong> Ο/Η αθλητής/τρια εκτελεί 2-3 αρχικές στροφές της σφύρας, ενώ το σώμα του/της παραμένει σχεδόν ακίνητο.</li>
+                    <li><strong>Στροφές:</strong> Εκτελεί 3 ή 4 πλήρεις στροφές του σώματος, διατηρώντας χαμηλό κέντρο βάρους.</li>
+                    <li><strong>Τελική Ώση:</strong> Στην τελευταία στροφή, το σώμα «ξετυλίγεται» με μέγιστη ταχύτητα και η σφύρα αφήνεται σε γωνία ~44°.</li>
+                    <li><strong>Το αριστερό πόδι (για δεξιόχειρες)</strong> λειτουργεί ως άξονας στήριξης.</li>
+                  </ol>
+                </div>
+                <div>
+                  <h3 class="slide-section-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                    Απαιτούμενες Αθλητικές Ικανότητες
+                  </h3>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Ικανότητα</th>
+                        <th>Σημασία για τη Ρίψη Σφύρας</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>Δύναμη</strong></td>
+                        <td>Απόλυτη μυϊκή ισχύς για τον έλεγχο του βαρέως εξοπλισμού.</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Ισορροπία & Σταθερότητα</strong></td>
+                        <td>Κρίσιμες λόγω της φυγόκεντρης δύναμης.</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Ευλυγισία</strong></td>
+                        <td>Μεγάλο εύρος κίνησης στη μέση και τους ώμους.</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Τεχνική Δεξιότητα</strong></td>
+                        <td>Το πιο τεχνικά σύνθετο αγώνισμα ρίψεων.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 10: Ρίψη Ακοντίου - Περιγραφή & Κανονισμοί -->
+          <div class="slide" id="slide-9">
+            <div class="slide-title-wrapper">
+              <h1 class="slide-main-title">Ρίψη Ακοντίου</h1>
+            </div>
+            <div class="slide-content">
+              <div class="slide-grid-2">
+                <div>
+                  <h3 class="slide-section-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></svg>
+                    Περιγραφή Αγωνίσματος
+                  </h3>
+                  <p class="slide-p">Ο/Η αθλητής/τρια εκτοξεύει ένα μεταλλικό ακόντιο (δόρυ) από ένα διάδρομο προσέγγισης, χωρίς στροφή. Είναι το μοναδικό αγώνισμα ρίψεων που γίνεται με φόρα.</p>
+                </div>
+                <div>
+                  <h3 class="slide-section-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    Βασικοί Κανονισμοί
+                  </h3>
+                  <p class="slide-p" style="font-weight: 500; margin-bottom: 6px;">Σύμφωνα με τη World Athletics:</p>
+                  <ul>
+                    <li>Μήκος ακοντίου: 2,60–2,70 μ. (άνδρες), 2,20–2,30 μ. (γυναίκες).</li>
+                    <li>Βάρος ακοντίου: 800 g (άνδρες), 600 g (γυναίκες).</li>
+                    <li>Η φόρα γίνεται εντός διαδρόμου 4 μ. πλάτους, μήκους 30 μ. min.</li>
+                    <li>Το ακόντιο πρέπει να πέσει στο έδαφος με την αιχμή πρώτα.</li>
+                    <li>Απαγορεύεται η στροφή 360° (σε αντίθεση με τον δίσκο).</li>
+                    <li>Ο/Η αθλητής/τρια πρέπει να σταματήσει πριν τη γραμμή τόξου.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 11: Ρίψη Ακοντίου - Τεχνική & Ικανότητες (Larger Clickable Image) -->
+          <div class="slide" id="slide-10">
+            <div class="slide-title-wrapper">
+              <h1 class="slide-main-title">Ρίψη Ακοντίου</h1>
+            </div>
+            <div class="slide-content">
+              <div class="slide-grid-2">
+                <div>
+                  <h3 class="slide-section-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                    Βασική Τεχνική
+                  </h3>
+                  <ol style="margin-bottom: 16px;">
+                    <li><strong>Αρχική Φόρα:</strong> Σταθερή επιτάχυνση για 10-14 βήματα.</li>
+                    <li><strong>Μεταβατικά Βήματα:</strong> Τα 4-5 τελευταία βήματα της φόρας το ακόντιο αποσύρεται προς τα πίσω και ψηλά, παράλληλα με τη διεύθυνση ρίψης.</li>
+                    <li><strong>Βήμα Ώθησης:</strong> Το τελευταίο βήμα είναι μακρύ, το σώμα «κλίνει» προς τα πίσω.</li>
+                    <li><strong>Αφή:</strong> Το ακόντιο αφήνεται σε γωνία ~35° ως προς το οριζόντιο επίπεδο, με κίνηση μαστίγιου του χεριού.</li>
+                  </ol>
+                  
+                  <figure style="padding: 16px;">
+                    <img src="images/image2.png" alt="Βιομηχανική ανάλυση της ρίψης ακοντίου" class="clickable-image" style="max-height: 180px; width: 100%; object-fit: contain;" title="Κλικ για μεγέθυνση">
+                    <figcaption>Mentorhub. (2026, Φεβρουάριος). Βιομηχανική ανάλυση της ρίψης ακοντίου: Ακολουθία κίνησης και τροχιά του ακοντίου [Εικόνα].</figcaption>
+                  </figure>
+                </div>
+                <div>
+                  <h3 class="slide-section-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                    Απαιτούμενες Αθλητικές Ικανότητες
+                  </h3>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Ικανότητα</th>
+                        <th>Σημασία για τη Ρίψη Ακοντίου</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>Ταχύτητα</strong></td>
+                        <td>Γρήγορη φόρα και «μαστιγιακή» κίνηση χεριού.</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Δύναμη</strong></td>
+                        <td>Ισχύς ώμου και αντιβραχίου.</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Ευλυγισία</strong></td>
+                        <td>Κινητικότητα ώμου, αγκώνα, καρπού.</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Συντονισμός</strong></td>
+                        <td>Σύνδεση φόρας με τεχνική ρίψης.</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Ισορροπία</strong></td>
+                        <td>Σταμάτημα πριν τη γραμμή, χωρίς απώλεια ισορροπίας.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 12: Συγκριτικός Πίνακας Αγωνισμάτων -->
+          <div class="slide" id="slide-11">
+            <div class="slide-title-wrapper">
+              <h1 class="slide-main-title">Συγκριτικός Πίνακας Αγωνισμάτων</h1>
+            </div>
+            <div class="slide-content" style="display: flex; align-items: center; justify-content: center; height: 100%;">
+              <table style="margin-top: 0; font-size: 0.9rem;">
+                <thead>
+                  <tr>
+                    <th>Αγώνισμα</th>
+                    <th>Χώρος Εκτέλεσης</th>
+                    <th>Βάρος (άνδρες)</th>
+                    <th>Βάρος (γυναίκες)</th>
+                    <th>Κύρια Ικανότητα</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Δίσκος</strong></td>
+                    <td>Κύκλος &Oslash; 2,50 μ.</td>
+                    <td>2,00 kg</td>
+                    <td>1,00 kg</td>
+                    <td>Δύναμη + Συντονισμός</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Σφαίρα</strong></td>
+                    <td>Κύκλος &Oslash; 2,135 μ.</td>
+                    <td>7,26 kg</td>
+                    <td>4,00 kg</td>
+                    <td>Μέγιστη Δύναμη</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Σφύρα</strong></td>
+                    <td>Κύκλος &Oslash; 2,135 μ.</td>
+                    <td>7,26 kg</td>
+                    <td>4,00 kg</td>
+                    <td>Τεχνική + Δύναμη</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Ακόντιο</strong></td>
+                    <td>Διάδρομος 4 μ.</td>
+                    <td>0,80 kg</td>
+                    <td>0,60 kg</td>
+                    <td>Ταχύτητα + Συντονισμός</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Slide 13: Ασφάλεια κατά τις Ρίψεις -->
+          <div class="slide" id="slide-12">
+            <div class="slide-title-wrapper">
+              <h1 class="slide-main-title">Ασφάλεια και Πρώτες Βοήθειες</h1>
+              <h2 class="slide-subtitle">Κίνδυνοι & Κανόνες Ασφαλείας</h2>
+            </div>
+            <div class="slide-content">
+              <div class="slide-grid-2">
+                <div>
+                  <h3 class="slide-section-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"></path></svg>
+                    Κίνδυνοι κατά τις Ρίψεις
+                  </h3>
+                  <p class="slide-p" style="font-weight: 500; margin-bottom: 8px;">Τα αγωνίσματα ρίψεων ενέχουν υψηλό κίνδυνο τραυματισμού αν δεν τηρηθούν κανόνες ασφαλείας:</p>
+                  <ul>
+                    <li><strong>Τραυματισμός ώμου:</strong> Ο πιο συχνός τραυματισμός στο ακόντιο (τένοντες, στροφικός πετάλου).</li>
+                    <li><strong>Τραυματισμός οσφυϊκής μοίρας:</strong> Σε δίσκο και σφύρα, λόγω στροφικών δυνάμεων.</li>
+                    <li><strong>Διαστρέμματα αστράγαλου/γόνατος:</strong> Κατά την εκτέλεση της στροφής.</li>
+                    <li><strong>Κίνδυνος πρόσκρουσης:</strong> Αν βρίσκεται κάποιος εντός της ζώνης ρίψης.</li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 class="slide-section-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"></path></svg>
+                    Κανόνες Ασφαλείας
+                  </h3>
+                  <p class="slide-p" style="font-weight: 600; text-transform: uppercase; color: var(--primary); margin-bottom: 8px; font-size: 0.8rem; letter-spacing: 0.05em;">ΚΑΝΟΝΕΣ ΠΟΥ ΠΡΕΠΕΙ ΠΑΝΤΑ ΝΑ ΤΗΡΟΥΝΤΑΙ:</p>
+                  <ul>
+                    <li>Ποτέ μην μπαίνεις στον χώρο ρίψης, ενώ εκτελείται άσκηση.</li>
+                    <li>Πάντα να περιμένεις εντολή του/της εκπαιδευτικού πριν μαζέψεις τον εξοπλισμό.</li>
+                    <li>Να κρατάς πάντα τα όργανα ρίψης στραμμένα προς τα κάτω όταν κινείσαι.</li>
+                    <li>Στη ρίψη σφύρας η χρήση προστατευτικού κλουβιού είναι υποχρεωτική σε επίσημους αγώνες.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 14: Πρώτες Βοήθειες -->
+          <div class="slide" id="slide-13">
+            <div class="slide-title-wrapper">
+              <h1 class="slide-main-title">Ασφάλεια και Πρώτες Βοήθειες</h1>
+              <h2 class="slide-subtitle">Πρώτες Βοήθειες &mdash; Συχνοί Τραυματισμοί</h2>
+            </div>
+            <div class="slide-content">
+              <div class="slide-grid-2">
+                <div>
+                  <h3 class="slide-section-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></svg>
+                    Θλάση μυός:
+                  </h3>
+                  <ul>
+                    <li>Σταμάτησε αμέσως την άσκηση.</li>
+                    <li>Εφάρμοσε πρωτόκολλο R.I.C.E. (Rest – Ice – Compression – Elevation).</li>
+                    <li>Αναζήτησε ιατρική βοήθεια αν ο πόνος επιμένει.</li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 class="slide-section-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></svg>
+                    Διάστρεμμα:
+                  </h3>
+                  <ul>
+                    <li>Ακινητοποίησε την άρθρωση.</li>
+                    <li>Εφάρμοσε κρύο (παγοκύστη τυλιγμένη σε πετσέτα) για 15-20 λεπτά.</li>
+                    <li>Μη φορτίζεις την άρθρωση.</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div class="note-box">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="16" x2="12" y2="12"></line>
+                  <line x1="12" y1="8" x2="12.01" y2="8"></svg>
+                <div>
+                  <strong>Σημείωση:</strong> Σε περίπτωση σοβαρού τραυματισμού ή αμφιβολίας μη μετακινείς τον/την τραυματία και κάλεσε άμεσα τον/την υπεύθυνο/η εκπαιδευτικό ή ασθενοφόρο (ΕΚΑΒ: 166).
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 15: Παγκόσμια Ρεκόρ -->
+          <div class="slide" id="slide-14">
+            <div class="slide-title-wrapper">
+              <h1 class="slide-main-title">Παγκόσμια Ρεκόρ</h1>
+            </div>
+            <div class="slide-content">
+              <table style="margin-top: 12px; font-size: 0.85rem;">
+                <thead>
+                  <tr>
+                    <th>Αγώνισμα</th>
+                    <th>Άνδρες</th>
+                    <th>Αθλητής</th>
+                    <th>Γυναίκες</th>
+                    <th>Αθλήτρια</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Σφαίρα</strong></td>
+                    <td>23,56 μ.</td>
+                    <td>Ryan Crouser (ΗΠΑ)</td>
+                    <td>22,63 μ.</td>
+                    <td>Natalya Lisovskaya (ΕΣΣΔ)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Δίσκος</strong></td>
+                    <td>74,08 μ.</td>
+                    <td>Jürgen Schult (Α. Γερμανία)</td>
+                    <td>76,80 μ.</td>
+                    <td>Gabriele Reinsch (Α. Γερμανία)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Σφύρα</strong></td>
+                    <td>86,74 μ.</td>
+                    <td>Yuriy Sedykh (ΕΣΣΔ)</td>
+                    <td>82,98 μ.</td>
+                    <td>Anita Włodarczyk (Πολωνία)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Ακόντιο</strong></td>
+                    <td>98,48 μ.</td>
+                    <td>Jan Železný (Τσεχία)</td>
+                    <td>72,28 μ.</td>
+                    <td>Barbora Špotáková (Τσεχία)</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div style="margin-top: 28px; text-align: center;">
+                <a href="https://worldathletics.org/records" target="_blank" class="records-link" style="display: inline-flex; align-items: center; gap: 8px; color: var(--primary); font-weight: 600; text-decoration: none; border-bottom: 2px solid transparent; padding-bottom: 2px; transition: var(--transition); font-size: 0.9rem;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                  </svg>
+                  Για ενημερωμένα ρεκόρ επισκέψου: worldathletics.org/records
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </main>
+    </div>
+
+    <!-- Thin Progress Bar Line -->
+    <div class="progress-container">
+      <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <!-- Bottom Controls -->
+    <footer class="footer">
+      <div class="footer-left">
+        <div class="nav-hint">
+          <span class="key-badge">&larr;</span>
+          <span class="key-badge">&rarr;</span>
+          <span>Πλοήγηση</span>
+        </div>
+      </div>
+      
+      <div class="footer-center">
+        <button id="prev-btn" class="btn btn-icon" title="Προηγούμενη Διαφάνεια">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <span class="slide-counter" id="slide-counter">1 / 15</span>
+        <button id="next-btn" class="btn btn-icon" title="Επόμενη Διαφάνεια">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <div class="footer-right">
+        <button id="fullscreen-btn" class="btn btn-icon" title="Πλήρης Οθόνη">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+          </svg>
+        </button>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Image Expansion Modal Overlay -->
+  <div id="image-modal" class="modal" role="dialog" aria-modal="true" aria-label="Μεγέθυνση εικόνας">
+    <span class="modal-close" title="Κλείσιμο">&times;</span>
+    <img class="modal-content" id="modal-img" src="" alt="">
+    <div id="modal-caption" class="modal-caption"></div>
+  </div>
+
+  <script>
+    // List of slides with their titles & structural categories
+    const slideData = [
+      { id: 0, title: "Εισαγωγή", category: "Εισαγωγή" },
+      { id: 1, title: "Ιστορία: Αρχαιότητα", category: "Ιστορία" },
+      { id: 2, title: "Ιστορία: Σύγχρονη Εποχή", category: "Ιστορία" },
+      { id: 3, title: "Δίσκος: Περιγραφή & Κανονισμοί", category: "Ρίψη Δίσκου" },
+      { id: 4, title: "Δίσκος: Τεχνική & Ικανότητες", category: "Ρίψη Δίσκου" },
+      { id: 5, title: "Σφαίρα: Περιγραφή & Κανονισμοί", category: "Ρίψη Σφαίρας" },
+      { id: 6, title: "Σφαίρα: Τεχνική & Ικανότητες", category: "Ρίψη Σφαίρας" },
+      { id: 7, title: "Σφύρα: Περιγραφή & Κανονισμοί", category: "Ρίψη Σφύρας" },
+      { id: 8, title: "Σφύρα: Τεχνική & Ικανότητες", category: "Ρίψη Σφύρας" },
+      { id: 9, title: "Ακόντιο: Περιγραφή & Κανονισμοί", category: "Ρίψη Ακοντίου" },
+      { id: 10, title: "Ακόντιο: Τεχνική & Ικανότητες", category: "Ρίψη Ακοντίου" },
+      { id: 11, title: "Συγκριτικός Πίνακας", category: "Σύγκριση" },
+      { id: 12, title: "Ασφάλεια: Κίνδυνοι & Κανόνες", category: "Ασφάλεια" },
+      { id: 13, title: "Πρώτες Βοήθειες", category: "Πρώτες Βοήθειες" },
+      { id: 14, title: "Παγκόσμια Ρεκόρ", category: "Παγκόσμια Ρεκόρ" }
+    ];
+
+    let currentSlide = 0;
+    const totalSlides = slideData.length;
+
+    // DOM Elements
+    const track = document.getElementById('slides-track');
+    const tabsContainer = document.getElementById('tabs-container');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const slideCounter = document.getElementById('slide-counter');
+    const progressBar = document.getElementById('progress-bar');
+    const categoryBadge = document.getElementById('category-badge');
+    const fullscreenBtn = document.getElementById('fullscreen-btn');
+    const container = document.getElementById('presentation');
+
+    // Modal DOM Elements
+    const modal = document.getElementById('image-modal');
+    const modalImg = document.getElementById('modal-img');
+    const modalCaption = document.getElementById('modal-caption');
+    const modalClose = document.querySelector('.modal-close');
+    const clickableImages = document.querySelectorAll('.clickable-image');
+
+    // Populate Slide Tabs row
+    function buildTabs() {
+      tabsContainer.innerHTML = '';
+      slideData.forEach((slide, index) => {
+        const button = document.createElement('button');
+        button.className = `tab-btn ${index === currentSlide ? 'active' : ''}`;
+        button.dataset.index = index;
+        button.title = slide.title;
+        button.textContent = index + 1;
+        
+        button.addEventListener('click', () => {
+          goToSlide(index);
+        });
+        
+        tabsContainer.appendChild(button);
+      });
+    }
+
+    // Slide navigation logic
+    function goToSlide(index) {
+      if (index < 0 || index >= totalSlides) return;
+      
+      currentSlide = index;
+      
+      // Slide the track
+      track.style.transform = `translateX(-${currentSlide * 100}%)`;
+      
+      // Update tab buttons active state
+      const tabs = tabsContainer.querySelectorAll('.tab-btn');
+      tabs.forEach((tab, idx) => {
+        if (idx === currentSlide) {
+          tab.classList.add('active');
+          tab.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        } else {
+          tab.classList.remove('active');
+        }
+      });
+      
+      // Update footer controls
+      slideCounter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+      prevBtn.disabled = currentSlide === 0;
+      nextBtn.disabled = currentSlide === totalSlides - 1;
+      
+      // Update progress bar
+      const progressPercent = (currentSlide / (totalSlides - 1)) * 100;
+      progressBar.style.width = `${progressPercent}%`;
+      
+      // Update category tag
+      categoryBadge.textContent = slideData[currentSlide].category;
+    }
+
+    // Image Modal Expansion Logic
+    clickableImages.forEach(img => {
+      img.addEventListener('click', () => {
+        modal.classList.add('active');
+        modalImg.src = img.src;
+        modalImg.alt = img.alt;
+        
+        // Find caption inside sibling figure / figcaption element
+        const figure = img.closest('figure');
+        const figcaption = figure ? figure.querySelector('figcaption') : null;
+        modalCaption.textContent = figcaption ? figcaption.textContent : '';
+      });
+    });
+
+    function closeModal() {
+      modal.classList.remove('active');
+    }
+
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal || e.target === modalClose) {
+        closeModal();
+      }
+    });
+
+    // Event Listeners for slide buttons
+    prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1));
+    nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
+
+    // Keyboard Shortcuts (Arrow keys & space to change slides, Escape to close modal)
+    document.addEventListener('keydown', (e) => {
+      if (modal.classList.contains('active')) {
+        if (e.key === 'Escape') {
+          closeModal();
+        }
+        return; // Disable slide advance while viewing modal
+      }
+
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        goToSlide(currentSlide + 1);
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        goToSlide(currentSlide - 1);
+      }
+    });
+
+    // Swipe Support for Touch Screens
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    container.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    container.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+      if (modal.classList.contains('active')) return;
+      const threshold = 50;
+      if (touchStartX - touchEndX > threshold) {
+        goToSlide(currentSlide + 1);
+      } else if (touchEndX - touchStartX > threshold) {
+        goToSlide(currentSlide - 1);
+      }
+    }
+
+    // Fullscreen Mode
+    fullscreenBtn.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        container.requestFullscreen().catch(err => {
+          console.error(`Error attempting to enable fullscreen: ${err.message}`);
+        });
+      } else {
+        document.exitFullscreen();
+      }
+    });
+
+    // Watch fullscreen changes to update icon style
+    document.addEventListener('fullscreenchange', () => {
+      const isFullscreen = !!document.fullscreenElement;
+      fullscreenBtn.innerHTML = isFullscreen 
+        ? `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14h6v6m10-6h-6v6M4 10h6V4m10 6h-6V4"></path></svg>`
+        : `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>`;
+    });
+
+    // Initialize Presentation
+    buildTabs();
+    goToSlide(0);
+  </script>
+</body>
+</html>
