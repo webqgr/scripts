@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Δρομικά Αγωνίσματα - Σχολικό Μάθημα</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* CSS variables defining the light Greek sand & terracotta design system */
+    :root {
+      --bg-page: #f5f4f0;
+      --bg-card: #ffffff;
+      --text-main: #1c1917;
+      --text-secondary: #44403c;
+      --text-muted: #78716c;
+      --primary: #c2410c;       /* Terracotta Burnt Orange */
+      --primary-hover: #9a3412;
+      --primary-light: #ffedd5;
+      --primary-glow: rgba(194, 65, 12, 0.04);
+      --secondary: #1e3a8a;     /* Olympic Deep Blue */
+      --secondary-light: #dbeafe;
+      --accent: #15803d;        /* Olive/Laurel Green */
+      --accent-light: #dcfce7;
+      --border: #e7e5e4;
+      --shadow: 0 12px 40px rgba(28, 25, 23, 0.08);
+      --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: var(--bg-page);
+      font-family: var(--font-sans);
+      color: var(--text-main);
+      overflow: hidden;
+    }
+
+    /* Presentation Container (strict max height constraint of 800px) */
+    .presentation-container {
+      width: 95vw;
+      max-width: 1150px;
+      height: 90vh;
+      max-height: 800px;
+      background-color: var(--bg-card);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Fullscreen adjustment */
+    .presentation-container:fullscreen {
+      width: 100vw;
+      max-width: 100%;
+      height: 100vh;
+      max-height: 100%;
+      border-radius: 0;
+      border: none;
+    }
+
+    /* Header */
+    .header {
+      height: 64px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background-color: var(--bg-card);
+      z-index: 10;
+      flex-shrink: 0;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-title {
+      font-weight: 700;
+      font-size: 1.25rem; /* Larger */
+      color: var(--text-main);
+      letter-spacing: -0.01em;
+    }
+
+    .header-subtitle {
+      font-size: 0.95rem; /* Larger */
+      color: var(--text-muted);
+      border-left: 1.5px solid var(--border);
+      padding-left: 16px;
+      display: inline-block;
+    }
+
+    .category-badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--primary);
+      background-color: var(--primary-light);
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.05em;
+    }
+
+    /* Top Tabs Navigation (Replaces Sidebar) */
+    .tabs-container {
+      display: flex;
+      gap: 6px;
+      padding: 10px 24px;
+      background-color: #fafaf9;
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+      white-space: nowrap;
+      scroll-behavior: smooth;
+      flex-shrink: 0;
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+    }
+
+    .tabs-container::-webkit-scrollbar {
+      display: none; /* Hide scrollbar for Chrome/Safari/Opera */
+    }
+
+    .tab-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 36px; /* Larger */
+      height: 36px; /* Larger */
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      font-size: 0.9rem; /* Larger */
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      padding: 0 8px;
+    }
+
+    .tab-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background-color: var(--primary-glow);
+    }
+
+    .tab-btn.active {
+      background-color: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 10px rgba(194, 65, 12, 0.15);
+    }
+
+    /* Main Section */
+    .main-body {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Slides Window and Track */
+    .slides-window {
+      flex: 1;
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+      background-color: var(--bg-card);
+    }
+
+    .slides-track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    /* Slide Styles */
+    .slide {
+      flex: 0 0 100%;
+      height: 100%;
+      box-sizing: border-box;
+      padding: 30px 48px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Beautiful custom scrollbars inside slides */
+    .slide::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .slide::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .slide::-webkit-scrollbar-thumb {
+      background-color: rgba(120, 113, 108, 0.2);
+      border-radius: 10px;
+    }
+
+    .slide::-webkit-scrollbar-thumb:hover {
+      background-color: rgba(120, 113, 108, 0.4);
+    }
+
+    /* Typography & Hierarchy */
+    .slide-title-wrapper {
+      margin-bottom: 24px;
+      border-left: 4px solid var(--primary);
+      padding-left: 16px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .slide-main-title {
+      font-size: 2.1rem;
+      font-weight: 700;
+      margin: 0;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      order: 2;
+    }
+
+    .slide-subtitle {
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 0;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      order: 3;
+    }
+
+    .slide-title-wrapper:has(.slide-subtitle) .slide-main-title {
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+      order: 1;
+    }
+
+    .slide-content {
+      flex: 1;
+      font-size: 1.05rem; /* Larger */
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+
+    .slide-p {
+      margin-bottom: 14px;
+      color: var(--text-secondary);
+      font-size: 1.05rem; /* Larger */
+    }
+
+    .slide-section-title {
+      font-size: 1.15rem; /* Larger */
+      font-weight: 600;
+      margin-top: 0;
+      margin-bottom: 10px;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .slide-section-title svg {
+      flex-shrink: 0;
+      color: var(--primary);
+    }
+
+    /* Grids & Columns for slide layout */
+    .slide-grid-2 {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 32px;
+      height: 100%;
+      align-items: start;
+    }
+
+    @media (max-width: 850px) {
+      .slide-grid-2 {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+    }
+
+    /* List styling */
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+      margin-bottom: 14px;
+    }
+
+    ul li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 8px;
+      line-height: 1.5;
+      font-size: 1.05rem; /* Larger */
+    }
+
+    ul li::before {
+      content: "•";
+      color: var(--primary);
+      font-weight: bold;
+      font-size: 1.3rem;
+      position: absolute;
+      left: 2px;
+      top: -2px;
+    }
+
+    ol {
+      padding-left: 20px;
+      margin-bottom: 14px;
+    }
+
+    ol li {
+      margin-bottom: 8px;
+      line-height: 1.5;
+      padding-left: 4px;
+      font-size: 1.05rem; /* Larger */
+    }
+
+    .intro-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      margin-top: 12px;
+      background: var(--primary-glow);
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px dashed rgba(194, 65, 12, 0.2);
+    }
+
+    /* Media/Figures */
+    figure {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      background-color: #fafaf9;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      width: 100%;
+    }
+
+    figure img {
+      max-width: 100%;
+      height: auto;
+      max-height: 200px; /* Larger */
+      object-fit: contain;
+      border-radius: 6px;
+      transition: var(--transition);
+    }
+
+    .clickable-image {
+      cursor: zoom-in;
+    }
+
+    .clickable-image:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 12px rgba(194, 65, 12, 0.1);
+    }
+
+    figcaption {
+      font-size: 0.78rem; /* Larger */
+      color: var(--text-muted);
+      text-align: center;
+      line-height: 1.4;
+      max-width: 95%;
+    }
+
+    /* Modal Styling */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background-color: rgba(28, 25, 23, 0.5);
+      backdrop-filter: blur(8px);
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-content {
+      margin: auto;
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: 85%;
+      max-height: 75vh;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+      border: 4px solid var(--bg-card);
+      transform: scale(0.9);
+      transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .modal.active .modal-content {
+      transform: scale(1);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 24px;
+      right: 32px;
+      color: #ffffff;
+      font-size: 36px;
+      font-weight: 700;
+      transition: var(--transition);
+      cursor: pointer;
+      z-index: 1010;
+      background: rgba(28, 25, 23, 0.3);
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+
+    .modal-close:hover {
+      color: var(--primary-light);
+      background: rgba(28, 25, 23, 0.6);
+    }
+
+    .modal-caption {
+      position: absolute;
+      bottom: 24px;
+      width: 80%;
+      max-width: 800px;
+      text-align: center;
+      color: #ffffff;
+      font-size: 0.85rem;
+      line-height: 1.4;
+      background: rgba(28, 25, 23, 0.6);
+      padding: 12px 20px;
+      border-radius: 8px;
+    }
+
+    /* Callout Boxes */
+    .alert-box {
+      background-color: var(--primary-light);
+      border-left: 4px solid var(--primary);
+      padding: 14px 16px;
+      border-radius: 6px;
+      margin-top: 16px;
+      font-size: 0.98rem; /* Larger */
+      color: var(--text-main);
+      line-height: 1.5;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .alert-box svg {
+      flex-shrink: 0;
+      color: var(--primary);
+      margin-top: 2px;
+    }
+
+    .note-box {
+      background-color: var(--accent-light);
+      border-left: 4px solid var(--accent);
+      padding: 14px 16px;
+      border-radius: 6px;
+      margin-top: 16px;
+      font-size: 0.98rem; /* Larger */
+      color: var(--text-main);
+      line-height: 1.5;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .note-box svg {
+      flex-shrink: 0;
+      color: var(--accent);
+      margin-top: 2px;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      margin-bottom: 14px;
+      font-size: 0.95rem; /* Larger */
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    th {
+      background-color: #fafaf9;
+      color: var(--text-main);
+      font-weight: 600;
+      padding: 10px 12px; /* Roomier */
+      border-bottom: 2px solid var(--border);
+      text-align: left;
+      font-size: 0.88rem; /* Larger */
+      letter-spacing: 0.02em;
+    }
+
+    td {
+      padding: 10px 12px; /* Roomier */
+      border-bottom: 1px solid var(--border);
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:nth-child(even) {
+      background-color: #fcfbfb;
+    }
+
+    tr:hover {
+      background-color: var(--primary-glow);
+    }
+
+    /* Buttons & Controls */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-main);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-family: var(--font-sans);
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      gap: 8px;
+      outline: none;
+    }
+
+    .btn:hover {
+      background: #fafaf9;
+      border-color: #d6d3d1;
+      color: var(--text-main);
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn-icon {
+      width: 38px;
+      height: 38px;
+      padding: 0;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    /* Footer & Navigation Controls */
+    .footer {
+      height: 60px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background-color: var(--bg-card);
+      z-index: 10;
+      flex-shrink: 0;
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .footer-center {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .slide-counter {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      min-width: 60px;
+      text-align: center;
+    }
+
+    .footer-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Progress Bar */
+    .progress-container {
+      position: absolute;
+      bottom: 60px;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background-color: var(--border);
+      z-index: 10;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background-color: var(--primary);
+      width: 0%;
+      transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    /* Key navigation helper hint */
+    .nav-hint {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .key-badge {
+      background-color: var(--bg-page);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-family: monospace;
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="presentation-container" id="presentation">
+    
+    <!-- Top Header -->
+    <header class="header">
+      <div class="header-left">
+        <span class="header-title">Δρομικά Αγωνίσματα</span>
+        <span class="header-subtitle">Κλασικός Αθλητισμός</span>
+      </div>
+      <div class="header-right">
+        <span class="category-badge" id="category-badge">Εισαγωγή</span>
+      </div>
+    </header>
+
+    <!-- Slide Tabs Row (Scrollable) -->
+    <nav class="tabs-container" id="tabs-container">
+      <!-- Populated by JavaScript -->
+    </nav>
+
+    <!-- Main View Area -->
+    <div class="main-body">
+      
+      <!-- Slides Window -->
+      <main class="slides-window">
+        <div class="slides-track" id="slides-track">
+          
+          <!-- Slide 1: Εισαγωγή -->
+          <div class="slide" id="slide-0">
+            <div class="slide-title-wrapper">
+              <h1 class="slide-main-title">Εισαγωγή</h1>
+            </div>
+            <div class="slide-content">
+              <p class="slide-p">Φαντάσου ότι στέκεσαι στη γραμμή εκκίνησης ενός αγώνα δρόμου. Η καρδιά χτυπά γρήγορα, τα πόδια είναι έτοιμα να εκτιναχθούν μπροστά. Εκείνη η στιγμή δεν εξαρτάται μόνο από την αντοχή σου, αλλά και από την τεχνική σου, τη στρατηγική σου και τη γνώση σου.</p>
+              <p class="slide-p">Τα δρομικά αγωνίσματα αποτελούν τον πυρήνα του κλασικού αθλητισμού. Από τα 100 μέτρα ταχύτητας ως τον μαραθώνιο των 42 χιλιομέτρων, κάθε αγώνισμα έχει τη δική του λογική, τους δικούς του κανόνες και απαιτεί διαφορετικές ικανότητες από τον/την αθλητή/τρια.</p>
+              
+              <div style="margin-top: 15px;">
+                <h3 class="slide-section-title">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                  Σε αυτή τη σελίδα θα ανακαλύψεις:
+                </h3>
+                <ul class="intro-list">
+                  <li>Ποια είναι τα κύρια δρομικά αγωνίσματα.</li>
+                  <li>Ποιοι κανόνες τα διέπουν.</li>
+                  <li>Ποια τεχνική χρησιμοποιούν οι αθλητές/τριες.</li>
+                  <li>Τι ιδιαίτερες ικανότητες χρειάζεται να αναπτύξεις για να διαπρέψεις σε καθένα από τα δρομικά αγωνίσματα.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 2: Κατηγορίες Δρομικών Αγωνισμάτων -->
+          <div class="slide" id="slide-1">
+            <div class="slide-title-wrapper">
+              <h1 class="slide-main-title">Κατηγορίες Δρομικών Αγωνισμάτων</h1>
+            </div>
+            <div class="slide-content">
+              <p class="slide-p" style="font-weight: 500;">Τα δρομικά αγωνίσματα χωρίζονται σε τέσσερις μεγάλες κατηγορίες:</p>
+              <div class="slide-grid-2" style="margin-top: 10px;">
+                <div>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Κατηγορία</th>
+                        <th>Αγωνίσματα</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>Δρόμοι Ταχύτητας (Σπριντ)</strong></td>
+                        <td>100μ, 200μ, 400μ</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Δρόμοι Μέσων Αποστάσεων</strong></td>
+                        <td>800μ, 1500μ</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Δρόμοι Μεγάλων Αποστάσεων</strong></td>
+                        <td>5.000μ, 10.000μ</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Δρόμοι Εμποδίων</strong></td>
+                        <td>110μ εμπόδια (ανδρών), 100μ εμπόδια (γυναικών), 400μ εμπόδια, 3.000μ στιπλ</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Δρόμοι Δρόμου (Road Events)</strong></td>
+                        <td>Ημιμαραθώνιος (21,097χλμ), Μαραθώνιος (42,195χλμ)</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div>
+                  <div class="note-box" style="margin-top: 8px;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <line x1="12" y1="16" x2="12" y2="12"></line>
+                      <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    <div>
+                      Γνωρίζεις ότι… ο μαραθώνιος πήρε το όνομά του από τον θρύλο του αγγελιοφόρου Φειδιππίδη, ο οποίος έτρεξε από τον Μαραθώνα ως την Αθήνα για να αναγγείλει τη νίκη των Ελλήνων κατά των Περσών (490 π.Χ.).
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 3: Βασικοί Κανονισμοί - Εκκίνηση -->
+          <div class="slide" id="slide-2">
+            <div class="slide-title-wrapper">
+              <h1 class="slide-main-title">Βασικοί Κανονισμοί</h1>
+              <h2 class="slide-subtitle">Εκκίνηση</h2>
+            </div>
+            <div class="slide-content">
+              <p class="slide-p" style="font-weight: 500;">Οι κανόνες των δρομικών αγωνισμάτων καθορίζονται από τη World Athletics (Παγκόσμια Ομοσπονδία Στίβου) και ισχύουν διεθνώς.</p>
+              
+              <div class="slide-grid-2">
+                <div>
+                  <h3 class="slide-section-title">Εκκίνηση:</h3>
+                  <ul>
+                    <li>Στα αγωνίσματα έως και 400μ οι αθλητές/τριες εκκινούν από χαμηλή θέση εκκίνησης με χρήση τεχνικού υποβοηθητή εκκίνησης.</li>
+                    <li>Στα αγωνίσματα από 800μ και πάνω χρησιμοποιείται η όρθια θέση εκκίνησης.</li>
+                    <li>Η εκκίνηση γίνεται μετά τις εντολές: «Στις θέσεις σας» &rarr; «Έτοιμοι» &rarr; πιστολιά ή ηχητικό σήμα.</li>
+                    <li><strong>Ψευδής εκκίνηση:</strong> Αν ο/η αθλητής/τρια κινηθεί πριν το σήμα, αποκλείεται (από το 2010, ισχύει μηδενική ανοχή &mdash; ακόμα και η πρώτη ψευδής εκκίνηση οδηγεί σε αποκλεισμό).</li>
+                  </ul>
+                </div>
+                <div class="slide-media">
+                  <figure>
+                    <img src="images/image-run1.jpg" alt="Θέση εκκίνησης" class="clickable-image" title="Κλικ για μεγέθυνση">
+                    <figcaption>Mentorhub. (2026, Φεβρουάριος). Αθλητής σπριντ σε θέση εκκίνησης στα μπλοκ [Φωτογραφία].</figcaption>
+                  </figure>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 4: Διαδρομή — Πίστα -->
+          <div class="slide" id="slide-3">
+            <div class="slide-title-wrapper">
+              <h1 class="slide-main-title">Βασικοί Κανονισμοί</h1>
+              <h2 class="slide-subtitle">Διαδρομή — Πίστα</h2>
+            </div>
+            <div class="slide-content">
+              <p class="slide-p">Οι κανονισμοί στα δρομικά αγωνίσματα έχουν ως στόχο να εξασφαλίζουν δίκαιο ανταγωνισμό και σωστή διεξαγωγή του αγώνα. Οι αθλητές/τριες πρέπει να είναι απόλυτα συγκεντρωμένοι/ες στην εκκίνηση, καθώς ακόμη και μία πολύ μικρή κίνηση πριν από το σήμα μπορεί να θεωρηθεί παράβαση. Για τον λόγο αυτό χρησιμοποιούνται σύγχρονα συστήματα ανίχνευσης κινήσης, τα οποία βοηθούν τους/τις κριτές να εντοπίζουν με ακρίβεια τις ψευδείς εκκινήσεις.</p>
+              
+              <div style="margin-top: 15px;">
+                <h3 class="slide-section-title">Διαδρομή &mdash; Πίστα:</h3>
+                <ul>
+                  <li>Η επίσημη πίστα έχει μήκος 400 μέτρα και αποτελείται από 8 διαδρόμους πλάτους 1,22μ έκαστος.</li>
+                  <li>Στα αγωνίσματα έως 400μ (και 4&times;400μ σκυταλοδρομία) οι αθλητές/τριες τρέχουν ο/η καθένας/καθεμία στον δικό του/της διάδρομο από αρχή έως τέλος.</li>
+                  <li>Στα 800μ οι αθλητές/τριες αρχικά τρέχουν σε διαδρόμους και μετά από συγκεκριμένο σημείο επιτρέπεται η συγχώνευση.</li>
+                  <li>Από 1.500μ και πάνω η εκκίνηση γίνεται χωρίς διαχωρισμό διαδρόμων.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 5: Διαδρομή — Πίστα (Σχέδιο & Κατασκευή) -->
+          <div class="slide" id="slide-4">
+            <div class="slide-title-wrapper">
+              <h1 class="slide-main-title">Βασικοί Κανονισμοί</h1>
+              <h2 class="slide-subtitle">Διαδρομή — Πίστα (Σχέδιο & Κατασκευή)</h2>
+            </div>
+            <div class="slide-content">
+              <div class="slide-grid-2">
+                <div>
+                  <p class="slide-p" style="margin-top: 10px;">Η κατασκευή της πίστας στον στίβο είναι σχεδιασμένη με συγκεκριμένες προδιαγραφές, ώστε να εξασφαλίζεται η ασφάλεια και η ομαλή διεξαγωγή των αγώνων. Οι γραμμές και οι σημάνσεις βοηθούν τους/τις αθλητές/τριες να γνωρίζουν ακριβώς τη θέση και τη διαδρομή κατά τη διάρκεια του αγώνα, ενώ παράλληλα διευκολύνουν τους/τις κριτές στην παρακολούθηση της σωστής τήρησης των κανονισμών.</p>
+                </div>
+                <div class="slide-media">
+                  <figure>
+                    <img src="images/image-run2.png" alt="Κάτοψη σταδίου" class="clickable-image" style="max-height: 160px;" title="Κλικ για μεγέθυνση">
+                    <figcaption>Mentorhub. (2026, Φεβρουάριος). Κάτοψη σταδίου στίβου με οκτώ διαδρομές [Εικονογράφηση].</figcaption>
+                  </figure>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 6: Αγωνίσματα Εμποδίων -->
+          <div class="slide" id="slide-5">
+            <div class="slide-title-wrapper">
+              <h1 class="slide-main-title">Βασικοί Κανονισμοί</h1>
+              <h2 class="slide-subtitle">Αγωνίσματα Εμποδίων</h2>
+            </div>
+            <div class="slide-content">
+              <p class="slide-p" style="font-weight: 500;">Τα αγωνίσματα με εμπόδια απαιτούν από τους/τις αθλητές/τριες να συνδυάζουν ταχύτητα, ρυθμό και σωστό συγχρονισμό στις κινήσεις τους. Η τεχνική στο πέρασμα των εμποδίων είναι ιδιαίτερα σημαντική, καθώς βοηθά τον/την αθλητή/τρια να διατηρεί την ταχύτητά του/της χωρίς να χάνει ισορροπία ή χρόνο κατά τη διάρκεια του αγώνα.</p>
+              
+              <div style="margin-top: 15px;">
+                <h3 class="slide-section-title">Κανόνες εμποδίων:</h3>
+                <ul>
+                  <li><strong>110μ εμπόδια (ανδρών):</strong> 10 εμπόδια ύψους 1,067μ, απόσταση μεταξύ τους 9,14μ.</li>
+                  <li><strong>100μ εμπόδια (γυναικών):</strong> 10 εμπόδια ύψους 0,84μ, απόσταση μεταξύ τους 8,50μ.</li>
+                  <li><strong>400μ εμπόδια:</strong> 10 εμπόδια ύψους 0,914μ (ανδρών) / 0,762μ (γυναικών).</li>
+                  <li>Η σκόπιμη ανατροπή εμποδίου επιφέρει αποκλεισμό, ενώ η τυχαία ανατροπή δεν τιμωρείται.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 7: Στιπλ (3.000μ με Εμπόδια) -->
+          <div class="slide" id="slide-6">
+            <div class="slide-title-wrapper">
+              <h1 class="slide-main-title">Βασικοί Κανονισμοί</h1>
+              <h2 class="slide-subtitle">Στιπλ (3.000μ με Εμπόδια)</h2>
+            </div>
+            <div class="slide-content">
+              <p class="slide-p">Το αγώνισμα του στιπλ θεωρείται από τα πιο απαιτητικά αγωνίσματα του στίβου, καθώς συνδυάζει στοιχεία αντοχής και τεχνικής. Οι αθλητές/τριες πρέπει να έχουν καλή ισορροπία και σωστό ρυθμό, ιδιαίτερα κατά το πέρασμα από τη διάβαση του νερού, όπου απαιτείται σωστός υπολογισμός του άλματος για να διατηρηθεί η ταχύτητα στον αγώνα.</p>
+              
+              <div style="margin-top: 15px;">
+                <h3 class="slide-section-title">Κανόνες στιπλ:</h3>
+                <ul>
+                  <li>Αποτελείται από 28 εμπόδια και 7 διαβάσεις νερού.</li>
+                  <li>Τα εμπόδια είναι σταθερά (δεν πέφτουν) και ύψους 0,914μ (ανδρών) / 0,762μ (γυναικών).</li>
+                  <li>Οι αθλητές/τριες μπορούν να πατήσουν πάνω στο εμπόδιο (δεν επιβάλλεται να πηδήσουν πάνω από αυτό χωρίς επαφή).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 8: Τερματισμός -->
+          <div class="slide" id="slide-7">
+            <div class="slide-title-wrapper">
+              <h1 class="slide-main-title">Βασικοί Κανονισμοί</h1>
+              <h2 class="slide-subtitle">Τερματισμός</h2>
+            </div>
+            <div class="slide-content">
+              <p class="slide-p">Στους σύγχρονους αγώνες στίβου η τεχνολογία παίζει σημαντικό ρόλο στην καταγραφή των αποτελεσμάτων. Οι ειδικές κάμερες του συστήματος φωτοφίνις καταγράφουν τη στιγμή του τερματισμού με πολύ μεγάλη ακρίβεια, επιτρέποντας στους/στις κριτές να ξεχωρίζουν ακόμη και πολύ μικρές διαφορές μεταξύ των αθλητών/τριών. Έτσι διασφαλίζεται ότι το αποτέλεσμα του αγώνα είναι δίκαιο και αξιόπιστο.</p>
+              
+              <div style="margin-top: 15px;">
+                <h3 class="slide-section-title">Κανόνες τερματισμού:</h3>
+                <ul>
+                  <li>Ο/Η αθλητής/τρια τερματίζει όταν το κορμί του/της (κορμός, χωρίς τα χέρια ή τα πόδια) περάσει το επίπεδο της γραμμής τερματισμού.</li>
+                  <li>Χρησιμοποιείται ηλεκτρονικό σύστημα χρονομέτρησης (photofinish) με ακρίβεια 1/1000 του δευτερολέπτου.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 9: Τεχνική Σπριντ (100μ – 400μ) -->
+          <div class="slide" id="slide-8">
+            <div class="slide-title-wrapper">
+              <h1 class="slide-main-title">Τεχνική Εκτέλεσης</h1>
+              <h2 class="slide-subtitle">Τεχνική Σπριντ (100μ – 400μ)</h2>
+            </div>
+            <div class="slide-content">
+              <p class="slide-p" style="font-weight: 500; margin-bottom: 8px;">Η τεχνική του σπριντ χωρίζεται σε τρεις φάσεις:</p>
+              
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 10px;">
+                <div style="background-color: var(--primary-glow); padding: 14px; border-radius: 8px; border: 1px solid var(--border); font-size: 0.85rem;">
+                  <h4 style="color: var(--primary); font-weight: 700; margin-bottom: 6px;">Φάση 1: Εκκίνηση και Επιτάχυνση (0–30μ)</h4>
+                  <ul style="padding-left: 0; margin-bottom: 0;">
+                    <li style="font-size: 0.85rem; padding-left: 15px; margin-bottom: 4px;">Ο κορμός είναι κεκλιμένος προς τα εμπρός (γωνία ~45°) για να αξιοποιηθεί η αδράνεια.</li>
+                    <li style="font-size: 0.85rem; padding-left: 15px; margin-bottom: 4px;">Τα βήματα είναι σύντομα και δυναμικά, με έντονη ώθηση από τα μπλοκ.</li>
+                    <li style="font-size: 0.85rem; padding-left: 15px; margin-bottom: 0;">Τα χέρια κινούνται εναλλάξ με ενέργεια σε γωνία 90° στον αγκώνα.</li>
+                  </ul>
+                </div>
+                
+                <div style="background-color: var(--primary-glow); padding: 14px; border-radius: 8px; border: 1px solid var(--border); font-size: 0.85rem;">
+                  <h4 style="color: var(--primary); font-weight: 700; margin-bottom: 6px;">Φάση 2: Μέγιστη Ταχύτητα (30–60μ)</h4>
+                  <ul style="padding-left: 0; margin-bottom: 0;">
+                    <li style="font-size: 0.85rem; padding-left: 15px; margin-bottom: 4px;">Ο κορμός ανορθώνεται σταδιακά (κατακόρυφη στάση).</li>
+                    <li style="font-size: 0.85rem; padding-left: 15px; margin-bottom: 4px;">Τα βήματα επιμηκύνονται (ο/η αθλητής/τρια «κάθεται» στον αέρα).</li>
+                    <li style="font-size: 0.85rem; padding-left: 15px; margin-bottom: 4px;">Η επαφή με το έδαφος γίνεται στο μπροστινό μέρος του ποδιού (акροποδητί).</li>
+                    <li style="font-size: 0.85rem; padding-left: 15px; margin-bottom: 0;">Ο στρόφιγγας του ισχίου είναι ο κυρίαρχος μοχλός παραγωγής ισχύος.</li>
+                  </ul>
+                </div>
+                
+                <div style="background-color: var(--primary-glow); padding: 14px; border-radius: 8px; border: 1px solid var(--border); font-size: 0.85rem;">
+                  <h4 style="color: var(--primary); font-weight: 700; margin-bottom: 6px;">Φάση 3: Διατήρηση Ταχύτητας (60–100μ)</h4>
+                  <ul style="padding-left: 0; margin-bottom: 0;">
+                    <li style="font-size: 0.85rem; padding-left: 15px; margin-bottom: 4px;">Στόχος είναι η ελαχιστοποίηση της επιβράδυνσης (αναπόφευκτη μετά τα 60–70μ λόγω κόπωσης).</li>
+                    <li style="font-size: 0.85rem; padding-left: 15px; margin-bottom: 0;">Η χαλάρωση των μυών του προσώπου και του λαιμού βοηθά στη διατήρηση οικονομίας κίνησης.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 10: Τεχνική Δρόμων Μέσων Αποστάσεων (800μ – 1500μ) -->
+          <div class="slide" id="slide-9">
+            <div class="slide-title-wrapper">
+              <h1 class="slide-main-title">Τεχνική Εκτέλεσης</h1>
+              <h2 class="slide-subtitle">Τεχνική Δρόμων Μέσων Αποστάσεων (800μ – 1500μ)</h2>
+            </div>
+            <div class="slide-content">
+              <p class="slide-p">Στα αγωνίσματα μέσων αποστάσεων εκτός από τη φυσική κατάσταση, σημαντικό ρόλο παίζει και η σωστή στρατηγική του αγώνα. Οι αθλητές/τριες πρέπει να διαχειρίζονται την ενέργειά τους σε όλη τη διάρκεια της κούρσας και να επιλέγουν την κατάλληλη στιγμή για να αυξήσουν ταχύτητα, ιδιαίτερα στα τελευταία μέτρα πριν τον τερματισμό.</p>
+              
+              <div style="margin-top: 15px;">
+                <h3 class="slide-section-title">Στοιχεία τεχνικής:</h3>
+                <ul>
+                  <li><strong>Στάση σώματος:</strong> Ελαφρά κλίση προς τα εμπρός, χαλαρός ώμος.</li>
+                  <li><strong>Βηματισμός:</strong> Μεσαίο μήκος βήματος &mdash; ούτε τόσο κοντό όσο στο σπριντ, ούτε τόσο οικονομικό όσο στις μεγάλες αποστάσεις.</li>
+                  <li><strong>Αναπνοή:</strong> Ρυθμική, συνήθως 2:2 (δύο βήματα εισπνοή, δύο εκπνοή) ή 3:2 (τρία βήματα εισπνοή, δύο εκπνοή).</li>
+                  <li><strong>Τακτική:</strong> Σημαντικό ρόλο παίζει η θέση στην ομάδα (drafting &mdash; τρέξιμο πίσω από άλλον/α αθλητή/τρια για εξοικονόμηση ενέργειας) και η επιλογή της κατάλληλης στιγμής για το τελικό «φινάλε» (kick).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 11: Τεχνική Δρόμων Μεγάλων Αποστάσεων (5.000μ – 10.000μ) -->
+          <div class="slide" id="slide-10">
+            <div class="slide-title-wrapper">
+              <h1 class="slide-main-title">Τεχνική Εκτέλεσης</h1>
+              <h2 class="slide-subtitle">Τεχνική Δρόμων Μεγάλων Αποστάσεων (5.000μ – 10.000μ)</h2>
+            </div>
+            <div class="slide-content">
+              <p class="slide-p">Στους δρόμους μεγάλων αποστάσεων η αντοχή και η σωστή διαχείριση της ενέργειας είναι ιδιαίτερα σημαντικές. Οι αθλητές/τριες προσπαθούν να διατηρούν έναν σταθερό ρυθμό σε όλη τη διάρκεια του αγώνα, αποφεύγοντας τις απότομες αλλαγές ταχύτητας που μπορεί να τους/τις κουράσουν γρήγορα. Η συγκέντρωση και η σωστή κατανομή των δυνάμεων βοηθούν τον/τη δρομέα να ολοκληρώσει αποτελεσματικά την μεγάλη απόσταση.</p>
+              
+              <div style="margin-top: 15px;">
+                <h3 class="slide-section-title">Στοιχεία τεχνικής:</h3>
+                <ul>
+                  <li><strong>Οικονομία κίνησης:</strong> Ελάχιστη κατανάλωση ενέργειας για κάθε μέτρο που διανύεται.</li>
+                  <li><strong>Στάση:</strong> Σχεδόν κατακόρυφη, χαλαρή.</li>
+                  <li><strong>Πατημασιά:</strong> Ενδιάμεση (midfoot strike) ή ακροποδητί &mdash; αποφυγή «χτυπήματος» στη φτέρνα (heel strike) που αυξάνει τον κίνδυνο τραυματισμού.</li>
+                  <li><strong>Ρυθμός:</strong> Ο/Η αθλητής/τρια επιλέγει έναν σταθερό ρυθμό (pace) που μπορεί να διατηρήσει για ολόκληρη την απόσταση.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 12: Τεχνική Εμποδίων -->
+          <div class="slide" id="slide-11">
+            <div class="slide-title-wrapper">
+              <h1 class="slide-main-title">Τεχνική Εκτέλεσης</h1>
+              <h2 class="slide-subtitle">Τεχνική Εμποδίων</h2>
+            </div>
+            <div class="slide-content">
+              <div class="slide-grid-2">
+                <div>
+                  <p class="slide-p" style="font-size: 0.95rem; margin-bottom: 8px;">Η επιτυχία στα αγωνίσματα με εμπόδια εξαρτάται σε μεγάλο βαθμό από τον σωστό ρυθμό και τον συγχρονισμό των κινήσεων. Οι αθλητές/τριες προσπαθούν να περνούν τα εμπόδια με ομαλή και γρήγορη κίνηση, ώστε να διατηρούν την ταχύτητά τους χωρίς μεγάλες διακοπές στον ρυθμό του τρεξίματος. Η συνεχής εξάσκηση βοηθά στην ανάπτυξη καλύτερου συντονισμού και ισορροπίας κατά τη διάρκεια του αγώνα.</p>
+                  
+                  <ul style="font-size: 0.9rem; margin-bottom: 0;">
+                    <li><strong>Προσέγγιση:</strong> 8 βήματα στο εμπόδιο (για τα 110μ ανδρών), στη συνέχεια 3 βήματα μεταξύ εμποδίων.</li>
+                    <li><strong>Υπέρβαση:</strong> Το «μπροστινό πόδι» (lead leg) εκτείνεται οριζόντια πάνω από το εμπόδιο, ενώ το «πίσω πόδι» (trail leg) ακολουθεί με κάμψη γόνατος και πλαϊνή κίνηση.</li>
+                    <li><strong>Στόχος:</strong> Ελάχιστη απώλεια ταχύτητας κατά την υπέρβαση &mdash; το εμπόδιο δεν αντιμετωπίζεται ως εμπόδιο, αλλά ως μέρος του σπριντ.</li>
+                    <li><strong>Προσγείωση:</strong> Άμεση επαναφορά στον ρυθμό του σπριντ.</li>
+                  </ul>
+                </div>
+                <div class="slide-media">
+                  <figure>
+                    <img src="images/image-run3.jpg" alt="Υπέρβαση εμποδίου" class="clickable-image" style="max-height: 160px;" title="Κλικ για μεγέθυνση">
+                    <figcaption>Mentorhub. (2026, Φεβρουάριος). Αθλητής στίβου κατά τη φάση υπέρβασης εμποδίου [Φωτογραφία].</figcaption>
+                  </figure>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 13: Αθλητικές Ικανότητες ανά Αγώνισμα -->
+          <div class="slide" id="slide-12">
+            <div class="slide-title-wrapper">
+              <h1 class="slide-main-title">Αθλητικές Ικανότητες ανά Αγώνισμα</h1>
+            </div>
+            <div class="slide-content">
+              <p class="slide-p" style="font-weight: 500; font-size: 0.95rem; margin-bottom: 8px;">Κάθε δρομικό αγώνισμα απαιτεί διαφορετικό «προφίλ» ικανοτήτων:</p>
+              
+              <div class="slide-grid-2">
+                <div>
+                  <table style="font-size: 0.85rem;">
+                    <thead>
+                      <tr>
+                        <th>Αγώνισμα</th>
+                        <th>Κύριες Ικανότητες</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>100μ – 200μ</strong></td>
+                        <td>Εκρηκτική δύναμη, ταχύτητα αντίδρασης, νευρομυϊκός συντονισμός</td>
+                      </tr>
+                      <tr>
+                        <td><strong>400μ</strong></td>
+                        <td>Ταχύτητα, ειδική αντοχή ταχύτητας, ψυχική σκληρότητα</td>
+                      </tr>
+                      <tr>
+                        <td><strong>800μ – 1500μ</strong></td>
+                        <td>Αερόβια/αναερόβια ικανότητα, τακτική νοημοσύνη, ταχύτητα στο φινάλε</td>
+                      </tr>
+                      <tr>
+                        <td><strong>5.000μ – 10.000μ</strong></td>
+                        <td>Αερόβια αντοχή, VO₂max, οικονομία τρεξίματος</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Εμπόδια</strong></td>
+                        <td>Ταχύτητα, ευλυγισία, ρυθμός, τεχνική</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Στιπλ</strong></td>
+                        <td>Αερόβια αντοχή, τεχνική εμποδίων, συντονισμός</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Μαραθώνιος</strong></td>
+                        <td>Αερόβια αντοχή, αντοχή κόπωσης, ψυχική ανθεκτικότητα, διατροφική στρατηγική</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div>
+                  <div class="note-box" style="margin-top: 0; padding: 12px 14px; font-size: 0.88rem;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <line x1="12" y1="16" x2="12" y2="12"></line>
+                      <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    <div>
+                      <strong>Τι είναι το VO₂max;</strong> Είναι η μέγιστη ποσότητα οξυγόνου που μπορεί να χρησιμοποιήσει ο οργανισμός σου κατά τη διάρκεια έντονης άσκησης. Όσο υψηλότερο, τόσο καλύτερη αερόβια ικανότητα.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 14: Συμπέρασμα -->
+          <div class="slide" id="slide-13">
+            <div class="slide-title-wrapper">
+              <h1 class="slide-main-title">Συμπέρασμα</h1>
+            </div>
+            <div class="slide-content" style="display: flex; align-items: center; justify-content: center; height: 100%;">
+              <p class="slide-p" style="font-size: 1.25rem; font-weight: 500; text-align: center; max-width: 800px; line-height: 1.8; color: var(--text-main); background-color: var(--primary-glow); padding: 30px; border-radius: 12px; border: 1.5px dashed rgba(194, 65, 12, 0.3);">Κάθε αγώνισμα του στίβου απαιτεί διαφορετικό συνδυασμό φυσικών και τεχνικών ικανοτήτων από τους/τις αθλητές/τριες. Για τον λόγο αυτό, η προπόνηση προσαρμόζεται ανάλογα με το αγώνισμα, ώστε να αναπτύσσονται οι κατάλληλες δεξιότητες και η φυσική κατάσταση που χρειάζεται κάθε δρομέας για να αποδώσει καλύτερα στον αγώνα.</p>
+            </div>
+          </div>
+
+        </div>
+      </main>
+    </div>
+
+    <!-- Thin Progress Bar Line -->
+    <div class="progress-container">
+      <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <!-- Bottom Controls -->
+    <footer class="footer">
+      <div class="footer-left">
+        <div class="nav-hint">
+          <span class="key-badge">&larr;</span>
+          <span class="key-badge">&rarr;</span>
+          <span>Πλοήγηση</span>
+        </div>
+      </div>
+      
+      <div class="footer-center">
+        <button id="prev-btn" class="btn btn-icon" title="Προηγούμενη Διαφάνεια">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <span class="slide-counter" id="slide-counter">1 / 14</span>
+        <button id="next-btn" class="btn btn-icon" title="Επόμενη Διαφάνεια">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <div class="footer-right"></div>
+    </footer>
+
+  </div>
+
+  <!-- Image Expansion Modal Overlay -->
+  <div id="image-modal" class="modal" role="dialog" aria-modal="true" aria-label="Μεγέθυνση εικόνας">
+    <span class="modal-close" title="Κλείσιμο">&times;</span>
+    <img class="modal-content" id="modal-img" src="" alt="">
+    <div id="modal-caption" class="modal-caption"></div>
+  </div>
+
+  <script>
+    // List of slides with their titles & structural categories
+    const slideData = [
+      { id: 0, title: "Εισαγωγή", category: "Εισαγωγή" },
+      { id: 1, title: "Κατηγορίες Αγωνισμάτων", category: "Κατηγορίες" },
+      { id: 2, title: "Κανονισμοί: Εκκίνηση", category: "Κανονισμοί" },
+      { id: 3, title: "Κανονισμοί: Διαδρομή — Πίστα", category: "Κανονισμοί" },
+      { id: 4, title: "Κανονισμοί: Στάδιο — Διαδρομές", category: "Κανονισμοί" },
+      { id: 5, title: "Κανονισμοί: Εμπόδια", category: "Κανονισμοί" },
+      { id: 6, title: "Κανονισμοί: Στιπλ", category: "Κανονισμοί" },
+      { id: 7, title: "Κανονισμοί: Τερματισμός", category: "Κανονισμοί" },
+      { id: 8, title: "Τεχνική: Σπριντ", category: "Τεχνική" },
+      { id: 9, title: "Τεχνική: Μέσες Αποστάσεις", category: "Τεχνική" },
+      { id: 10, title: "Τεχνική: Μεγάλες Αποστάσεις", category: "Τεχνική" },
+      { id: 11, title: "Τεχνική: Εμπόδια", category: "Τεχνική" },
+      { id: 12, title: "Αθλητικές Ικανότητες", category: "Ικανότητες" },
+      { id: 13, title: "Συμπέρασμα", category: "Συμπέρασμα" }
+    ];
+
+    let currentSlide = 0;
+    const totalSlides = slideData.length;
+
+    // DOM Elements
+    const track = document.getElementById('slides-track');
+    const tabsContainer = document.getElementById('tabs-container');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const slideCounter = document.getElementById('slide-counter');
+    const progressBar = document.getElementById('progress-bar');
+    const categoryBadge = document.getElementById('category-badge');
+    const container = document.getElementById('presentation');
+
+    // Modal DOM Elements
+    const modal = document.getElementById('image-modal');
+    const modalImg = document.getElementById('modal-img');
+    const modalCaption = document.getElementById('modal-caption');
+    const modalClose = document.querySelector('.modal-close');
+    const clickableImages = document.querySelectorAll('.clickable-image');
+
+    // Populate Slide Tabs row
+    function buildTabs() {
+      tabsContainer.innerHTML = '';
+      slideData.forEach((slide, index) => {
+        const button = document.createElement('button');
+        button.className = `tab-btn ${index === currentSlide ? 'active' : ''}`;
+        button.dataset.index = index;
+        button.title = slide.title;
+        button.textContent = index + 1;
+        
+        button.addEventListener('click', () => {
+          goToSlide(index);
+        });
+        
+        tabsContainer.appendChild(button);
+      });
+    }
+
+    // Slide navigation logic
+    function goToSlide(index) {
+      if (index < 0 || index >= totalSlides) return;
+      
+      currentSlide = index;
+      
+      // Slide the track
+      track.style.transform = `translateX(-${currentSlide * 100}%)`;
+      
+      // Update tab buttons active state
+      const tabs = tabsContainer.querySelectorAll('.tab-btn');
+      tabs.forEach((tab, idx) => {
+        if (idx === currentSlide) {
+          tab.classList.add('active');
+          tab.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        } else {
+          tab.classList.remove('active');
+        }
+      });
+      
+      // Update footer controls
+      slideCounter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+      prevBtn.disabled = currentSlide === 0;
+      nextBtn.disabled = currentSlide === totalSlides - 1;
+      
+      // Update progress bar
+      const progressPercent = (currentSlide / (totalSlides - 1)) * 100;
+      progressBar.style.width = `${progressPercent}%`;
+      
+      // Update category tag
+      categoryBadge.textContent = slideData[currentSlide].category;
+    }
+
+    // Image Modal Expansion Logic
+    clickableImages.forEach(img => {
+      img.addEventListener('click', () => {
+        modal.classList.add('active');
+        modalImg.src = img.src;
+        modalImg.alt = img.alt;
+        
+        // Find caption inside sibling figure / figcaption element
+        const figure = img.closest('figure');
+        const figcaption = figure ? figure.querySelector('figcaption') : null;
+        modalCaption.textContent = figcaption ? figcaption.textContent : '';
+      });
+    });
+
+    function closeModal() {
+      modal.classList.remove('active');
+    }
+
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal || e.target === modalClose) {
+        closeModal();
+      }
+    });
+
+    // Event Listeners for slide buttons
+    prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1));
+    nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
+
+    // Keyboard Shortcuts (Arrow keys & space to change slides, Escape to close modal)
+    document.addEventListener('keydown', (e) => {
+      if (modal.classList.contains('active')) {
+        if (e.key === 'Escape') {
+          closeModal();
+        }
+        return; // Disable slide advance while viewing modal
+      }
+
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        goToSlide(currentSlide + 1);
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        goToSlide(currentSlide - 1);
+      }
+    });
+
+    // Swipe Support for Touch Screens
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    container.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    container.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+      if (modal.classList.contains('active')) return;
+      const threshold = 50;
+      if (touchStartX - touchEndX > threshold) {
+        goToSlide(currentSlide + 1);
+      } else if (touchEndX - touchStartX > threshold) {
+        goToSlide(currentSlide - 1);
+      }
+    }
+
+    // Initialize Presentation
+    buildTabs();
+    goToSlide(0);
+  </script>
+</body>
+</html>
