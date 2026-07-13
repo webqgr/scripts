@@ -52,13 +52,14 @@
 
 body {
     font-family: 'Outfit', sans-serif;
-    background-color: var(--bg-main);
+    background-color: #ebdcd0; /* Beautiful outer page desktop background */
     color: var(--text-primary);
     line-height: 1.5;
     overflow: hidden; /* Prevent body scrolling to avoid dual-scrollbar issues */
     height: 100vh;
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Scrollbars styling */
@@ -75,6 +76,21 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
     background: var(--text-secondary);
+}
+
+/* Page Wrapper to limit the full page height */
+.page-wrapper {
+    width: 100%;
+    height: 100vh;
+    max-height: 820px; /* Constrains full page height to be under 850px */
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-main);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
 }
 
 /* Header with Logo and Slide Tabs in the same slim row */
@@ -170,7 +186,6 @@ header {
 .app-container {
     display: flex;
     flex: 1;
-    height: calc(100vh - var(--header-height));
     overflow: hidden;
     position: relative;
     justify-content: center;
@@ -758,6 +773,19 @@ ul.checklist li::before {
 }
 
 /* Responsive Layout Adjustments */
+@media (max-width: 820px), (max-height: 820px) {
+    body {
+        background-color: var(--bg-main);
+    }
+    
+    .page-wrapper {
+        max-height: 100vh;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+    }
+}
+
 @media (max-width: 820px) {
     header {
         flex-direction: column;
@@ -781,11 +809,6 @@ ul.checklist li::before {
         height: auto;
         min-height: calc(100vh - 100px);
         overflow: visible;
-    }
-    
-    body {
-        height: auto;
-        overflow-y: auto;
     }
     
     .content-area {
@@ -820,567 +843,570 @@ ul.checklist li::before {
 </head>
 <body>
 
-    <!-- Header containing unified Logo and Slide tabs -->
-    <header>
-        <div class="logo-container">
-            <span class="logo-icon">⚡</span>
-            <span class="logo-text">Διατρέφομαι υγιεινά και αθλούμαι καθημερινά</span>
-        </div>
-        <div class="tabs-container">
-            <button class="nav-item active" data-slide="0">1</button>
-            <button class="nav-item" data-slide="1">2</button>
-            <button class="nav-item" data-slide="2">3</button>
-            <button class="nav-item" data-slide="3">4</button>
-            <button class="nav-item" data-slide="4">5</button>
-            <button class="nav-item" data-slide="5">6</button>
-            <button class="nav-item" data-slide="6">7</button>
-            <button class="nav-item" data-slide="7">8</button>
-        </div>
-    </header>
+    <!-- The central restricted wrapper limiting layout height under 850px -->
+    <div class="page-wrapper">
+        <!-- Header containing unified Logo and Slide tabs -->
+        <header>
+            <div class="logo-container">
+                <span class="logo-icon">⚡</span>
+                <span class="logo-text">Διατρέφομαι υγιεινά και αθλούμαι καθημερινά</span>
+            </div>
+            <div class="tabs-container">
+                <button class="nav-item active" data-slide="0">1</button>
+                <button class="nav-item" data-slide="1">2</button>
+                <button class="nav-item" data-slide="2">3</button>
+                <button class="nav-item" data-slide="3">4</button>
+                <button class="nav-item" data-slide="4">5</button>
+                <button class="nav-item" data-slide="5">6</button>
+                <button class="nav-item" data-slide="6">7</button>
+                <button class="nav-item" data-slide="7">8</button>
+            </div>
+        </header>
 
-    <div class="app-container">
-        <!-- Main Content Area -->
-        <main class="content-area">
+        <div class="app-container">
+            <!-- Main Content Area -->
+            <main class="content-area">
 
-            <div class="slides-wrapper">
-                
-                <!-- SLIDE 1: ΕΙΣΑΓΩΓΗ -->
-                <section class="slide active" id="slide-0">
-                    <div class="intro-hero">
-                        <h1>Εισαγωγή</h1>
-                        <p>Κάθε μέρα τρως, πίνεις και κινείσαι. Αυτές οι τρεις απλές πράξεις κρύβουν πίσω τους έναν αόρατο «υπολογισμό» που το σώμα σου κάνει αδιάκοπα: πόση ενέργεια παίρνεις από τις τροφές και πόση ενέργεια ξοδεύεις με τις δραστηριότητές σου. Όταν αυτή η ισορροπία διαταράσσεται για μεγάλο χρονικό διάστημα, το σωματικό σου βάρος αλλάζει.</p>
-                        <p style="margin-top: 1rem; font-weight: 500; color: var(--accent-primary);">Σε αυτό το μάθημα θα ανακαλύψεις τι είναι οι θερμίδες, πώς τις προσλαμβάνεις από τα τρόφιμα, πώς τις δαπανάς μέσα από την καθημερινή σου ζωή και το πιο εκπληκτικό πόση άσκηση χρειάζεται για να «κάψεις» αυτά που τρως.</p>
-                    </div>
-                </section>
-
-                <!-- SLIDE 2: ΤΙ ΕΙΝΑΙ ΟΙ ΘΕΡΜΙΔΕΣ; -->
-                <section class="slide" id="slide-1">
-                    <h1>Τι είναι οι Θερμίδες;</h1>
+                <div class="slides-wrapper">
                     
-                    <div class="grid-2">
-                        <div class="card">
-                            <h2>Definition / Ορισμός</h2>
-                            <p>Η θερμίδα (kcal) είναι η μονάδα μέτρησης της ενέργειας που περιέχεται στα τρόφιμα και που δαπανά ο οργανισμός κατά τη λειτουργία του. Στην καθημερινή ζωή, όταν λέμε «θερμίδα», εννοούμε στην πραγματικότητα «χιλιοθερμίδα» (kcal) δηλαδή την ποσότητα ενέργειας που χρειάζεται για να θερμανθεί 1 λίτρο νερού κατά 1°C.</p>
-                            <div class="highlight-box">
-                                <p>Στις ετικέτες τροφίμων και στις διατροφικές οδηγίες, οι τιμές που βλέπεις αναφέρονται πάντα σε kcal (χιλιοθερμίδες).</p>
-                            </div>
+                    <!-- SLIDE 1: ΕΙΣΑΓΩΓΗ -->
+                    <section class="slide active" id="slide-0">
+                        <div class="intro-hero">
+                            <h1>Εισαγωγή</h1>
+                            <p>Κάθε μέρα τρως, πίνεις και κινείσαι. Αυτές οι τρεις απλές πράξεις κρύβουν πίσω τους έναν αόρατο «υπολογισμό» που το σώμα σου κάνει αδιάκοπα: πόση ενέργεια παίρνεις από τις τροφές και πόση ενέργεια ξοδεύεις με τις δραστηριότητές σου. Όταν αυτή η ισορροπία διαταράσσεται για μεγάλο χρονικό διάστημα, το σωματικό σου βάρος αλλάζει.</p>
+                            <p style="margin-top: 1rem; font-weight: 500; color: var(--accent-primary);">Σε αυτό το μάθημα θα ανακαλύψεις τι είναι οι θερμίδες, πώς τις προσλαμβάνεις από τα τρόφιμα, πώς τις δαπανάς μέσα από την καθημερινή σου ζωή και το πιο εκπληκτικό πόση άσκηση χρειάζεται για να «κάψεις» αυτά που τρως.</p>
                         </div>
+                    </section>
 
-                        <div class="card">
-                            <h2>Τι είναι «κενές θερμίδες»;</h2>
-                            <p>Μερικά τρόφιμα και ποτά (π.χ. αναψυκτικά, γλυκά, τσιπς) έχουν πολλές θερμίδες, αλλά ελάχιστα θρεπτικά συστατικά, καθώς δεν προσφέρουν βιταμίνες, μέταλλα ή φυτικές ίνες. Αυτές οι θερμίδες ονομάζονται «κενές θερμίδες» (empty calories). Το πρόβλημα δεν είναι μόνο το βάρος είναι ότι ταυτόχρονα στερείσαι θρεπτικά συστατικά που χρειάζεται ο οργανισμός σου για να αναπτυχθεί σωστά.</p>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <h2>Από πού προέρχονται οι θερμίδες;</h2>
-                        <p>Τα τρόφιμα αποδίδουν ενέργεια μέσα από τρία μακροθρεπτικά συστατικά:</p>
+                    <!-- SLIDE 2: ΤΙ ΕΙΝΑΙ ΟΙ ΘΕΡΜΙΔΕΣ; -->
+                    <section class="slide" id="slide-1">
+                        <h1>Τι είναι οι Θερμίδες;</h1>
                         
-                        <div class="grid-3" style="margin-top: 1rem;">
-                            <div class="card highlight" style="background: rgba(59, 130, 246, 0.05); border-color: rgba(59, 130, 246, 0.25);">
-                                <span class="macro-badge carb-badge">Υδατάνθρακες</span>
-                                <h3 style="margin-top: 1rem; font-size: 1.8rem; font-weight: 800;">4 <span style="font-size: 1rem; font-weight: 500;">kcal/g</span></h3>
-                                <p style="font-size: 0.9rem; margin-bottom: 0;">Κύρια πηγή άμεσης ενέργειας</p>
-                                <div class="macro-bar-outer"><div class="macro-bar-inner carb-bar"></div></div>
-                            </div>
-                            <div class="card highlight" style="background: rgba(16, 185, 129, 0.05); border-color: rgba(16, 185, 129, 0.25);">
-                                <span class="macro-badge protein-badge">Πρωτεΐνες</span>
-                                <h3 style="margin-top: 1rem; font-size: 1.8rem; font-weight: 800;">4 <span style="font-size: 1rem; font-weight: 500;">kcal/g</span></h3>
-                                <p style="font-size: 0.9rem; margin-bottom: 0;">Δομικά υλικά για τους μύες και τους ιστούς</p>
-                                <div class="macro-bar-outer"><div class="macro-bar-inner protein-bar"></div></div>
-                            </div>
-                            <div class="card highlight" style="background: rgba(249, 115, 22, 0.05); border-color: rgba(249, 115, 22, 0.25);">
-                                <span class="macro-badge fat-badge">Λίπη</span>
-                                <h3 style="margin-top: 1rem; font-size: 1.8rem; font-weight: 800;">9 <span style="font-size: 1rem; font-weight: 500;">kcal/g</span></h3>
-                                <p style="font-size: 0.9rem; margin-bottom: 0;">Πυκνή πηγή ενέργειας και αποθήκευσης</p>
-                                <div class="macro-bar-outer"><div class="macro-bar-inner fat-bar"></div></div>
-                            </div>
-                        </div>
-
-                        <p style="margin-top: 1rem; font-style: italic; font-size: 0.95rem;">Παρατήρησε ότι τα λίπη αποδίδουν διπλάσια και πλέον ενέργεια σε σχέση με τους υδατάνθρακες και τις πρωτεΐνες. Αυτός είναι ένας βασικός λόγος που τα λιπαρά τρόφιμα έχουν τόσο υψηλή θερμιδική αξία.</p>
-                        
-                        <div class="image-container">
-                            <img src="images/image1.png" alt="Διατροφικά μακροθρεπτικά συστατικά και η ενεργειακή τους απόδοση" class="lesson-image">
-                        </div>
-                        <div class="footer-citation">
-                            Mentorhub. (2026, Μάρτιος). Διατροφικά μακροθρεπτικά συστατικά και η ενεργειακή τους απόδοση [Εκπαιδευτικό infographic].
-                        </div>
-                    </div>
-                </section>
-
-                <!-- SLIDE 3: ΕΝΕΡΓΕΙΑΚΗ ΙΣΟΡΡΟΠΙΑ -->
-                <section class="slide" id="slide-2">
-                    <h1>Ενεργειακή Ισορροπία</h1>
-
-                    <div class="grid-2">
-                        <div class="card">
-                            <h2>Η βασική αρχή</h2>
-                            <p>Η ενεργειακή ισορροπία είναι η σχέση μεταξύ της ενέργειας που προσλαμβάνεις (μέσω τροφής) και της ενέργειας που δαπανάς (μέσω βασικού μεταβολισμού και σωματικής δραστηριότητας):</p>
-                            
-                            <div style="display: flex; flex-direction: column; gap: 0.5rem; margin: 1rem 0;">
-                                <div class="card" style="padding: 0.75rem; background: rgba(59, 130, 246, 0.08); border-left: 4px solid var(--accent-blue);">
-                                    <strong style="color: var(--text-primary); font-size: 0.95rem;">Ενεργειακή πρόσληψη = Ενεργειακή δαπάνη → Σταθερό βάρος</strong>
+                        <div class="grid-2">
+                            <div class="card">
+                                <h2>Definition / Ορισμός</h2>
+                                <p>Η θερμίδα (kcal) είναι η μονάδα μέτρησης της ενέργειας που περιέχεται στα τρόφιμα και που δαπανά ο οργανισμός κατά τη λειτουργία του. Στην καθημερινή ζωή, όταν λέμε «θερμίδα», εννοούμε στην πραγματικότητα «χιλιοθερμίδα» (kcal) δηλαδή την ποσότητα ενέργειας που χρειάζεται για να θερμανθεί 1 λίτρο νερού κατά 1°C.</p>
+                                <div class="highlight-box">
+                                    <p>Στις ετικέτες τροφίμων και στις διατροφικές οδηγίες, οι τιμές που βλέπεις αναφέρονται πάντα σε kcal (χιλιοθερμίδες).</p>
                                 </div>
-                                <div class="card" style="padding: 0.75rem; background: rgba(239, 68, 68, 0.08); border-left: 4px solid var(--danger);">
-                                    <strong style="color: var(--text-primary); font-size: 0.95rem;">Ενεργειακή πρόσληψη &gt; Ενεργειακή δαπάνη → Αύξηση βάρους</strong>
-                                </div>
-                                <div class="card" style="padding: 0.75rem; background: rgba(16, 185, 129, 0.08); border-left: 4px solid var(--success);">
-                                    <strong style="color: var(--text-primary); font-size: 0.95rem;">Ενεργειακή πρόσληψη &lt; Ενεργειακή δαπάνη → Μείωση βάρους</strong>
-                                </div>
+                            </div>
+
+                            <div class="card">
+                                <h2>Τι είναι «κενές θερμίδες»;</h2>
+                                <p>Μερικά τρόφιμα και ποτά (π.χ. αναψυκτικά, γλυκά, τσιπς) έχουν πολλές θερμίδες, αλλά ελάχιστα θρεπτικά συστατικά, καθώς δεν προσφέρουν βιταμίνες, μέταλλα ή φυτικές ίνες. Αυτές οι θερμίδες ονομάζονται «κενές θερμίδες» (empty calories). Το πρόβλημα δεν είναι μόνο το βάρος είναι ότι ταυτόχρονα στερείσαι θρεπτικά συστατικά που χρειάζεται ο οργανισμός σου για να αναπτυχθεί σωστά.</p>
                             </div>
                         </div>
 
                         <div class="card">
-                            <h2>Πού πηγαίνει η ενέργεια που προσλαμβάνεις;</h2>
-                            <p>Η ενέργεια που παίρνεις από το φαγητό κατανέμεται σε τρεις μεγάλες κατηγορίες δαπάνης:</p>
+                            <h2>Από πού προέρχονται οι θερμίδες;</h2>
+                            <p>Τα τρόφιμα αποδίδουν ενέργεια μέσα από τρία μακροθρεπτικά συστατικά:</p>
                             
-                            <div class="expenditure-container">
-                                <div class="expenditure-item">
-                                    <div class="expenditure-header">
-                                        <span>α) Βασικός Μεταβολικός Ρυθμός (BMR)</span>
-                                        <span style="color: var(--accent-blue);">60–75%</span>
+                            <div class="grid-3" style="margin-top: 1rem;">
+                                <div class="card highlight" style="background: rgba(59, 130, 246, 0.05); border-color: rgba(59, 130, 246, 0.25);">
+                                    <span class="macro-badge carb-badge">Υδατάνθρακες</span>
+                                    <h3 style="margin-top: 1rem; font-size: 1.8rem; font-weight: 800;">4 <span style="font-size: 1rem; font-weight: 500;">kcal/g</span></h3>
+                                    <p style="font-size: 0.9rem; margin-bottom: 0;">Κύρια πηγή άμεσης ενέργειας</p>
+                                    <div class="macro-bar-outer"><div class="macro-bar-inner carb-bar"></div></div>
+                                </div>
+                                <div class="card highlight" style="background: rgba(16, 185, 129, 0.05); border-color: rgba(16, 185, 129, 0.25);">
+                                    <span class="macro-badge protein-badge">Πρωτεΐνες</span>
+                                    <h3 style="margin-top: 1rem; font-size: 1.8rem; font-weight: 800;">4 <span style="font-size: 1rem; font-weight: 500;">kcal/g</span></h3>
+                                    <p style="font-size: 0.9rem; margin-bottom: 0;">Δομικά υλικά για τους μύες και τους ιστούς</p>
+                                    <div class="macro-bar-outer"><div class="macro-bar-inner protein-bar"></div></div>
+                                </div>
+                                <div class="card highlight" style="background: rgba(249, 115, 22, 0.05); border-color: rgba(249, 115, 22, 0.25);">
+                                    <span class="macro-badge fat-badge">Λίπη</span>
+                                    <h3 style="margin-top: 1rem; font-size: 1.8rem; font-weight: 800;">9 <span style="font-size: 1rem; font-weight: 500;">kcal/g</span></h3>
+                                    <p style="font-size: 0.9rem; margin-bottom: 0;">Πυκνή πηγή ενέργειας και αποθήκευσης</p>
+                                    <div class="macro-bar-outer"><div class="macro-bar-inner fat-bar"></div></div>
+                                </div>
+                            </div>
+
+                            <p style="margin-top: 1rem; font-style: italic; font-size: 0.95rem;">Παρατήρησε ότι τα λίπη αποδίδουν διπλάσια και πλέον ενέργεια σε σχέση με τους υδατάνθρακες και τις πρωτεΐνες. Αυτός είναι ένας βασικός λόγος που τα λιπαρά τρόφιμα έχουν τόσο υψηλή θερμιδική αξία.</p>
+                            
+                            <div class="image-container">
+                                <img src="images/image1.png" alt="Διατροφικά μακροθρεπτικά συστατικά και η ενεργειακή τους απόδοση" class="lesson-image">
+                            </div>
+                            <div class="footer-citation">
+                                Mentorhub. (2026, Μάρτιος). Διατροφικά μακροθρεπτικά συστατικά και η ενεργειακή τους απόδοση [Εκπαιδευτικό infographic].
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SLIDE 3: ΕΝΕΡΓΕΙΑΚΗ ΙΣΟΡΡΟΠΙΑ -->
+                    <section class="slide" id="slide-2">
+                        <h1>Ενεργειακή Ισορροπία</h1>
+
+                        <div class="grid-2">
+                            <div class="card">
+                                <h2>Η βασική αρχή</h2>
+                                <p>Η ενεργειακή ισορροπία είναι η σχέση μεταξύ της ενέργειας που προσλαμβάνεις (μέσω τροφής) και της ενέργειας που δαπανάς (μέσω βασικού μεταβολισμού και σωματικής δραστηριότητας):</p>
+                                
+                                <div style="display: flex; flex-direction: column; gap: 0.5rem; margin: 1rem 0;">
+                                    <div class="card" style="padding: 0.75rem; background: rgba(59, 130, 246, 0.08); border-left: 4px solid var(--accent-blue);">
+                                        <strong style="color: var(--text-primary); font-size: 0.95rem;">Ενεργειακή πρόσληψη = Ενεργειακή δαπάνη → Σταθερό βάρος</strong>
                                     </div>
-                                    <p style="font-size: 0.8rem; margin-bottom: 0.4rem; color: var(--text-secondary);">Είναι η ενέργεια που χρειάζεται το σώμα σου απλώς για να λειτουργεί, να χτυπά η καρδιά, να αναπνέεις, να λειτουργεί ο εγκέφαλος. Ακόμα και αν ξαπλώσεις όλη μέρα, ο οργανισμός σου συνεχίζει να καίει θερμίδες.</p>
-                                    <div class="expenditure-bar-outer"><div class="expenditure-bar-inner" style="width: 70%; background: var(--accent-blue);"></div></div>
+                                    <div class="card" style="padding: 0.75rem; background: rgba(239, 68, 68, 0.08); border-left: 4px solid var(--danger);">
+                                        <strong style="color: var(--text-primary); font-size: 0.95rem;">Ενεργειακή πρόσληψη &gt; Ενεργειακή δαπάνη → Αύξηση βάρους</strong>
+                                    </div>
+                                    <div class="card" style="padding: 0.75rem; background: rgba(16, 185, 129, 0.08); border-left: 4px solid var(--success);">
+                                        <strong style="color: var(--text-primary); font-size: 0.95rem;">Ενεργειακή πρόσληψη &lt; Ενεργειακή δαπάνη → Μείωση βάρους</strong>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <h2>Πού πηγαίνει η ενέργεια που προσλαμβάνεις;</h2>
+                                <p>Η ενέργεια που παίρνεις από το φαγητό κατανέμεται σε τρεις μεγάλες κατηγορίες δαπάνης:</p>
+                                
+                                <div class="expenditure-container">
+                                    <div class="expenditure-item">
+                                        <div class="expenditure-header">
+                                            <span>α) Βασικός Μεταβολικός Ρυθμός (BMR)</span>
+                                            <span style="color: var(--accent-blue);">60–75%</span>
+                                        </div>
+                                        <p style="font-size: 0.8rem; margin-bottom: 0.4rem; color: var(--text-secondary);">Είναι η ενέργεια που χρειάζεται το σώμα σου απλώς για να λειτουργεί, να χτυπά η καρδιά, να αναπνέεις, να λειτουργεί ο εγκέφαλος. Ακόμα και αν ξαπλώσεις όλη μέρα, ο οργανισμός σου συνεχίζει να καίει θερμίδες.</p>
+                                        <div class="expenditure-bar-outer"><div class="expenditure-bar-inner" style="width: 70%; background: var(--accent-blue);"></div></div>
+                                    </div>
+                                    
+                                    <div class="expenditure-item">
+                                        <div class="expenditure-header">
+                                            <span>β) Θερμική επίδραση τροφής</span>
+                                            <span style="color: var(--accent-secondary);">~10%</span>
+                                        </div>
+                                        <p style="font-size: 0.8rem; margin-bottom: 0.4rem; color: var(--text-secondary);">Το ίδιο το φαγητό χρειάζεται ενέργεια για να χωνευτεί. Αντιπροσωπεύει περίπου 10% της ημερήσιας δαπάνης.</p>
+                                        <div class="expenditure-bar-outer"><div class="expenditure-bar-inner" style="width: 10%; background: var(--accent-secondary);"></div></div>
+                                    </div>
+
+                                    <div class="expenditure-item">
+                                        <div class="expenditure-header">
+                                            <span>γ) Σωματική δραστηριότητα</span>
+                                            <span style="color: var(--accent-primary);">15–30%</span>
+                                        </div>
+                                        <p style="font-size: 0.8rem; margin-bottom: 0.4rem; color: var(--text-secondary);">Κάθε κίνηση που κάνεις από το να σηκωθείς από την καρέκλα μέχρι να παίξεις ποδόσφαιρο καίει θερμίδες. Αυτό το μέρος είναι το πιο ελεγχόμενο από εσένα.</p>
+                                        <div class="expenditure-bar-outer"><div class="expenditure-bar-inner" style="width: 20%; background: var(--accent-primary);"></div></div>
+                                    </div>
                                 </div>
                                 
-                                <div class="expenditure-item">
-                                    <div class="expenditure-header">
-                                        <span>β) Θερμική επίδραση τροφής</span>
-                                        <span style="color: var(--accent-secondary);">~10%</span>
-                                    </div>
-                                    <p style="font-size: 0.8rem; margin-bottom: 0.4rem; color: var(--text-secondary);">Το ίδιο το φαγητό χρειάζεται ενέργεια για να χωνευτεί. Αντιπροσωπεύει περίπου 10% της ημερήσιας δαπάνης.</p>
-                                    <div class="expenditure-bar-outer"><div class="expenditure-bar-inner" style="width: 10%; background: var(--accent-secondary);"></div></div>
+                                <div class="image-container">
+                                    <img src="images/image2.png" alt="Διάγραμμα κατανομής ενεργειακής δαπάνης" class="lesson-image">
                                 </div>
-
-                                <div class="expenditure-item">
-                                    <div class="expenditure-header">
-                                        <span>γ) Σωματική δραστηριότητα</span>
-                                        <span style="color: var(--accent-primary);">15–30%</span>
-                                    </div>
-                                    <p style="font-size: 0.8rem; margin-bottom: 0.4rem; color: var(--text-secondary);">Κάθε κίνηση που κάνεις από το να σηκωθείς από την καρέκλα μέχρι να παίξεις ποδόσφαιρο καίει θερμίδες. Αυτό το μέρος είναι το πιο ελεγχόμενο από εσένα.</p>
-                                    <div class="expenditure-bar-outer"><div class="expenditure-bar-inner" style="width: 20%; background: var(--accent-primary);"></div></div>
+                                <div class="footer-citation">
+                                    Mentorhub. (2026, Μάρτιος). Διάγραμμα κατανομής ενεργειακής δαπάνης [Εκπαιδευτικό γράφημα].
                                 </div>
                             </div>
-                            
-                            <div class="image-container">
-                                <img src="images/image2.png" alt="Διάγραμμα κατανομής ενεργειακής δαπάνης" class="lesson-image">
-                            </div>
-                            <div class="footer-citation">
-                                Mentorhub. (2026, Μάρτιος). Διάγραμμα κατανομής ενεργειακής δαπάνης [Εκπαιδευτικό γράφημα].
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <h2>Πόσες θερμίδες χρειάζεσαι την ημέρα;</h2>
-                        <p>Οι ημερήσιες ενεργειακές ανάγκες εξαρτώνται από την ηλικία, το φύλο, το βάρος, το ύψος και το επίπεδο δραστηριότητας. Για έναν/μία έφηβο/η 12–15 ετών οι συστάσεις είναι κατά προσέγγιση:</p>
-                        
-                        <div style="overflow-x: auto;">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Επίπεδο Δραστηριότητας</th>
-                                        <th>Κορίτσια</th>
-                                        <th>Αγόρια</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><strong>Καθιστική ζωή</strong></td>
-                                        <td>~1.800 kcal/ημέρα</td>
-                                        <td>~2.000 kcal/ημέρα</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Μέτρια δραστηριότητα</strong></td>
-                                        <td>~2.000 kcal/ημέρα</td>
-                                        <td>~2.200 kcal/ημέρα</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Έντονη δραστηριότητα</strong></td>
-                                        <td>~2.200 kcal/ημέρα</td>
-                                        <td>~2.600 kcal/ημέρα</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <p style="font-style: italic; font-size: 0.9rem; margin-top: 0.4rem;">Αυτές είναι εκτιμήσεις — κάθε άνθρωπος είναι διαφορετικός. Για ακριβή αξιολόγηση χρειάζεται ειδικός (διαιτολόγος ή γιατρός).</p>
-                    </div>
-                </section>
-
-                <!-- SLIDE 4: ΘΕΡΜΙΔΕΣ ΣΤΑ ΤΡΟΦΙΜΑ -->
-                <section class="slide" id="slide-3">
-                    <h1>Θερμίδες στα Τρόφιμα: Υγιεινά vs Ανθυγιεινά Γεύματα</h1>
-                    
-                    <div class="card">
-                        <h2>Τι κρύβεται στο πιάτο σου;</h2>
-                        <p>Παρακάτω βλέπεις τη θερμιδική αξία συνηθισμένων τροφίμων που ίσως καταναλώνεις καθημερινά. Μερικά από αυτά είναι υγιεινές επιλογές, άλλα λιγότερο.</p>
-                        
-                        <div class="filter-container">
-                            <button class="btn-filter active" data-filter="all">Όλα τα Τρόφιμα</button>
-                            <button class="btn-filter" data-filter="healthy">✅ Υγιεινά</button>
-                            <button class="btn-filter" data-filter="unhealthy">⚠️ Ανθυγιεινά / Κενές</button>
-                            <button class="btn-filter" data-filter="moderate">⚖️ Με Μέτρο</button>
-                        </div>
-
-                        <div style="overflow-x: auto;">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Τρόφιμο</th>
-                                        <th>Μερίδα</th>
-                                        <th>kcal (κατά προσέγγιση)</th>
-                                        <th>Χαρακτηρισμός</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="food-table-body">
-                                    <tr data-category="unhealthy">
-                                        <td><strong>Burger με τυρί + πατάτες</strong></td>
-                                        <td>350 g</td>
-                                        <td>~850</td>
-                                        <td><span class="status-tag tag-unhealthy">⚠️ Ανθυγιεινό</span></td>
-                                    </tr>
-                                    <tr data-category="unhealthy">
-                                        <td><strong>Πίτσα μαργαρίτα</strong></td>
-                                        <td>2 κομμάτια / 200 g</td>
-                                        <td>~530</td>
-                                        <td><span class="status-tag tag-unhealthy">⚠️ Ανθυγιεινό</span></td>
-                                    </tr>
-                                    <tr data-category="unhealthy">
-                                        <td><strong>Χωριάτικο λουκάνικο (ψητό)</strong></td>
-                                        <td>100 g</td>
-                                        <td>~320</td>
-                                        <td><span class="status-tag tag-unhealthy">⚠️ Ανθυγιεινό</span></td>
-                                    </tr>
-                                    <tr data-category="moderate">
-                                        <td><strong>Παγωτό βανίλιας</strong></td>
-                                        <td>120 g</td>
-                                        <td>~280</td>
-                                        <td><span class="status-tag tag-moderate">⚠️ Με μέτρο</span></td>
-                                    </tr>
-                                    <tr data-category="unhealthy">
-                                        <td><strong>Πάστα σοκολάτας</strong></td>
-                                        <td>100 g</td>
-                                        <td>~400</td>
-                                        <td><span class="status-tag tag-unhealthy">⚠️ Ανθυγιεινό</span></td>
-                                    </tr>
-                                    <tr data-category="empty">
-                                        <td><strong>Αναψυκτικό (κόλα)</strong></td>
-                                        <td>330 ml</td>
-                                        <td>~139</td>
-                                        <td><span class="status-tag tag-empty">⚠️ Κενές θερμίδες</span></td>
-                                    </tr>
-                                    <tr data-category="healthy">
-                                        <td><strong>Ομελέτα 2 αβγών</strong></td>
-                                        <td>150 g</td>
-                                        <td>~220</td>
-                                        <td><span class="status-tag tag-healthy">✅ Υγιεινό</span></td>
-                                    </tr>
-                                    <tr data-category="very-healthy">
-                                        <td><strong>Ψητό ψάρι (τσιπούρα)</strong></td>
-                                        <td>200 g</td>
-                                        <td>~200</td>
-                                        <td><span class="status-tag tag-very-healthy">✅ Πολύ υγιεινό</span></td>
-                                    </tr>
-                                    <tr data-category="very-healthy">
-                                        <td><strong>Χωριάτικη σαλάτα</strong></td>
-                                        <td>300 g</td>
-                                        <td>~180</td>
-                                        <td><span class="status-tag tag-very-healthy">✅ Πολύ υγιεινό</span></td>
-                                    </tr>
-                                    <tr data-category="healthy">
-                                        <td><strong>Μπανάνα</strong></td>
-                                        <td>1 μεγάλη / 150 g</td>
-                                        <td>~135</td>
-                                        <td><span class="status-tag tag-healthy">✅ Υγιεινό</span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="highlight-box" style="margin-top: 0.75rem;">
-                            <p>Παρατήρησε ότι ένα burger με πατάτες έχει σχεδόν 5 φορές περισσότερες θερμίδες από μία χωριάτικη σαλάτα και σε πολύ μικρότερο όγκο!</p>
-                        </div>
-                        
-                        <div class="image-container">
-                            <img src="images/image3.png" alt="Σύγκριση θερμιδικής αξίας διαφορετικών γευμάτων" class="lesson-image">
-                        </div>
-                        <div class="footer-citation">
-                            Mentorhub. (2026, Μάρτιος). Σύγκριση θερμιδικής αξίας διαφορετικών γευμάτων [Εκπαιδευτικό infographic].
-                        </div>
-                    </div>
-
-                    <div class="card" style="margin-top: 1rem;">
-                        <h2>Γιατί η ποιότητα της τροφής μετράει εξίσου με τις θερμίδες;</h2>
-                        <p>Δύο γεύματα με ίδιες θερμίδες μπορεί να είναι πολύ διαφορετικά στη θρεπτική τους αξία. Το ψητό ψάρι των 200 kcal σου δίνει υψηλής ποιότητας πρωτεΐνη, ωμέγα-3 λιπαρά οξέα και βιταμίνες. Ένα αναψυκτικό με παρόμοιες θερμίδες δεν σου δίνει τίποτα από αυτά.</p>
-                    </div>
-                </section>
-
-                <!-- SLIDE 5: ΘΕΡΜΙΔΕΣ ΚΑΙ ΣΩΜΑΤΙΚΗ ΔΡΑΣΤΗΡΙΟΤΗΤΑ -->
-                <section class="slide" id="slide-4">
-                    <h1>Θερμίδες και Σωματική Δραστηριότητα</h1>
-
-                    <div class="card">
-                        <h2>Πόσες θερμίδες «καίει» η άσκηση;</h2>
-                        <p>Η ενέργεια που δαπανάς κατά την άσκηση εξαρτάται από: το είδος της δραστηριότητας, τη διάρκεια και το σωματικό βάρος.</p>
-                        
-                        <div style="overflow-x: auto;">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Αθλητική Δραστηριότητα</th>
-                                        <th>Διάρκεια</th>
-                                        <th>kcal (~60 kg άτομο)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><strong>Κολύμβηση (έντονη)</strong></td>
-                                        <td>85 λεπτά</td>
-                                        <td>~850</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Τρέξιμο (~10 km/h)</strong></td>
-                                        <td>50 λεπτά</td>
-                                        <td>~530</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Κολύμβηση (μέτρια)</strong></td>
-                                        <td>40 λεπτά</td>
-                                        <td>~400</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Αερόβια γυμναστική</strong></td>
-                                        <td>40 λεπτά</td>
-                                        <td>~320</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Ποδηλασία (μέτρια)</strong></td>
-                                        <td>25 λεπτά</td>
-                                        <td>~220</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Βάρη (μέτρια ένταση)</strong></td>
-                                        <td>30 λεπτά</td>
-                                        <td>~180</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Ποδόσφαιρο</strong></td>
-                                        <td>30 λεπτά</td>
-                                        <td>~280</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Μπάσκετ</strong></td>
-                                        <td>15 λεπτά</td>
-                                        <td>~139</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Άλμα σε σχοινάκι</strong></td>
-                                        <td>12 λεπτά</td>
-                                        <td>~135</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Περπάτημα αργό</strong></td>
-                                        <td>30 λεπτά</td>
-                                        <td>~85</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="card warning" style="margin-top: 1rem;">
-                        <h2>Το «παράδοξο» της ενεργειακής ισορροπίας</h2>
-                        <ul class="checklist">
-                            <li><strong>Για να «ξοδέψεις» τις θερμίδες ενός burger με πατάτες (~850 kcal) χρειάζεσαι:</strong> Σχεδόν 1 ώρα και 25 λεπτά έντονης κολύμβησης ή 1 ώρα και 20 λεπτά τρεξίματος.</li>
-                            <li><strong>Για να «ξοδέψεις» τις θερμίδες ενός κουτιού αναψυκτικού (~139 kcal) χρειάζεσαι:</strong> Περίπου 15 λεπτά μπάσκετ ή Περίπου 50 λεπτά αργού περπατήματος.</li>
-                        </ul>
-                        
-                        <p style="margin-top: 1rem; font-weight: 500;">Το βασικό συμπέρασμα: Χρειάζονται μόλις λεπτά για να καταναλώσεις τρόφιμα με πολλές θερμίδες, αλλά ώρες άσκησης για να τις αντισταθμίσεις. Αυτός είναι ο λόγος που η επιλογή υγιεινών τροφίμων είναι σαφώς πιο αποτελεσματική από την προσπάθεια να «αποτοξινωθείς» με άσκηση.</p>
-                        
-                        <div class="image-container">
-                            <img src="images/image4.png" alt="Σύγκριση θερμίδων τροφίμων και φυσικής δραστηριότητας" class="lesson-image">
-                        </div>
-                        <div class="footer-citation">
-                            Mentorhub. (2026, Μάρτιος). Σύγκριση θερμίδων τροφίμων και ισοδύναμης φυσικής δραστηριότητας [Εκπαιδευτικό infographic].
-                        </div>
-                    </div>
-                </section>
-
-                <!-- SLIDE 6: ΠΡΑΚΤΙΚΕΣ ΣΥΜΒΟΥΛΕΣ -->
-                <section class="slide" id="slide-5">
-                    <h1>Πρακτικές Συμβουλές για Υγιεινό Σωματικό Βάρος</h1>
-
-                    <div class="grid-2">
-                        <div class="card">
-                            <h2>Οδηγίες ΠΟΥ για Φυσική Δραστηριότητα</h2>
-                            <p>Σύμφωνα με τον Παγκόσμιο Οργανισμό Υγείας (ΠΟΥ, 2020), τα παιδιά και οι έφηβοι/ες ηλικίας 5–17 ετών πρέπει:</p>
-                            <ul class="checklist">
-                                <li>Να κάνουν τουλάχιστον 60 λεπτά μέτριας έως έντονης σωματικής δραστηριότητας κάθε μέρα.</li>
-                                <li>Να περιλαμβάνουν ασκήσεις ενδυνάμωσης (π.χ. βάρη, calisthenics) τουλάχιστον 3 φορές την εβδομάδα.</li>
-                                <li>Να περιορίζουν τον καθιστικό χρόνο (οθόνες, καναπές).</li>
-                            </ul>
                         </div>
 
                         <div class="card">
-                            <h2>Ισορροπημένο Πιάτο Διατροφής</h2>
-                            <p>Η σωστή κατανομή των τροφικών ομάδων σε κάθε κύριο γεύμα βοηθά στη λήψη όλων των απαραίτητων συστατικών.</p>
+                            <h2>Πόσες θερμίδες χρειάζεσαι την ημέρα;</h2>
+                            <p>Οι ημερήσιες ενεργειακές ανάγκες εξαρτώνται από την ηλικία, το φύλο, το βάρος, το ύψος και το επίπεδο δραστηριότητας. Για έναν/μία έφηβο/η 12–15 ετών οι συστάσεις είναι κατά προσέγγιση:</p>
                             
-                            <div class="image-container">
-                                <img src="images/image5.png" alt="Ισορροπημένο πιάτο διατροφής με κατανομή τροφικών ομάδων" class="lesson-image" style="max-height: 120px;">
-                            </div>
-                            
-                            <div class="footer-citation">
-                                Mentorhub. (2026, Μάρτιος). Ισορροπημένο πιάτο διατροφής με κατανομή τροφικών ομάδων [Εκπαιδευτικό infographic].
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <h2>Δέκα πρακτικές συμβουλές για εσένα</h2>
-                        <p>Ακολουθώντας τις παρακάτω συμβουλές μπορείς να διατηρείς εύκολα ένα υγιές σωματικό βάρος:</p>
-                        
-                        <div class="tips-grid">
-                            <div class="tip-card">
-                                <span class="tip-num">1</span>
-                                <div class="tip-content">Φάε πρωινό κάθε μέρα, δίνει ενέργεια και μειώνει την υπερφαγία αργότερα.</div>
-                            </div>
-                            <div class="tip-card">
-                                <span class="tip-num">2</span>
-                                <div class="tip-content">Προτίμησε νερό αντί για αναψυκτικά εξαλείφεις εκατοντάδες «κενές» θερμίδες.</div>
-                            </div>
-                            <div class="tip-card">
-                                <span class="tip-num">3</span>
-                                <div class="tip-content">Φάε αργά και με προσοχή ο κορεσμός χρειάζεται ~20 λεπτά για να φτάσει στον εγκέφαλο.</div>
-                            </div>
-                            <div class="tip-card">
-                                <span class="tip-num">4</span>
-                                <div class="tip-content">Γέμισε το μισό πιάτο σου με λαχανικά σε κάθε κυρίως γεύμα.</div>
-                            </div>
-                            <div class="tip-card">
-                                <span class="tip-num">5</span>
-                                <div class="tip-content">Κινήσου κάθε μέρα έστω με γρήγορο περπάτημα 30 λεπτών.</div>
-                            </div>
-                            <div class="tip-card">
-                                <span class="tip-num">6</span>
-                                <div class="tip-content">Μαγείρεψε ή επίλεξε ψητές παρασκευές, αντί για τηγανητές.</div>
-                            </div>
-                            <div class="tip-card">
-                                <span class="tip-num">7</span>
-                                <div class="tip-content">Διάβασε τις ετικέτες τροφίμων, μαθαίνοντας πόσες θερμίδες έχει αυτό που αγοράζεις.</div>
-                            </div>
-                            <div class="tip-card">
-                                <span class="tip-num">8</span>
-                                <div class="tip-content">Απόφυγε το φαγητό μπροστά στην οθόνη, ο αποσπασμένος νους τρώει περισσότερο.</div>
-                            </div>
-                            <div class="tip-card">
-                                <span class="tip-num">9</span>
-                                <div class="tip-content">Φάε σε τακτά γεύματα (3 κύρια + 1–2 σνακ) και απόφυγε το τσιμπολόγημα.</div>
-                            </div>
-                            <div class="tip-card">
-                                <span class="tip-num">10</span>
-                                <div class="tip-content">Συνδύασε αερόβια άσκηση με ενδυνάμωση, ο μυϊκός ιστός καίει περισσότερες θερμίδες και σε ηρεμία.</div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- SLIDE 7: ΔΕΙΚΤΗΣ ΜΑΖΑΣ ΣΩΜΑΤΟΣ -->
-                <section class="slide" id="slide-6">
-                    <h1>Ο Δείκτης Μάζας Σώματος (ΔΜΣ)</h1>
-
-                    <div class="grid-2">
-                        <div class="card">
-                            <h2>Τι είναι ο ΔΜΣ;</h2>
-                            <p>Ο Δείκτης Μάζας Σώματος (ΔΜΣ) είναι ένας απλός υπολογισμός που εκτιμά αν το σωματικό βάρος είναι αναλογικό με το ύψος:</p>
-                            
-                            <div class="highlight-box" style="background: rgba(16, 185, 129, 0.05); border-left-color: var(--accent-primary); text-align: center; padding: 1.25rem;">
-                                <strong style="font-size: 1.3rem; color: var(--accent-primary); display: block; margin-bottom: 0.25rem;">ΔΜΣ = Βάρος (kg) ÷ [Ύψος (m)]²</strong>
-                            </div>
-
-                            <div class="card" style="background: rgba(255, 255, 255, 0.02); margin-top: 0.75rem; border-color: rgba(255, 255, 255, 0.05);">
-                                <h3>Παράδειγμα</h3>
-                                <p style="margin-bottom: 0;">Αν ζυγίζεις 55 kg και έχεις ύψος 1,65 m:</p>
-                                <p style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-top: 0.25rem; text-align: center;">ΔΜΣ = 55 ÷ (1,65 × 1,65) = 55 ÷ 2,72 ≈ 20,2</p>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <h2>Ερμηνεία ΔΜΣ για Ενήλικες</h2>
                             <div style="overflow-x: auto;">
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th>ΔΜΣ</th>
-                                            <th>Κατηγορία</th>
+                                            <th>Επίπεδο Δραστηριότητας</th>
+                                            <th>Κορίτσια</th>
+                                            <th>Αγόρια</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td><strong>Κάτω από 18,5</strong></td>
-                                            <td><span class="status-tag tag-moderate">Ελλιποβαρής</span></td>
-                                        </tr>
-                                        <tr style="background: rgba(16, 185, 129, 0.05);">
-                                            <td><strong>18,5 – 24,9</strong></td>
-                                            <td><span class="status-tag tag-healthy" style="background: var(--accent-primary); color: var(--bg-main);">Φυσιολογικό βάρος</span></td>
+                                            <td><strong>Καθιστική ζωή</strong></td>
+                                            <td>~1.800 kcal/ημέρα</td>
+                                            <td>~2.000 kcal/ημέρα</td>
                                         </tr>
                                         <tr>
-                                            <td><strong>25 – 29,9</strong></td>
-                                            <td><span class="status-tag tag-unhealthy">Υπέρβαρος</span></td>
+                                            <td><strong>Μέτρια δραστηριότητα</strong></td>
+                                            <td>~2.000 kcal/ημέρα</td>
+                                            <td>~2.200 kcal/ημέρα</td>
                                         </tr>
                                         <tr>
-                                            <td><strong>30 και πάνω</strong></td>
-                                            <td><span class="status-tag tag-unhealthy" style="background: var(--danger); color: white;">Παχυσαρκία</span></td>
+                                            <td><strong>Έντονη δραστηριότητα</strong></td>
+                                            <td>~2.200 kcal/ημέρα</td>
+                                            <td>~2.600 kcal/ημέρα</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p style="font-style: italic; font-size: 0.9rem; margin-top: 0.4rem;">Αυτές είναι εκτιμήσεις — κάθε άνθρωπος είναι διαφορετικός. Για ακριβή αξιολόγηση χρειάζεται ειδικός (διαιτολόγος ή γιατρός).</p>
+                        </div>
+                    </section>
+
+                    <!-- SLIDE 4: ΘΕΡΜΙΔΕΣ ΣΤΑ ΤΡΟΦΙΜΑ -->
+                    <section class="slide" id="slide-3">
+                        <h1>Θερμίδες στα Τρόφιμα: Υγιεινά vs Ανθυγιεινά Γεύματα</h1>
+                        
+                        <div class="card">
+                            <h2>Τι κρύβεται στο πιάτο σου;</h2>
+                            <p>Παρακάτω βλέπεις τη θερμιδική αξία συνηθισμένων τροφίμων που ίσως καταναλώνεις καθημερινά. Μερικά από αυτά είναι υγιεινές επιλογές, άλλα λιγότερο.</p>
+                            
+                            <div class="filter-container">
+                                <button class="btn-filter active" data-filter="all">Όλα τα Τρόφιμα</button>
+                                <button class="btn-filter" data-filter="healthy">✅ Υγιεινά</button>
+                                <button class="btn-filter" data-filter="unhealthy">⚠️ Ανθυγιεινά / Κενές</button>
+                                <button class="btn-filter" data-filter="moderate">⚖️ Με Μέτρο</button>
+                            </div>
+
+                            <div style="overflow-x: auto;">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Τρόφιμο</th>
+                                            <th>Μερίδα</th>
+                                            <th>kcal (κατά προσέγγιση)</th>
+                                            <th>Χαρακτηρισμός</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="food-table-body">
+                                        <tr data-category="unhealthy">
+                                            <td><strong>Burger με τυρί + πατάτες</strong></td>
+                                            <td>350 g</td>
+                                            <td>~850</td>
+                                            <td><span class="status-tag tag-unhealthy">⚠️ Ανθυγιεινό</span></td>
+                                        </tr>
+                                        <tr data-category="unhealthy">
+                                            <td><strong>Πίτσα μαργαρίτα</strong></td>
+                                            <td>2 κομμάτια / 200 g</td>
+                                            <td>~530</td>
+                                            <td><span class="status-tag tag-unhealthy">⚠️ Ανθυγιεινό</span></td>
+                                        </tr>
+                                        <tr data-category="unhealthy">
+                                            <td><strong>Χωριάτικο λουκάνικο (ψητό)</strong></td>
+                                            <td>100 g</td>
+                                            <td>~320</td>
+                                            <td><span class="status-tag tag-unhealthy">⚠️ Ανθυγιεινό</span></td>
+                                        </tr>
+                                        <tr data-category="moderate">
+                                            <td><strong>Παγωτό βανίλιας</strong></td>
+                                            <td>120 g</td>
+                                            <td>~280</td>
+                                            <td><span class="status-tag tag-moderate">⚠️ Με μέτρο</span></td>
+                                        </tr>
+                                        <tr data-category="unhealthy">
+                                            <td><strong>Πάστα σοκολάτας</strong></td>
+                                            <td>100 g</td>
+                                            <td>~400</td>
+                                            <td><span class="status-tag tag-unhealthy">⚠️ Ανθυγιεινό</span></td>
+                                        </tr>
+                                        <tr data-category="empty">
+                                            <td><strong>Αναψυκτικό (κόλα)</strong></td>
+                                            <td>330 ml</td>
+                                            <td>~139</td>
+                                            <td><span class="status-tag tag-empty">⚠️ Κενές θερμίδες</span></td>
+                                        </tr>
+                                        <tr data-category="healthy">
+                                            <td><strong>Ομελέτα 2 αβγών</strong></td>
+                                            <td>150 g</td>
+                                            <td>~220</td>
+                                            <td><span class="status-tag tag-healthy">✅ Υγιεινό</span></td>
+                                        </tr>
+                                        <tr data-category="very-healthy">
+                                            <td><strong>Ψητό ψάρι (τσιπούρα)</strong></td>
+                                            <td>200 g</td>
+                                            <td>~200</td>
+                                            <td><span class="status-tag tag-very-healthy">✅ Πολύ υγιεινό</span></td>
+                                        </tr>
+                                        <tr data-category="very-healthy">
+                                            <td><strong>Χωριάτικη σαλάτα</strong></td>
+                                            <td>300 g</td>
+                                            <td>~180</td>
+                                            <td><span class="status-tag tag-very-healthy">✅ Πολύ υγιεινό</span></td>
+                                        </tr>
+                                        <tr data-category="healthy">
+                                            <td><strong>Μπανάνα</strong></td>
+                                            <td>1 μεγάλη / 150 g</td>
+                                            <td>~135</td>
+                                            <td><span class="status-tag tag-healthy">✅ Υγιεινό</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="highlight-box" style="margin-top: 0.75rem;">
+                                <p>Παρατήρησε ότι ένα burger με πατάτες έχει σχεδόν 5 φορές περισσότερες θερμίδες από μία χωριάτικη σαλάτα και σε πολύ μικρότερο όγκο!</p>
+                            </div>
+                            
+                            <div class="image-container">
+                                <img src="images/image3.png" alt="Σύγκριση θερμιδικής αξίας διαφορετικών γευμάτων" class="lesson-image">
+                            </div>
+                            <div class="footer-citation">
+                                Mentorhub. (2026, Μάρτιος). Σύγκριση θερμιδικής αξίας διαφορετικών γευμάτων [Εκπαιδευτικό infographic].
+                            </div>
+                        </div>
+
+                        <div class="card" style="margin-top: 1rem;">
+                            <h2>Γιατί η ποιότητα της τροφής μετράει εξίσου με τις θερμίδες;</h2>
+                            <p>Δύο γεύματα με ίδιες θερμίδες μπορεί να είναι πολύ διαφορετικά στη θρεπτική τους αξία. Το ψητό ψάρι των 200 kcal σου δίνει υψηλής ποιότητας πρωτεΐνη, ωμέγα-3 λιπαρά οξέα και βιταμίνες. Ένα αναψυκτικό με παρόμοιες θερμίδες δεν σου δίνει τίποτα από αυτά.</p>
+                        </div>
+                    </section>
+
+                    <!-- SLIDE 5: ΘΕΡΜΙΔΕΣ ΚΑΙ ΣΩΜΑΤΙΚΗ ΔΡΑΣΤΗΡΙΟΤΗΤΑ -->
+                    <section class="slide" id="slide-4">
+                        <h1>Θερμίδες και Σωματική Δραστηριότητα</h1>
+
+                        <div class="card">
+                            <h2>Πόσες θερμίδες «καίει» η άσκηση;</h2>
+                            <p>Η ενέργεια που δαπανάς κατά την άσκηση εξαρτάται από: το είδος της δραστηριότητας, τη διάρκεια και το σωματικό βάρος.</p>
+                            
+                            <div style="overflow-x: auto;">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Αθλητική Δραστηριότητα</th>
+                                            <th>Διάρκεια</th>
+                                            <th>kcal (~60 kg άτομο)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Κολύμβηση (έντονη)</strong></td>
+                                            <td>85 λεπτά</td>
+                                            <td>~850</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Τρέξιμο (~10 km/h)</strong></td>
+                                            <td>50 λεπτά</td>
+                                            <td>~530</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Κολύμβηση (μέτρια)</strong></td>
+                                            <td>40 λεπτά</td>
+                                            <td>~400</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Αερόβια γυμναστική</strong></td>
+                                            <td>40 λεπτά</td>
+                                            <td>~320</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Ποδηλασία (μέτρια)</strong></td>
+                                            <td>25 λεπτά</td>
+                                            <td>~220</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Βάρη (μέτρια ένταση)</strong></td>
+                                            <td>30 λεπτά</td>
+                                            <td>~180</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Ποδόσφαιρο</strong></td>
+                                            <td>30 λεπτά</td>
+                                            <td>~280</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Μπάσκετ</strong></td>
+                                            <td>15 λεπτά</td>
+                                            <td>~139</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Άλμα σε σχοινάκι</strong></td>
+                                            <td>12 λεπτά</td>
+                                            <td>~135</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Περπάτημα αργό</strong></td>
+                                            <td>30 λεπτά</td>
+                                            <td>~85</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="card warning">
-                        <h3>⚠️ Σημαντική σημείωση</h3>
-                        <p style="margin-bottom: 0;">Για παιδιά και εφήβου/ες ο ΔΜΣ ερμηνεύεται διαφορετικά συγκρίνεται με ειδικά εκατοστιαία τεταρτημόρια για ηλικία και φύλο. Ο ΔΜΣ δεν μετρά απευθείας το σωματικό λίπος και δεν λαμβάνει υπόψη τη μυϊκή μάζα. Πάντα συμβουλεύεσαι έναν/μία ειδικό για αξιολόγηση.</p>
-                    </div>
-                </section>
+                        <div class="card warning" style="margin-top: 1rem;">
+                            <h2>Το «παράδοξο» της ενεργειακής ισορροπίας</h2>
+                            <ul class="checklist">
+                                <li><strong>Για να «ξοδέψεις» τις θερμίδες ενός burger με πατάτες (~850 kcal) χρειάζεσαι:</strong> Σχεδόν 1 ώρα και 25 λεπτά έντονης κολύμβησης ή 1 ώρα και 20 λεπτά τρεξίματος.</li>
+                                <li><strong>Για να «ξοδέψεις» τις θερμίδες ενός κουτιού αναψυκτικού (~139 kcal) χρειάζεσαι:</strong> Περίπου 15 λεπτά μπάσκετ ή Περίπου 50 λεπτά αργού περπατήματος.</li>
+                            </ul>
+                            
+                            <p style="margin-top: 1rem; font-weight: 500;">Το βασικό συμπέρασμα: Χρειάζονται μόλις λεπτά για να καταναλώσεις τρόφιμα με πολλές θερμίδες, αλλά ώρες άσκησης για να τις αντισταθμίσεις. Αυτός είναι ο λόγος που η επιλογή υγιεινών τροφίμων είναι σαφώς πιο αποτελεσματική από την προσπάθεια να «αποτοξινωθείς» με άσκηση.</p>
+                            
+                            <div class="image-container">
+                                <img src="images/image4.png" alt="Σύγκριση θερμίδων τροφίμων και φυσικής δραστηριότητας" class="lesson-image">
+                            </div>
+                            <div class="footer-citation">
+                                Mentorhub. (2026, Μάρτιος). Σύγκριση θερμίδων τροφίμων και ισοδύναμης φυσικής δραστηριότητας [Εκπαιδευτικό infographic].
+                            </div>
+                        </div>
+                    </section>
 
-                <!-- SLIDE 8: ΣΥΝΟΨΗ -->
-                <section class="slide" id="slide-7">
-                    <h1>Σύνοψη όσων έμαθες</h1>
-                    
-                    <div class="card highlight">
-                        <p style="font-size: 1.1rem; margin-bottom: 1rem; font-weight: 500;">Ανακεφαλαίωση των βασικών σημείων του μαθήματος:</p>
+                    <!-- SLIDE 6: ΠΡΑΚΤΙΚΕΣ ΣΥΜΒΟΥΛΕΣ -->
+                    <section class="slide" id="slide-5">
+                        <h1>Πρακτικές Συμβουλές για Υγιεινό Σωματικό Βάρος</h1>
+
+                        <div class="grid-2">
+                            <div class="card">
+                                <h2>Οδηγίες ΠΟΥ για Φυσική Δραστηριότητα</h2>
+                                <p>Σύμφωνα με τον Παγκόσμιο Οργανισμό Υγείας (ΠΟΥ, 2020), τα παιδιά και οι έφηβοι/ες ηλικίας 5–17 ετών πρέπει:</p>
+                                <ul class="checklist">
+                                    <li>Να κάνουν τουλάχιστον 60 λεπτά μέτριας έως έντονης σωματικής δραστηριότητας κάθε μέρα.</li>
+                                    <li>Να περιλαμβάνουν ασκήσεις ενδυνάμωσης (π.χ. βάρη, calisthenics) τουλάχιστον 3 φορές την εβδομάδα.</li>
+                                    <li>Να περιορίζουν τον καθιστικό χρόνο (οθόνες, καναπές).</li>
+                                </ul>
+                            </div>
+
+                            <div class="card">
+                                <h2>Ισορροπημένο Πιάτο Διατροφής</h2>
+                                <p>Η σωστή κατανομή των τροφικών ομάδων σε κάθε κύριο γεύμα βοηθά στη λήψη όλων των απαραίτητων συστατικών.</p>
+                                
+                                <div class="image-container">
+                                    <img src="images/image5.png" alt="Ισορροπημένο πιάτο διατροφής με κατανομή τροφικών ομάδων" class="lesson-image" style="max-height: 120px;">
+                                </div>
+                                
+                                <div class="footer-citation">
+                                    Mentorhub. (2026, Μάρτιος). Ισορροπημένο πιάτο διατροφής με κατανομή τροφικών ομάδων [Εκπαιδευτικό infographic].
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <h2>Δέκα πρακτικές συμβουλές για εσένα</h2>
+                            <p>Ακολουθώντας τις παρακάτω συμβουλές μπορείς να διατηρείς εύκολα ένα υγιές σωματικό βάρος:</p>
+                            
+                            <div class="tips-grid">
+                                <div class="tip-card">
+                                    <span class="tip-num">1</span>
+                                    <div class="tip-content">Φάε πρωινό κάθε μέρα, δίνει ενέργεια και μειώνει την υπερφαγία αργότερα.</div>
+                                </div>
+                                <div class="tip-card">
+                                    <span class="tip-num">2</span>
+                                    <div class="tip-content">Προτίμησε νερό αντί για αναψυκτικά εξαλείφεις εκατοντάδες «κενές» θερμίδες.</div>
+                                </div>
+                                <div class="tip-card">
+                                    <span class="tip-num">3</span>
+                                    <div class="tip-content">Φάε αργά και με προσοχή ο κορεσμός χρειάζεται ~20 λεπτά για να φτάσει στον εγκέφαλο.</div>
+                                </div>
+                                <div class="tip-card">
+                                    <span class="tip-num">4</span>
+                                    <div class="tip-content">Γέμισε το μισό πιάτο σου με λαχανικά σε κάθε κυρίως γεύμα.</div>
+                                </div>
+                                <div class="tip-card">
+                                    <span class="tip-num">5</span>
+                                    <div class="tip-content">Κινήσου κάθε μέρα έστω με γρήγορο περπάτημα 30 λεπτών.</div>
+                                </div>
+                                <div class="tip-card">
+                                    <span class="tip-num">6</span>
+                                    <div class="tip-content">Μαγείρεψε ή επίλεξε ψητές παρασκευές, αντί για τηγανητές.</div>
+                                </div>
+                                <div class="tip-card">
+                                    <span class="tip-num">7</span>
+                                    <div class="tip-content">Διάβασε τις ετικέτες τροφίμων, μαθαίνοντας πόσες θερμίδες έχει αυτό που αγοράζεις.</div>
+                                </div>
+                                <div class="tip-card">
+                                    <span class="tip-num">8</span>
+                                    <div class="tip-content">Απόφυγε το φαγητό μπροστά στην οθόνη, ο αποσπασμένος νους τρώει περισσότερο.</div>
+                                </div>
+                                <div class="tip-card">
+                                    <span class="tip-num">9</span>
+                                    <div class="tip-content">Φάε σε τακτά γεύματα (3 κύρια + 1–2 σνακ) και απόφυγε το τσιμπολόγημα.</div>
+                                </div>
+                                <div class="tip-card">
+                                    <span class="tip-num">10</span>
+                                    <div class="tip-content">Συνδύασε αερόβια άσκηση με ενδυνάμωση, ο μυϊκός ιστός καίει περισσότερες θερμίδες και σε ηρεμία.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SLIDE 7: ΔΕΙΚΤΗΣ ΜΑΖΑΣ ΣΩΜΑΤΟΣ -->
+                    <section class="slide" id="slide-6">
+                        <h1>Ο Δείκτης Μάζας Σώματος (ΔΜΣ)</h1>
+
+                        <div class="grid-2">
+                            <div class="card">
+                                <h2>Τι είναι ο ΔΜΣ;</h2>
+                                <p>Ο Δείκτης Μάζας Σώματος (ΔΜΣ) είναι ένας απλός υπολογισμός που εκτιμά αν το σωματικό βάρος είναι αναλογικό με το ύψος:</p>
+                                
+                                <div class="highlight-box" style="background: rgba(16, 185, 129, 0.05); border-left-color: var(--accent-primary); text-align: center; padding: 1.25rem;">
+                                    <strong style="font-size: 1.3rem; color: var(--accent-primary); display: block; margin-bottom: 0.25rem;">ΔΜΣ = Βάρος (kg) ÷ [Ύψος (m)]²</strong>
+                                </div>
+
+                                <div class="card" style="background: rgba(255, 255, 255, 0.02); margin-top: 0.75rem; border-color: rgba(255, 255, 255, 0.05);">
+                                    <h3>Παράδειγμα</h3>
+                                    <p style="margin-bottom: 0;">Αν ζυγίζεις 55 kg και έχεις ύψος 1,65 m:</p>
+                                    <p style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-top: 0.25rem; text-align: center;">ΔΜΣ = 55 ÷ (1,65 × 1,65) = 55 ÷ 2,72 ≈ 20,2</p>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <h2>Ερμηνεία ΔΜΣ για Ενήλικες</h2>
+                                <div style="overflow-x: auto;">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>ΔΜΣ</th>
+                                                <th>Κατηγορία</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>Κάτω από 18,5</strong></td>
+                                                <td><span class="status-tag tag-moderate">Ελλιποβαρής</span></td>
+                                            </tr>
+                                            <tr style="background: rgba(16, 185, 129, 0.05);">
+                                                <td><strong>18,5 – 24,9</strong></td>
+                                                <td><span class="status-tag tag-healthy" style="background: var(--accent-primary); color: var(--bg-main);">Φυσιολογικό βάρος</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>25 – 29,9</strong></td>
+                                                <td><span class="status-tag tag-unhealthy">Υπέρβαρος</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>30 και πάνω</strong></td>
+                                                <td><span class="status-tag tag-unhealthy" style="background: var(--danger); color: white;">Παχυσαρκία</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card warning">
+                            <h3>⚠️ Σημαντική σημείωση</h3>
+                            <p style="margin-bottom: 0;">Για παιδιά και εφήβου/ες ο ΔΜΣ ερμηνεύεται διαφορετικά συγκρίνεται με ειδικά εκατοστιαία τεταρτημόρια για ηλικία και φύλο. Ο ΔΜΣ δεν μετρά απευθείας το σωματικό λίπος και δεν λαμβάνει υπόψη τη μυϊκή μάζα. Πάντα συμβουλεύεσαι έναν/μία ειδικό για αξιολόγηση.</p>
+                        </div>
+                    </section>
+
+                    <!-- SLIDE 8: ΣΥΝΟΨΗ -->
+                    <section class="slide" id="slide-7">
+                        <h1>Σύνοψη όσων έμαθες</h1>
                         
-                        <ul class="checklist" style="gap: 1rem;">
-                            <li>Η θερμίδα (kcal) είναι η μονάδα ενέργειας στα τρόφιμα και στην άσκηση.</li>
-                            <li>Τα τρόφιμα αποδίδουν ενέργεια μέσω υδατανθράκων, πρωτεϊνών και λιπών. Τα λίπη έχουν τη μεγαλύτερη ενεργειακή πυκνότητα.</li>
-                            <li>Η ενεργειακή ισορροπία (πρόσληψη vs δαπάνη) καθορίζει αν το βάρος σου αυξάνεται, μειώνεται ή παραμένει σταθερό.</li>
-                            <li>Ο Βασικός Μεταβολικός Ρυθμός καταναλώνει τη μεγαλύτερη μερίδα ενέργειας ακόμα και σε ηρεμία.</li>
-                            <li>Οι θερμίδες προσλαμβάνονται εύκολα από ανθυγιεινά τρόφιμα, αλλά δαπανώνται δύσκολα μέσω άσκησης.</li>
-                            <li>Ο ΠΟΥ συστήνει 60 λεπτά μέτριας-έντονης δραστηριότητας κάθε μέρα για εφήβους/ες.</li>
-                            <li>Η καλύτερη στρατηγική για υγιές βάρος είναι ο συνδυασμός ισορροπημένης διατροφής και τακτικής άσκησης.</li>
-                        </ul>
-                    </div>
-                </section>
+                        <div class="card highlight">
+                            <p style="font-size: 1.1rem; margin-bottom: 1rem; font-weight: 500;">Ανακεφαλαίωση των βασικών σημείων του μαθήματος:</p>
+                            
+                            <ul class="checklist" style="gap: 1rem;">
+                                <li>Η θερμίδα (kcal) είναι η μονάδα ενέργειας στα τρόφιμα και στην άσκηση.</li>
+                                <li>Τα τρόφιμα αποδίδουν ενέργεια μέσω υδατανθράκων, πρωτεϊνών και λιπών. Τα λίπη έχουν τη μεγαλύτερη ενεργειακή πυκνότητα.</li>
+                                <li>Η ενεργειακή ισορροπία (πρόσληψη vs δαπάνη) καθορίζει αν το βάρος σου αυξάνεται, μειώνεται ή παραμένει σταθερό.</li>
+                                <li>Ο Βασικός Μεταβολικός Ρυθμός καταναλώνει τη μεγαλύτερη μερίδα ενέργειας ακόμα και σε ηρεμία.</li>
+                                <li>Οι θερμίδες προσλαμβάνονται εύκολα από ανθυγιεινά τρόφιμα, αλλά δαπανώνται δύσκολα μέσω άσκησης.</li>
+                                <li>Ο ΠΟΥ συστήνει 60 λεπτά μέτριας-έντονης δραστηριότητας κάθε μέρα για εφήβους/ες.</li>
+                                <li>Η καλύτερη στρατηγική για υγιές βάρος είναι ο συνδυασμός ισορροπημένης διατροφής και τακτικής άσκησης.</li>
+                            </ul>
+                        </div>
+                    </section>
 
-            </div>
-
-            <!-- Lower Control Navigation Bar -->
-            <div class="control-bar">
-                <button id="btn-prev" class="btn-nav" disabled>
-                    <span class="nav-arrow">←</span> Προηγούμενο
-                </button>
-                <div class="page-indicator">
-                    Σελίδα <span class="page-num-val">1</span> από <span class="page-num-total">8</span>
                 </div>
-                <button id="btn-next" class="btn-nav btn-primary">
-                    Επόμενο <span class="nav-arrow">→</span>
-                </button>
-            </div>
-        </main>
+
+                <!-- Lower Control Navigation Bar -->
+                <div class="control-bar">
+                    <button id="btn-prev" class="btn-nav" disabled>
+                        <span class="nav-arrow">←</span> Προηγούμενο
+                    </button>
+                    <div class="page-indicator">
+                        Σελίδα <span class="page-num-val">1</span> από <span class="page-num-total">8</span>
+                    </div>
+                    <button id="btn-next" class="btn-nav btn-primary">
+                        Επόμενο <span class="nav-arrow">→</span>
+                    </button>
+                </div>
+            </main>
+        </div>
     </div>
 
-    <!-- Beautiful Lightbox Image Modal -->
+    <!-- Beautiful Lightbox Image Modal (Stays directly in body for global fixed positioning) -->
     <div id="image-modal" class="image-modal-overlay">
         <span class="image-modal-close" id="btn-close-image-modal">&times;</span>
         <img class="image-modal-content" id="zoomed-image-content" alt="Zoomed view">
@@ -1434,7 +1460,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update navigation state buttons
         if (btnPrev) btnPrev.disabled = (index === 0);
         
-        // On the very last slide, completely hide the Next button (restoring original code layout rules)
+        // On the very last slide, completely hide the Next button
         if (btnNext) {
             if (index === totalSlides - 1) {
                 btnNext.style.visibility = 'hidden';
@@ -1493,6 +1519,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize first slide
     showSlide(0);
 
+    // --- STREAMING_CHUNK:Implementing food table filter mechanics... ---
     // --- FOOD FILTER (SLIDE 4) ---
     const filterButtons = document.querySelectorAll('.btn-filter');
     const foodRows = document.querySelectorAll('#food-table-body tr');
@@ -1532,6 +1559,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // --- STREAMING_CHUNK:Implementing modal click-to-zoom listeners... ---
     // --- INTERACTIVE LIGHTBOX IMAGE MODAL ---
     const imgModal = document.getElementById('image-modal');
     const zoomedImg = document.getElementById('zoomed-image-content');
