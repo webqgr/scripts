@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Οδηγός Οφσάιντ - Θεωρία & Κανόνες</title>
+  
+  <style>
+    /* Premium Modern Design Tokens & Variables */
+    :root {
+      --color-primary: #10b981;      /* Emerald 500 */
+      --color-primary-dark: #047857; /* Emerald 700 */
+      --color-primary-light: #ecfdf5;/* Emerald 50 */
+      --color-accent: #f59e0b;       /* Amber 500 */
+      --color-accent-light: #fef3c7; /* Amber 100 */
+      --color-accent-dark: #b45309;  /* Amber 700 */
+      --color-danger: #e11d48;       /* Rose 600 */
+      --color-danger-light: #fff1f2;  /* Rose 50 */
+      --color-slate-50: #f8fafc;
+      --color-slate-100: #f1f5f9;
+      --color-slate-200: #e2e8f0;
+      --color-slate-300: #cbd5e1;
+      --color-slate-500: #64748b;
+      --color-slate-700: #334155;
+      --color-slate-800: #1e293b;
+      --color-slate-900: #0f172a;
+      --color-white: #ffffff;
+      
+      --font-stack: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --shadow-premium: 0 20px 50px rgba(4, 120, 87, 0.08);
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.05);
+      --transition-bezier: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Core Resets & Dynamic Layout Box constraints */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-stack);
+      background: linear-gradient(135deg, #ecfdf5 0%, #f8fafc 50%, #f0fdfa 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      color: var(--color-slate-700);
+      overflow: hidden;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    /* Constrained dynamic viewport box (max-height 680px) */
+    .app-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 880px;
+      height: 92vh;
+      max-height: 680px;
+      min-height: 420px;
+      background-color: var(--color-white);
+      border: 1px solid rgba(16, 185, 129, 0.15);
+      border-radius: 24px;
+      box-shadow: var(--shadow-premium);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    /* Progress Indicators */
+    .top-progress-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background-color: var(--color-slate-100);
+      z-index: 30;
+    }
+
+    .top-progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--color-primary), #14b8a6);
+      width: 33.333%;
+      transition: width 0.6s var(--transition-bezier);
+    }
+
+    /* Header Styles */
+    .header {
+      height: 68px;
+      min-height: 68px;
+      border-bottom: 1px solid var(--color-slate-100);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 20;
+      background-color: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+    }
+
+    .header-logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-badge {
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-titles {
+      line-height: 1.25;
+    }
+
+    .header-main-title {
+      color: var(--color-slate-800);
+      font-size: 15px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .header-subtitle {
+      color: var(--color-primary-dark);
+      font-size: 12.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    /* Interactive Slide Selector Tabs inside Header */
+    .header-tabs {
+      display: flex;
+      align-items: center;
+      background-color: rgba(241, 245, 249, 0.85);
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid rgba(226, 232, 240, 0.5);
+      gap: 4px;
+    }
+
+    .tab-button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px 14px;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--color-slate-500);
+      border-radius: 8px;
+      transition: all 0.25s var(--transition-bezier);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tab-button:hover {
+      color: var(--color-slate-800);
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .tab-button.active {
+      background-color: var(--color-white);
+      color: var(--color-primary-dark);
+      box-shadow: 0 2px 8px rgba(4, 120, 87, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.1);
+    }
+
+    .tab-number {
+      background-color: rgba(226, 232, 240, 0.6);
+      color: var(--color-slate-800);
+      border-radius: 4px;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .tab-button.active .tab-number {
+      background-color: var(--color-primary-light);
+      color: var(--color-primary-dark);
+    }
+
+    /* Main Smooth Viewport */
+    .main-viewport {
+      flex-grow: 1;
+      overflow: hidden;
+      background-color: rgba(248, 250, 252, 0.4);
+      position: relative;
+    }
+
+    /* Sliding Track */
+    .slide-track {
+      display: flex;
+      width: 300%;
+      height: 100%;
+      transition: transform 0.6s var(--transition-bezier);
+      will-change: transform;
+    }
+
+    /* Individual Slide Container */
+    .slide-content {
+      width: 33.333333%;
+      height: 100%;
+      flex-shrink: 0;
+      padding: 24px 32px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      scroll-behavior: smooth;
+    }
+
+    /* Custom Modern Scrollbars */
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: var(--color-slate-100);
+      border-radius: 9999px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(16, 185, 129, 0.25);
+      border-radius: 9999px;
+      transition: background 0.3s;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: rgba(16, 185, 129, 0.45);
+    }
+
+    /* Header inside Slide Content */
+    .slide-header {
+      border-bottom: 1px solid var(--color-slate-100);
+      padding-bottom: 12px;
+    }
+
+    .slide-tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background-color: var(--color-primary-light);
+      color: var(--color-primary-dark);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+
+    .slide-tag-teal {
+      background-color: #f0fdfa;
+      color: #0d9488;
+    }
+
+    .slide-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--color-slate-800);
+      margin-top: 6px;
+      letter-spacing: -0.01em;
+    }
+
+    .slide-lead {
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--color-slate-800);
+      font-weight: 600;
+    }
+
+    .slide-sub-lead {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--color-slate-600);
+      margin-top: 8px;
+      font-weight: 500;
+    }
+
+    /* Callout Card Wrapper */
+    .intro-callout {
+      background: linear-gradient(90deg, rgba(16, 185, 129, 0.04) 0%, rgba(20, 184, 166, 0.04) 100%);
+      border-left: 4px solid var(--color-primary);
+      padding: 18px 24px;
+      border-radius: 0 16px 16px 0;
+    }
+
+    /* CSS Grid Layout Rules */
+    .grid-layout {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    /* Generic Content Box */
+    .content-box {
+      background-color: var(--color-white);
+      padding: 20px;
+      border-radius: 16px;
+      border: 1px solid var(--color-slate-100);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .box-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .box-title {
+      font-size: 15px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-slate-800);
+    }
+
+    .box-body-text {
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: var(--color-slate-600);
+      font-weight: 500;
+    }
+
+    .box-quote {
+      font-size: 15px;
+      line-height: 1.6;
+      font-weight: 700;
+      color: var(--color-slate-700);
+      background-color: var(--color-slate-50);
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid var(--color-slate-100);
+      margin-top: 10px;
+    }
+
+    /* Warning Banner block */
+    .warning-banner {
+      background-color: var(--color-accent-light);
+      border: 1px solid rgba(245, 158, 11, 0.2);
+      padding: 14px 18px;
+      border-radius: 12px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .warning-icon {
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .warning-text {
+      font-size: 14.5px;
+      line-height: 1.55;
+      color: #78350f;
+      font-weight: 700;
+    }
+
+    /* Styled Lists */
+    .styled-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .list-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .list-number {
+      background-color: var(--color-primary-light);
+      color: var(--color-primary-dark);
+      font-size: 13px;
+      font-weight: 800;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .list-text {
+      font-size: 14.5px;
+      line-height: 1.5;
+      color: var(--color-slate-700);
+      font-weight: 600;
+    }
+
+    /* Evaluation Block */
+    .evaluation-card {
+      background-color: rgba(16, 185, 129, 0.03);
+      border: 1px solid rgba(16, 185, 129, 0.1);
+      border-radius: 16px;
+      padding: 18px 24px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .evaluation-icon-box {
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+
+    .evaluation-title {
+      font-size: 14.5px;
+      font-weight: 800;
+      color: var(--color-slate-800);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .evaluation-desc {
+      font-size: 15.5px;
+      line-height: 1.6;
+      color: var(--color-slate-700);
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    .highlight-brand {
+      color: var(--color-primary-dark);
+      font-weight: 800;
+    }
+
+    /* Slide 2: Exceptions Layout */
+    .cases-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .case-card {
+      background-color: var(--color-white);
+      padding: 18px 20px;
+      border-radius: 16px;
+      border: 1px solid var(--color-slate-100);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+      transition: box-shadow 0.3s;
+    }
+
+    .case-card:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    .case-card-wide {
+      grid-column: span 2;
+    }
+
+    .case-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2px;
+    }
+
+    .case-label {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--color-primary-dark);
+      background-color: var(--color-primary-light);
+      padding: 3px 10px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .no-offside-badge {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--color-danger);
+      background-color: var(--color-danger-light);
+      padding: 3px 10px;
+      border-radius: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .case-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--color-slate-800);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .case-desc {
+      font-size: 14.5px;
+      line-height: 1.55;
+      color: var(--color-slate-600);
+      font-weight: 500;
+    }
+
+    .case-footer {
+      border-top: 1px solid var(--color-slate-100);
+      padding-top: 10px;
+      font-size: 12.5px;
+      font-style: italic;
+      color: var(--color-slate-500);
+      font-weight: 600;
+    }
+
+    .case-footer-highlight {
+      color: var(--color-primary-dark);
+      font-weight: 700;
+      font-style: normal;
+    }
+
+    /* Slide 3: Summary & Tables */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.8fr;
+      gap: 20px;
+    }
+
+    .principles-card {
+      background-color: var(--color-white);
+      padding: 20px;
+      border-radius: 16px;
+      border: 1px solid var(--color-slate-100);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .principles-header {
+      border-bottom: 1px solid var(--color-slate-100);
+      padding-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .principles-header-icon {
+      font-size: 20px;
+    }
+
+    .principles-section-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--color-slate-800);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .principles-sub-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #0d9488;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .principles-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      list-style: none;
+    }
+
+    .principles-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 14.5px;
+      line-height: 1.5;
+      font-weight: 700;
+      color: var(--color-slate-700);
+    }
+
+    .principles-dot {
+      color: #0d9488;
+      font-size: 16px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .bold-dark {
+      color: var(--color-slate-900);
+      font-weight: 800;
+    }
+
+    /* Table Styling Rules */
+    .table-container-box {
+      background-color: var(--color-white);
+      padding: 20px;
+      border-radius: 16px;
+      border: 1px solid var(--color-slate-100);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .table-header-area {
+      border-bottom: 1px solid var(--color-slate-100);
+      padding-bottom: 10px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .table-wrapper-scroller {
+      overflow-x: auto;
+      border: 1px solid var(--color-slate-100);
+      border-radius: 12px;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13.5px;
+    }
+
+    .data-table th {
+      background-color: var(--color-slate-50);
+      border-bottom: 1px solid var(--color-slate-100);
+      padding: 10px 12px;
+      color: var(--color-slate-700);
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+    }
+
+    .data-table th.center, .data-table td.center {
+      text-align: center;
+    }
+
+    .data-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--color-slate-100);
+      color: var(--color-slate-700);
+      font-weight: 600;
+    }
+
+    .data-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .data-table tr:hover {
+      background-color: rgba(248, 250, 252, 0.7);
+    }
+
+    .row-index {
+      font-weight: 700;
+      color: var(--color-slate-500);
+    }
+
+    .row-title {
+      color: var(--color-slate-900);
+    }
+
+    .row-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      background-color: var(--color-danger-light);
+      color: var(--color-danger);
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 11px;
+    }
+
+    .row-meta {
+      color: var(--color-slate-500);
+      font-size: 12.5px;
+    }
+
+    /* Slim Control Footer */
+    .footer {
+      height: 54px;
+      min-height: 54px;
+      border-top: 1px solid var(--color-slate-100);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      z-index: 20;
+    }
+
+    .nav-button {
+      border: none;
+      background-color: var(--color-slate-100);
+      color: var(--color-slate-700);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .nav-button:hover:not(:disabled) {
+      background-color: var(--color-primary-light);
+      color: var(--color-primary-dark);
+    }
+
+    .nav-button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .nav-button-primary {
+      background-color: var(--color-primary-dark);
+      color: var(--color-white);
+    }
+
+    .nav-button-primary:hover:not(:disabled) {
+      background-color: #046c4e;
+      color: var(--color-white);
+    }
+
+    .dot-navigation {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dot-indicator {
+      border: none;
+      background-color: var(--color-slate-200);
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .dot-indicator.active {
+      background-color: var(--color-primary-dark);
+      width: 20px;
+      border-radius: 9999px;
+    }
+
+    /* Adaptive Design Framework Breakpoints */
+    @media (max-width: 768px) {
+      .grid-layout, .cases-grid, .summary-grid {
+        grid-template-columns: 1fr;
+      }
+      .case-card-wide {
+        grid-column: span 1;
+      }
+      .tab-text {
+        display: none;
+      }
+      .slide-content {
+        padding: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-logo-area {
+        display: none;
+      }
+      .header {
+        justify-content: center;
+      }
+      .footer {
+        padding: 0 12px;
+      }
+      .nav-button span {
+        display: none;
+      }
+      .nav-button {
+        padding: 8px 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Boxed Interactive Window -->
+  <div class="app-wrapper">
+    
+    <!-- Top Progress Indicator -->
+    <div class="top-progress-container">
+      <div id="topProgressBar" class="top-progress-bar"></div>
+    </div>
+
+    <!-- Slim Elegant Header with Segmented Custom Tabs -->
+    <header class="header">
+      <div class="header-logo-area">
+        <span class="logo-badge">⚽</span>
+        <div class="header-titles">
+          <h1 class="header-main-title">Οδηγός Οφσάιντ</h1>
+          <p class="header-subtitle" id="slideSubtitle">Μέρος 1: Θεωρία</p>
+        </div>
+      </div>
+
+      <!-- Segmented Header Navigation Tabs with Custom Emojis -->
+      <div class="header-tabs">
+        <button onclick="goToSlide(0)" id="tab-0" class="tab-button active">
+          <span class="tab-number">1</span>
+          <span class="tab-text">📖 Θεωρία</span>
+        </button>
+        <button onclick="goToSlide(1)" id="tab-1" class="tab-button">
+          <span class="tab-number">2</span>
+          <span class="tab-text">🚫 Εξαιρέσεις</span>
+        </button>
+        <button onclick="goToSlide(2)" id="tab-2" class="tab-button">
+          <span class="tab-number">3</span>
+          <span class="tab-text">📋 Ανακεφαλαίωση</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Content Track Area -->
+    <main id="slides-container" class="main-viewport">
+      <div id="slide-track" class="slide-track">
+
+        <!-- ==================== SLIDE 1 ==================== -->
+        <div id="slide-0" class="slide-content custom-scrollbar">
+          
+          <div class="slide-header">
+            <span class="slide-tag">📖 Σελίδα 1 • Θεωρία</span>
+            <h2 class="slide-title">⚽ Τι είναι το Οφσάιντ;</h2>
+          </div>
+
+          <div class="intro-callout">
+            <p class="slide-lead">
+              🏟️ Φαντάσου ότι παρακολουθείς έναν αγώνα ποδοσφαίρου και ξαφνικά ο/η διαιτητής σφυρίζει. Οι παίκτες/τριες της μίας ομάδας διαμαρτύρονται, οι παίκτες/τριες της άλλης πανηγυρίζουν. Τι συνέβη; Πολύ πιθανόν να σφυρίχτηκε οφσάιντ.
+            </p>
+            <p class="slide-sub-lead">
+              🧠 Ο κανονισμός του οφσάιντ είναι από τους πιο γνωστούς αλλά και από τους πιο παρεξηγημένους κανονισμούς στο ποδόσφαιρο. Ας τον δούμε μαζί, βήμα-βήμα.
+            </p>
+          </div>
+
+          <div class="grid-layout">
+            
+            <!-- Box Left: Rules definition -->
+            <div class="content-box">
+              <div>
+                <div class="box-header">
+                  <span class="logo-badge">📖</span>
+                  <h3 class="box-title">Ορισμός (Κανόνας 11 IFAB)</h3>
+                </div>
+                <p class="box-body-text">
+                  Σύμφωνα με τους επίσημους κανονισμούς της IFAB (International Football Association Board), ένας/μία παίκτης/τρια βρίσκεται σε θέση οφσάιντ όταν:
+                </p>
+                <div class="box-quote">
+                  🏃‍♂️ Οποιοδήποτε μέρος του κεφαλιού, του σώματος ή των ποδιών του/της βρίσκεται πιο κοντά στη γραμμή τέρματος του/της αντιπάλου/ης από ό,τι η μπάλα και ο/η δεύτερος/η τελευταίος/α αμυντικός/ή (συνήθως ο/η τελευταίος/α παίκτης/τρια πεδίου, ο/η τερματοφύλακας, υπολογίζεται ως ένας/μία από τους/τις αμυντικούς).
+                </div>
+              </div>
+              
+              <div class="warning-banner">
+                <span class="warning-icon">⚠️</span>
+                <p class="warning-text">
+                  <strong>Προσοχή:</strong> 🙅‍♂️ Τα χέρια και τα μπράτσα ΔΕΝ λαμβάνονται υπόψη για τον καθορισμό της θέσης οφσάιντ.
+                </p>
+              </div>
+            </div>
+
+            <!-- Box Right: When is it ruled -->
+            <div class="content-box">
+              <div>
+                <div class="box-header">
+                  <span class="logo-badge">🚩</span>
+                  <h3 class="box-title">Πότε καταλογίζεται Οφσάιντ;</h3>
+                </div>
+                <p class="box-body-text" style="margin-bottom: 12px;">
+                  Το να βρίσκεσαι σε θέση οφσάιντ δεν είναι από μόνο του παράβαση. Το οφσάιντ καταλογίζεται μόνο όταν ο/η παίκτης/τρια εμπλέκεται ενεργά στο παιχνίδι, δηλαδή:
+                </p>
+                
+                <div class="styled-list">
+                  <div class="list-item">
+                    <span class="list-number">1</span>
+                    <span class="list-text">👟 Παίζει ή αγγίζει την μπάλα που έχει παίξει ή αγγίξει συμπαίκτης/τριά του/της.</span>
+                  </div>
+                  <div class="list-item">
+                    <span class="list-number">2</span>
+                    <span class="list-text">🛑 Παρεμποδίζει αντίπαλο παίκτη/τρια (π.χ. εμποδίζει την ορατότητα του/της τερματοφύλακα).</span>
+                  </div>
+                  <div class="list-item">
+                    <span class="list-number">3</span>
+                    <span class="list-text">📈 Αποκτά πλεονέκτημα από τη θέση οφσάιντ (π.χ. η μπάλα αναπηδά σε αυτόν/ή από δοκάρι ή αντίπαλο/η).</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Evaluation Warning Box -->
+          <div class="evaluation-card">
+            <div class="evaluation-icon-box">⏱️</div>
+            <div>
+              <h4 class="evaluation-title">Κρίσιμη Στιγμή Αξιολόγησης</h4>
+              <p class="evaluation-desc">
+                Η θέση του/της παίκτη/τριας κρίνεται τη στιγμή που ο/η συμπαίκτης/τριά του/της παίζει ή αγγίζει την μπάλα <span class="highlight-brand">ΟΧΙ</span> τη στιγμή που ο/η παίκτης/τρια λαμβάνει την μπάλα.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ==================== SLIDE 2 ==================== -->
+        <div id="slide-1" class="slide-content custom-scrollbar">
+          
+          <div class="slide-header">
+            <span class="slide-tag">🚫 Σελίδα 2 • Κανόνες &amp; Εξαιρέσεις</span>
+            <h2 class="slide-title">🟢 ΠΕΡΙΠΤΩΣΕΙΣ ΠΟΥ ΔΕΝ ΙΣΧΥΕΙ ΤΟ ΟΦΣΑΙΝΤ</h2>
+            <p class="slide-sub-lead" style="margin-top: 4px; font-weight: 600; color: var(--color-slate-700);">
+              💡 Υπάρχουν 7 συγκεκριμένες περιπτώσεις στις οποίες, ακόμα και αν ένας/μία παίκτης/τρια βρίσκεται σε θέση οφσάιντ, ο κανονισμός δεν εφαρμόζεται.
+            </p>
+          </div>
+
+          <div class="cases-grid">
+            
+            <!-- Case 1 -->
+            <div class="case-card">
+              <div>
+                <div class="case-top">
+                  <span class="case-label">Περίπτωση 1</span>
+                  <span class="no-offside-badge">❌ ΔΕΝ ισχύει</span>
+                </div>
+                <h3 class="case-title">🧠 Σκόπιμη Αμυντική Επαφή</h3>
+                <p class="case-desc" style="margin-top: 6px;">
+                  Ο/Η αμυντικός/ή σκόπιμα παίζει την μπάλα (deliberate play). Η τελευταία επαφή ήταν από αντίπαλο/η το «ρολόι» οφσάιντ μηδενίζεται.
+                </p>
+              </div>
+              <div class="case-footer">
+                🛡️ Διαφορετικό αν ο/η αμυντικός/ή απλώς εκτρέπει ακούσια.
+              </div>
+            </div>
+
+            <!-- Case 2 -->
+            <div class="case-card">
+              <div>
+                <div class="case-top">
+                  <span class="case-label">Περίπτωση 2</span>
+                  <span class="no-offside-badge">❌ ΔΕΝ ισχύει</span>
+                </div>
+                <h3 class="case-title">📐 Απευθείας από Κορνέρ</h3>
+                <p class="case-desc" style="margin-top: 6px;">
+                  Ο/Η παίκτης/τρια λαμβάνει την μπάλα απευθείας από εκτέλεση γωνιαίας (κορνέρ). Δεν μπορεί να κριθεί οφσάιντ σε καμία περίπτωση.
+                </p>
+              </div>
+            </div>
+
+            <!-- Case 3 -->
+            <div class="case-card">
+              <div>
+                <div class="case-top">
+                  <span class="case-label">Περίπτωση 3</span>
+                  <span class="no-offside-badge">❌ ΔΕΝ ισχύει</span>
+                </div>
+                <h3 class="case-title">👐 Απευθείας από Throw-in</h3>
+                <p class="case-desc" style="margin-top: 6px;">
+                  Ο/Η παίκτης/τρια λαμβάνει την μπάλα απευθείας από ρίψη εντός ενός/μίας συμπαίκτη/τριας. Η ρίψη εντός εξαιρείται πάντα από τον κανονισμό.
+                </p>
+              </div>
+            </div>
+
+            <!-- Case 4 -->
+            <div class="case-card">
+              <div>
+                <div class="case-top">
+                  <span class="case-label">Περίπτωση 4</span>
+                  <span class="no-offside-badge">❌ ΔΕΝ ισχύει</span>
+                </div>
+                <h3 class="case-title">🥾 Απευθείας από Goal Kick</h3>
+                <p class="case-desc" style="margin-top: 6px;">
+                  Ο/Η παίκτης/τρια λαμβάνει την μπάλα απευθείας από κλωτσιά τέρματος.
+                </p>
+              </div>
+              <div class="case-footer">
+                <span class="case-footer-highlight">🆕 Νέος κανονισμός IFAB 2019-2020.</span>
+              </div>
+            </div>
+
+            <!-- Case 5 -->
+            <div class="case-card">
+              <div>
+                <div class="case-top">
+                  <span class="case-label">Περίπτωση 5</span>
+                  <span class="no-offside-badge">❌ ΔΕΝ ισχύει</span>
+                </div>
+                <h3 class="case-title">🗺️ Παίκτης στο Δικό του Μισό</h3>
+                <p class="case-desc" style="margin-top: 6px;">
+                  Τη στιγμή της πάσας ο/η παίκτης/τρια βρίσκεται στο δικό του/της μισό γηπέδου. Δεν μπορεί ποτέ να κριθεί οφσάιντ.
+                </p>
+              </div>
+            </div>
+
+            <!-- Case 6 -->
+            <div class="case-card">
+              <div>
+                <div class="case-top">
+                  <span class="case-label">Περίπτωση 6</span>
+                  <span class="no-offside-badge">❌ ΔΕΝ ισχύει</span>
+                </div>
+                <h3 class="case-title">📏 Ισόπαλη Θέση (Level)</h3>
+                <p class="case-desc" style="margin-top: 6px;">
+                  Ο/Η παίκτης/τρια βρίσκεται ακριβώς στην ίδια γραμμή με τον/τη δεύτερο/η τελευταίο/α αμυντικό/ή. Χρειάζεται να είναι πιο μπροστά, όχι στο ίδιο σημείο.
+                </p>
+              </div>
+            </div>
+
+            <!-- Case 7 -->
+            <div class="case-card case-card-wide">
+              <div>
+                <div class="case-top">
+                  <span class="case-label">Περίπτωση 7</span>
+                  <span class="no-offside-badge">❌ ΔΕΝ ισχύει</span>
+                </div>
+                <h3 class="case-title">🧘 Παθητική Θέση</h3>
+                <p class="case-desc" style="margin-top: 6px;">
+                  Ο/Η παίκτης/τρια βρίσκεται σε θέση οφσάιντ, αλλά δεν εμπλέκεται ενεργά στη φάση δεν παίζει μπάλα, δεν παρεμποδίζει, δεν αποκτά πλεονέκτημα.
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ==================== SLIDE 3 ==================== -->
+        <div id="slide-2" class="slide-content custom-scrollbar">
+          
+          <div class="slide-header">
+            <span class="slide-tag slide-tag-teal">📋 Σελίδα 3 • Σύνοψη</span>
+            <h2 class="slide-title">📋 ΑΝΑΚΕΦΑΛΑΙΩΣΗ</h2>
+          </div>
+
+          <div class="summary-grid">
+            
+            <!-- Column 1: Principles -->
+            <div class="principles-card">
+              <div class="principles-header">
+                <span class="principles-header-icon">⭐</span>
+                <h3 class="principles-section-title">Βασικές Αρχές</h3>
+              </div>
+              
+              <div style="display: flex; flex-direction: column; gap: 12px;">
+                <h4 class="principles-sub-title">💡 Θυμήσου!</h4>
+                <ul class="principles-list">
+                  <li class="principles-item">
+                    <span class="principles-dot">•</span>
+                    <span>⏱️ Η θέση κρίνεται τη στιγμή της πάσας, όχι της λήψης.</span>
+                  </li>
+                  <li class="principles-item">
+                    <span class="principles-dot">•</span>
+                    <span>✅ Χρειάζονται <span class="bold-dark">ΔΥΟ</span> συνθήκες: σωστή θέση + ενεργός εμπλοκή.</span>
+                  </li>
+                  <li class="principles-item">
+                    <span class="principles-dot">•</span>
+                    <span>🙅‍♂️ Τα χέρια/μπράτσα δεν μετράνε για τον υπολογισμό.</span>
+                  </li>
+                  <li class="principles-item">
+                    <span class="principles-dot">•</span>
+                    <span>📏 Η ισόπαλος θέση ΔΕΝ είναι οφσάιντ χρειάζεται να είσαι πιο μπροστά.</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Column 2: Exceptions Table -->
+            <div class="table-container-box">
+              <div class="table-header-area">
+                <span class="principles-header-icon">📊</span>
+                <h3 class="principles-section-title">Πίνακας Εξαιρέσεων</h3>
+              </div>
+
+              <div class="table-wrapper-scroller custom-scrollbar">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th class="center" style="width: 40px;">#</th>
+                      <th>Περίπτωση</th>
+                      <th class="center" style="width: 120px;">Ισχύει Οφσάιντ;</th>
+                      <th>Σημείωση</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="center row-index">1</td>
+                      <td class="row-title">Αμυντικός/ή παίζει σκόπιμα την μπάλα</td>
+                      <td class="center"><span class="row-badge">❌ OXI</span></td>
+                      <td class="row-meta">Deliberate play ακυρώνεται</td>
+                    </tr>
+                    <tr>
+                      <td class="center row-index">2</td>
+                      <td class="row-title">Απευθείας λήψη από κορνέρ</td>
+                      <td class="center"><span class="row-badge">❌ OXI</span></td>
+                      <td class="row-meta">Γωνιαία εκτέλεση</td>
+                    </tr>
+                    <tr>
+                      <td class="center row-index">3</td>
+                      <td class="row-title">Απευθείας λήψη από throw-in</td>
+                      <td class="center"><span class="row-badge">❌ OXI</span></td>
+                      <td class="row-meta">Ρίψη εντός</td>
+                    </tr>
+                    <tr>
+                      <td class="center row-index">4</td>
+                      <td class="row-title">Απευθείας λήψη από goal kick</td>
+                      <td class="center"><span class="row-badge">❌ OXI</span></td>
+                      <td class="row-meta">Νέος κανονισμός 2019-2020</td>
+                    </tr>
+                    <tr>
+                      <td class="center row-index">5</td>
+                      <td class="row-title">Παίκτης/ρια στο δικό του/της μισό γηπέδου</td>
+                      <td class="center"><span class="row-badge">❌ OXI</span></td>
+                      <td class="row-meta">Κρίνεται τη στιγμή της πάσας</td>
+                    </tr>
+                    <tr>
+                      <td class="center row-index">6</td>
+                      <td class="row-title">Ισόπαλη θέση με αμυντικό (level)</td>
+                      <td class="center"><span class="row-badge">❌ OXI</span></td>
+                      <td class="row-meta">Χρειάζεται να είναι πιο μπροστά</td>
+                    </tr>
+                    <tr>
+                      <td class="center row-index">7</td>
+                      <td class="row-title">Παθητική θέση, χωρίς ενεργό εμπλοκή</td>
+                      <td class="center"><span class="row-badge">❌ OXI</span></td>
+                      <td class="row-meta">Δεν παίζει, δεν παρεμποδίζει</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Slim Footer Controls -->
+    <footer class="footer">
+      
+      <!-- Prev navigation trigger -->
+      <button id="prevBtn" onclick="prevSlide()" class="nav-button">
+        👈
+        <span>Προηγούμενο</span>
+      </button>
+
+      <!-- Central dot indicators -->
+      <div class="dot-navigation">
+        <button onclick="goToSlide(0)" class="dot-indicator active" id="dot-0" aria-label="Μετάβαση στη διαφάνεια 1"></button>
+        <button onclick="goToSlide(1)" class="dot-indicator" id="dot-1" aria-label="Μετάβαση στη διαφάνεια 2"></button>
+        <button onclick="goToSlide(2)" class="dot-indicator" id="dot-2" aria-label="Μετάβαση στη διαφάνεια 3"></button>
+      </div>
+
+      <!-- Next navigation trigger -->
+      <button id="nextBtn" onclick="nextSlide()" class="nav-button nav-button-primary">
+        <span>Επόμενο</span>
+        👉
+      </button>
+
+    </footer>
+
+  </div>
+
+  <script>
+    let currentIndex = 0;
+    const totalSlides = 3;
+
+    const subtitles = [
+      "Μέρος 1: Θεωρία 📖",
+      "Μέρος 2: Εξαιρέσεις 🚫",
+      "Μέρος 3: Ανακεφαλαίωση 📋"
+    ];
+
+    const track = document.getElementById('slide-track');
+    const slides = [
+      document.getElementById('slide-0'),
+      document.getElementById('slide-1'),
+      document.getElementById('slide-2')
+    ];
+    const dots = [
+      document.getElementById('dot-0'),
+      document.getElementById('dot-1'),
+      document.getElementById('dot-2')
+    ];
+    const tabs = [
+      document.getElementById('tab-0'),
+      document.getElementById('tab-1'),
+      document.getElementById('tab-2')
+    ];
+    
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const slideSubtitle = document.getElementById('slideSubtitle');
+    const topProgressBar = document.getElementById('topProgressBar');
+
+    function updatePresentation() {
+      // Execute hardware-accelerated horizontal track sliding
+      track.style.transform = `translateX(-${currentIndex * 33.333333}%)`;
+
+      // Soft reset of scroll offset context on hidden cards
+      slides.forEach((slide, index) => {
+        if (index !== currentIndex) {
+          setTimeout(() => {
+            slide.scrollTop = 0;
+          }, 350);
+        }
+      });
+
+      // Update dot pagination indicators
+      dots.forEach((dot, index) => {
+        if (index === currentIndex) {
+          dot.className = "dot-indicator active";
+        } else {
+          dot.className = "dot-indicator";
+        }
+      });
+
+      // Update active segmented Header Tabs
+      tabs.forEach((tab, index) => {
+        if (index === currentIndex) {
+          tab.className = "tab-button active";
+        } else {
+          tab.className = "tab-button";
+        }
+      });
+
+      // Sync sub-titles & header progression meters
+      slideSubtitle.textContent = subtitles[currentIndex];
+      topProgressBar.style.width = `${((currentIndex + 1) / totalSlides) * 100}%`;
+
+      // Toggle navigational active statuses
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex === totalSlides - 1;
+    }
+
+    function nextSlide() {
+      if (currentIndex < totalSlides - 1) {
+        currentIndex++;
+        updatePresentation();
+      }
+    }
+
+    function prevSlide() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updatePresentation();
+      }
+    }
+
+    function goToSlide(index) {
+      if (index >= 0 && index < totalSlides) {
+        currentIndex = index;
+        updatePresentation();
+      }
+    }
+
+    // Connect physical keyboard navigation keys
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        prevSlide();
+      }
+    });
+
+    // Handle touch gesture sweeps elegantly on mobile
+    let touchstartX = 0;
+    let touchendX = 0;
+    const slidesArea = document.getElementById('slides-container');
+
+    slidesArea.addEventListener('touchstart', e => {
+      touchstartX = e.changedTouches[0].screenX;
+    }, {passive: true});
+
+    slidesArea.addEventListener('touchend', e => {
+      touchendX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, {passive: true});
+
+    function handleSwipe() {
+      if (touchendX < touchstartX - 50) {
+        nextSlide(); // Swipe Left (forward)
+      }
+      if (touchendX > touchstartX + 50) {
+        prevSlide(); // Swipe Right (backwards)
+      }
+    }
+
+    // Launch viewport rendering sync on loading completion
+    window.onload = function() {
+      updatePresentation();
+    };
+  </script>
+</body>
+</html>
