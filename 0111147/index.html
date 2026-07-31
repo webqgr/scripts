@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Συμμετέχοντες στον Τρωικό Πόλεμο - Ιλιάδα Ραψωδία Β</title>
+  <style>
+    /* Reset & Base Design System */
+    :root {
+      --bg-color: #f7f4ed;
+      --card-bg: #ffffff;
+      --navy-dark: #0a1e38;
+      --navy-main: #133966;
+      --navy-light: #e6f0fa;
+      --green-dark: #165228;
+      --green-main: #27783e;
+      --green-light: #eaf5ec;
+      --orange-dark: #a0330a;
+      --orange-main: #d44d18;
+      --orange-light: #fdf0eb;
+      --gold-accent: #d4af37;
+      --gold-light: #fef9e7;
+      --text-main: #1c2d42;
+      --text-muted: #576b82;
+      --border-radius: 20px;
+      --shadow-sm: 0 4px 14px rgba(10, 30, 56, 0.06);
+      --shadow-md: 0 10px 30px rgba(10, 30, 56, 0.12);
+      --shadow-lg: 0 20px 45px rgba(10, 30, 56, 0.18);
+      --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+      font-size: 1.15rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 15px 50px;
+    }
+
+    /* Main Container (Boxed & Centered, Max 960px) */
+    .app-container {
+      width: 100%;
+      max-width: 960px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* Top Action Bar */
+    .top-bar {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    .btn-instructions {
+      background: var(--navy-dark);
+      color: #ffffff;
+      border: 2px solid var(--gold-accent);
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.25s ease;
+    }
+
+    .btn-instructions:hover {
+      background: var(--navy-main);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* Header Main Node */
+    .main-header-node {
+      background: linear-gradient(135deg, var(--navy-dark) 0%, #163861 100%);
+      color: #ffffff;
+      border: 3px solid var(--gold-accent);
+      border-radius: 24px;
+      padding: 28px 24px;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      margin-bottom: 35px;
+      overflow: hidden;
+    }
+
+    .main-header-node::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at top right, rgba(212, 175, 55, 0.15), transparent 70%);
+      pointer-events: none;
+    }
+
+    .main-header-node h1 {
+      font-size: 2.1rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    }
+
+    .header-flourish {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      color: var(--gold-accent);
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .header-flourish::before, .header-flourish::after {
+      content: "";
+      height: 2px;
+      width: 70px;
+      background: linear-gradient(90deg, transparent, var(--gold-accent), transparent);
+    }
+
+    /* Concept Map Visual Grid */
+    .concept-map {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      position: relative;
+    }
+
+    @media (max-width: 768px) {
+      .concept-map {
+        grid-template-columns: 1fr;
+        gap: 35px;
+      }
+    }
+
+    /* Branch Column Styling */
+    .branch {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 26px;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .branch-left {
+      border: 3px solid var(--green-main);
+    }
+
+    .branch-right {
+      border: 3px solid var(--orange-main);
+    }
+
+    /* Branch Headers */
+    .branch-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding-bottom: 18px;
+      border-bottom: 2px solid #edf2f7;
+      margin-bottom: 22px;
+    }
+
+    .branch-icon {
+      font-size: 2.4rem;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      flex-shrink: 0;
+    }
+
+    .branch-left .branch-icon {
+      background: var(--green-light);
+      color: var(--green-dark);
+    }
+
+    .branch-right .branch-icon {
+      background: var(--orange-light);
+      color: var(--orange-dark);
+    }
+
+    .branch-title-group h2 {
+      font-size: 1.55rem;
+      font-weight: 800;
+    }
+
+    .branch-left .branch-title-group h2 {
+      color: var(--green-dark);
+    }
+
+    .branch-right .branch-title-group h2 {
+      color: var(--orange-dark);
+    }
+
+    .branch-subtitle {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* Left Branch Subnode Cards */
+    .subnodes-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .subnode-card {
+      background: #fafbfd;
+      border: 2px dashed #b0bec5;
+      border-radius: 16px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .subnode-card:hover {
+      border-style: solid;
+      border-color: var(--green-main);
+      background: var(--green-light);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .subnode-card.active {
+      border-style: solid;
+      border-color: var(--green-main);
+      background: #ffffff;
+      box-shadow: var(--shadow-md);
+    }
+
+    .subnode-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .subnode-header-icon {
+      font-size: 2rem;
+    }
+
+    .subnode-title-group h3 {
+      font-size: 1.3rem;
+      color: var(--green-dark);
+      margin-bottom: 2px;
+    }
+
+    .subnode-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    /* Expandable Content Area */
+    .subnode-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, opacity 0.3s ease, margin-top 0.35s ease;
+      opacity: 0;
+      margin-top: 0;
+    }
+
+    .subnode-card.active .subnode-content {
+      max-height: 500px;
+      opacity: 1;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px dashed #cfd8dc;
+    }
+
+    .text-quote-box {
+      background: var(--green-light);
+      border-left: 4px solid var(--green-main);
+      padding: 16px;
+      border-radius: 10px;
+      color: var(--green-dark);
+    }
+
+    .text-quote-box h4 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+      font-weight: 800;
+    }
+
+    .source-link {
+      display: inline-block;
+      margin-top: 10px;
+      color: #1565c0;
+      text-decoration: underline;
+      font-weight: 700;
+      word-break: break-all;
+    }
+
+    .characters-list {
+      list-style-type: disc;
+      list-style-position: inside;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .characters-list li {
+      padding: 10px 14px;
+      background: #ffffff;
+      border: 1px solid #c8e6c9;
+      border-radius: 10px;
+      font-weight: 700;
+      color: var(--green-dark);
+    }
+
+    /* Right Branch Launch Section */
+    .quiz-launch-box {
+      text-align: center;
+      padding: 20px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      flex: 1;
+    }
+
+    .quiz-launch-icon {
+      font-size: 3.5rem;
+      background: var(--orange-light);
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid var(--orange-main);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .quiz-launch-desc {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 320px;
+    }
+
+    .btn-open-quiz {
+      background: linear-gradient(135deg, var(--orange-main) 0%, var(--orange-dark) 100%);
+      color: #ffffff;
+      border: 2px solid var(--gold-accent);
+      padding: 16px 32px;
+      font-size: 1.2rem;
+      font-weight: 800;
+      border-radius: 35px;
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-open-quiz:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* MODERN MATCHING QUIZ MODAL */
+    .matching-modal-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(10, 30, 56, 0.85);
+      backdrop-filter: blur(8px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      padding: 15px;
+    }
+
+    .matching-modal-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .matching-modal-card {
+      background: var(--bg-color);
+      border-radius: 24px;
+      width: 100%;
+      max-width: 920px;
+      max-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      border: 3px solid var(--gold-accent);
+      transform: scale(0.95);
+      transition: transform 0.3s ease;
+    }
+
+    .matching-modal-overlay.open .matching-modal-card {
+      transform: scale(1);
+    }
+
+    .matching-modal-header {
+      background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy-main) 100%);
+      color: #ffffff;
+      padding: 20px 26px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px solid var(--gold-accent);
+    }
+
+    .matching-modal-header h2 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .modal-close-icon {
+      background: rgba(255,255,255,0.15);
+      border: none;
+      color: #ffffff;
+      font-size: 2rem;
+      cursor: pointer;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease;
+    }
+
+    .modal-close-icon:hover {
+      background: rgba(255,255,255,0.3);
+    }
+
+    .matching-modal-body {
+      padding: 24px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .matching-instruction-banner {
+      background: var(--gold-light);
+      border: 2px solid var(--gold-accent);
+      color: #6d5000;
+      padding: 14px 20px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-align: center;
+    }
+
+    /* Modern 2-Column Matching Layout */
+    .matching-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .matching-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .column-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--navy-dark);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .matching-items-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* Hero Card Item */
+    .hero-card {
+      background: #ffffff;
+      border: 3px solid #d0d7de;
+      border-radius: 14px;
+      padding: 14px 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: var(--navy-dark);
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .hero-card:hover {
+      border-color: var(--orange-main);
+      background: var(--orange-light);
+      transform: translateX(4px);
+    }
+
+    .hero-card.selected {
+      border-color: var(--orange-main);
+      background: var(--orange-light);
+      box-shadow: 0 0 0 3px rgba(212, 77, 24, 0.3);
+    }
+
+    .hero-card.paired {
+      border-color: var(--green-main);
+      background: var(--green-light);
+      color: var(--green-dark);
+    }
+
+    .hero-card.is-correct-card {
+      border-color: var(--green-main) !important;
+      background: var(--green-light) !important;
+    }
+
+    .hero-card.is-incorrect-card {
+      border-color: #e53935 !important;
+      background: #ffebee !important;
+      color: #c62828 !important;
+    }
+
+    .hero-avatar-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--navy-light);
+      color: var(--navy-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    .hero-card.paired .hero-avatar-badge {
+      background: var(--green-main);
+      color: #ffffff;
+    }
+
+    .hero-card.is-incorrect-card .hero-avatar-badge {
+      background: #e53935;
+      color: #ffffff;
+    }
+
+    .paired-tag {
+      font-size: 0.85rem;
+      background: var(--green-main);
+      color: #ffffff;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-weight: 700;
+      display: none;
+    }
+
+    .hero-card.paired .paired-tag {
+      display: inline-block;
+    }
+
+    .hero-card.is-incorrect-card .paired-tag {
+      background: #e53935;
+    }
+
+    /* Role Card Item */
+    .role-card {
+      background: #ffffff;
+      border: 3px solid #d0d7de;
+      border-radius: 14px;
+      padding: 14px 18px;
+      cursor: pointer;
+      font-size: 1.05rem;
+      color: var(--text-main);
+      transition: all 0.2s ease;
+      user-select: none;
+      position: relative;
+    }
+
+    .role-card:hover {
+      border-color: var(--navy-main);
+      background: var(--navy-light);
+      transform: translateX(-4px);
+    }
+
+    .role-card.selected {
+      border-color: var(--navy-main);
+      background: var(--navy-light);
+      box-shadow: 0 0 0 3px rgba(19, 57, 102, 0.3);
+    }
+
+    .role-card.paired {
+      border-color: var(--green-main);
+      background: var(--green-light);
+    }
+
+    .role-card.is-correct-card {
+      border-color: var(--green-main) !important;
+      background: var(--green-light) !important;
+    }
+
+    .role-card.is-incorrect-card {
+      border-color: #e53935 !important;
+      background: #ffebee !important;
+      color: #c62828 !important;
+    }
+
+    .matched-hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--navy-main);
+      color: #ffffff;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 12px;
+      margin-bottom: 6px;
+    }
+
+    .role-card.is-incorrect-card .matched-hero-pill {
+      background: #e53935;
+    }
+
+    /* Modal Action Footer */
+    .matching-modal-footer {
+      background: #ffffff;
+      border-top: 2px solid #e1e8ed;
+      padding: 18px 26px;
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .btn-check-quiz {
+      background: linear-gradient(135deg, var(--green-main) 0%, var(--green-dark) 100%);
+      color: #ffffff;
+      border: 2px solid var(--gold-accent);
+      padding: 14px 36px;
+      font-size: 1.2rem;
+      font-weight: 800;
+      border-radius: 35px;
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+      transition: all 0.25s ease;
+      flex: 1;
+      max-width: 240px;
+      text-align: center;
+    }
+
+    .btn-check-quiz:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn-reset-quiz {
+      background: #eceff1;
+      color: var(--text-main);
+      border: 2px solid #cfd8dc;
+      padding: 14px 24px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-radius: 35px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-reset-quiz:hover {
+      background: #cfd8dc;
+    }
+
+    /* Feedback Banner Box inside Matching Modal */
+    .modal-feedback-box {
+      padding: 20px 24px;
+      border-radius: 16px;
+      display: none;
+      animation: fadeIn 0.35s ease;
+      margin-top: 15px;
+    }
+
+    .modal-feedback-box.success {
+      display: block !important;
+      background: var(--green-light);
+      border: 3px solid var(--green-main);
+      color: var(--green-dark);
+    }
+
+    .modal-feedback-box.error {
+      display: block !important;
+      background: #ffebee;
+      border: 3px solid #e53935;
+      color: #c62828;
+    }
+
+    .modal-feedback-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .modal-feedback-message {
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+
+    /* INSTRUCTIONS MODAL */
+    .instructions-modal-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(10, 30, 56, 0.8);
+      backdrop-filter: blur(6px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2500;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      padding: 15px;
+    }
+
+    .instructions-modal-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .instructions-modal-card {
+      background: #ffffff;
+      border-radius: 24px;
+      width: 100%;
+      max-width: 820px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      border: 3px solid var(--gold-accent);
+      transform: scale(0.95);
+      transition: transform 0.3s ease;
+    }
+
+    .instructions-modal-overlay.open .instructions-modal-card {
+      transform: scale(1);
+    }
+
+    .instructions-modal-header {
+      background: var(--navy-dark);
+      color: #ffffff;
+      padding: 20px 26px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px solid var(--gold-accent);
+    }
+
+    .instructions-modal-header h2 {
+      font-size: 1.55rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .instructions-modal-body {
+      padding: 26px 30px;
+      overflow-y: auto;
+      font-size: 1.05rem;
+      color: var(--text-main);
+    }
+
+    .instructions-modal-body p {
+      margin-bottom: 14px;
+    }
+
+    .instructions-modal-body ul {
+      margin: 12px 0 16px 28px;
+      list-style-type: disc;
+    }
+
+    .instructions-modal-body ol {
+      margin: 12px 0 16px 28px;
+      list-style-type: decimal;
+    }
+
+    .instructions-modal-body li {
+      margin-bottom: 8px;
+      padding-left: 4px;
+    }
+
+    .instruction-subtitle {
+      font-weight: 800;
+      color: var(--navy-main);
+      margin-top: 18px;
+      margin-bottom: 8px;
+    }
+
+    /* Footer Graphics */
+    .decorations-container {
+      margin-top: 45px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      width: 100%;
+      pointer-events: none;
+      padding: 0 10px;
+    }
+
+    .decor-ship, .decor-horse {
+      opacity: 0.8;
+      transition: opacity 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Top Action Bar -->
+    <div class="top-bar">
+      <button class="btn-instructions" id="openInstructionsBtn" aria-label="Άνοιγμα οδηγιών">
+        <span>📖</span> Οδηγίες
+      </button>
+    </div>
+
+    <!-- Central Header Node -->
+    <header class="main-header-node">
+      <h1>ΣΥΜΜΕΤΕΧΟΝΤΕΣ ΣΤΟΝ ΤΡΩΙΚΟ ΠΟΛΕΜΟ</h1>
+      <div class="header-flourish">🏛️ ΙΛΙΑΔΑ - ΡΑΨΩΔΙΑ Β 🏛️</div>
+    </header>
+
+    <!-- Concept Map Layout -->
+    <main class="concept-map">
+
+      <!-- LEFT BRANCH: ΡΑΨΩΔΙΑ Β -->
+      <section class="branch branch-left">
+        <div class="branch-header">
+          <div class="branch-icon">📖</div>
+          <div class="branch-title-group">
+            <h2>ΡΑΨΩΔΙΑ Β</h2>
+            <div class="branch-subtitle">Η πηγή των πληροφοριών μας</div>
+          </div>
+        </div>
+
+        <div class="subnodes-container">
+          
+          <!-- Subnode 1: Κείμενο -->
+          <div class="subnode-card" id="nodeTextCard" tabindex="0" role="button" aria-expanded="false">
+            <div class="subnode-header">
+              <span class="subnode-header-icon">📜</span>
+              <div class="subnode-title-group">
+                <h3>Κείμενο</h3>
+                <div class="subnode-desc">Το απόσπασμα της Ραψωδίας Β της Ιλιάδας (Κάντε κλικ για προβολή)</div>
+              </div>
+            </div>
+            <div class="subnode-content">
+              <div class="text-quote-box">
+                <h4>ΡΑΨΩΔΙΑ Β, ΙΛΙΑΔΑ</h4>
+                <p>Μελέτησε το πρωτότυπο ή μεταφρασμένο απόσπασμα της Ραψωδίας Β για να ανακαλύψεις τους ηγέτες, τα στρατεύματα και τα πρόσωπα της εκστρατείας.</p>
+                <a href="https://www.greek-language.gr/digitalResources/ancient_greek/library/browse.html?text_id=158&page=11" target="_blank" rel="noopener noreferrer" class="source-link">
+                  🔗 ΨΗΦΙΔΕΣ ΓΙΑ ΤΗΝ ΕΛΛΗΝΙΚΗ ΓΛΩΣΣΑ
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Subnode 2: Πρόσωπα -->
+          <div class="subnode-card" id="nodePeopleCard" tabindex="0" role="button" aria-expanded="false">
+            <div class="subnode-header">
+              <span class="subnode-header-icon">🔍</span>
+              <div class="subnode-title-group">
+                <h3>Πρόσωπα</h3>
+                <div class="subnode-desc">Τα πρόσωπα που συμμετέχουν στα γεγονότα (Κάντε κλικ για προβολή)</div>
+              </div>
+            </div>
+            <div class="subnode-content">
+              <ul class="characters-list">
+                <li>Αγαμέμνων</li>
+                <li>Μενέλαος</li>
+                <li>Οδυσσέας</li>
+                <li>Νέστορας</li>
+                <li>Αχιλλέας</li>
+                <li>Θερσίτης</li>
+                <li>Ανώνυμος Αχαιός</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- RIGHT BRANCH: ΗΡΩΕΣ ΚΑΙ ΡΟΛΟΙ -->
+      <section class="branch branch-right">
+        <div class="branch-header">
+          <div class="branch-icon">🏛️</div>
+          <div class="branch-title-group">
+            <h2>ΗΡΩΕΣ ΚΑΙ ΡΟΛΟΙ</h2>
+            <div class="branch-subtitle">Δραστηριότητα αντιστοίχισης προσώπων</div>
+          </div>
+        </div>
+
+        <div class="quiz-launch-box">
+          <div class="quiz-launch-icon">👑</div>
+          <p class="quiz-launch-desc">
+            Αντιστοίχισε κάθε ήρωα της Ραψωδίας Β με τον ιδιαίτερο ρόλο του στην εκστρατεία.
+          </p>
+          <button type="button" class="btn-open-quiz" id="openMatchingModalBtn">
+            <span>✨</span> Έναρξη Αντιστοίχισης
+          </button>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer Artwork (SVG) -->
+    <footer class="decorations-container">
+      <svg class="decor-ship" width="160" height="100" viewBox="0 0 160 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 75 C 40 95, 120 95, 150 75 C 130 85, 30 85, 10 75 Z" fill="#133966" opacity="0.3"/>
+        <path d="M25 70 L140 70 C145 70 150 60 155 45 L135 55 L20 55 C15 62 20 70 25 70 Z" stroke="#133966" stroke-width="2.5" fill="#fcfaf5"/>
+        <line x1="80" y1="15" x2="80" y2="60" stroke="#133966" stroke-width="3"/>
+        <path d="M80 18 Q 110 32 80 50 Z" fill="#133966" opacity="0.25" stroke="#133966" stroke-width="1.5"/>
+        <line x1="40" y1="60" x2="35" y2="78" stroke="#133966" stroke-width="2"/>
+        <line x1="60" y1="60" x2="55" y2="78" stroke="#133966" stroke-width="2"/>
+        <line x1="80" y1="60" x2="75" y2="78" stroke="#133966" stroke-width="2"/>
+        <line x1="100" y1="60" x2="95" y2="78" stroke="#133966" stroke-width="2"/>
+        <line x1="120" y1="60" x2="115" y2="78" stroke="#133966" stroke-width="2"/>
+      </svg>
+
+      <svg class="decor-horse" width="120" height="120" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="25" cy="88" r="7" stroke="#133966" stroke-width="2" fill="#fcfaf5"/>
+        <circle cx="75" cy="88" r="7" stroke="#133966" stroke-width="2" fill="#fcfaf5"/>
+        <line x1="15" y1="88" x2="85" y2="88" stroke="#133966" stroke-width="3"/>
+        <rect x="22" y="50" width="56" height="30" rx="4" stroke="#133966" stroke-width="2.5" fill="#fcfaf5"/>
+        <line x1="30" y1="80" x2="30" y2="88" stroke="#133966" stroke-width="3"/>
+        <line x1="70" y1="80" x2="70" y2="88" stroke="#133966" stroke-width="3"/>
+        <path d="M65 50 L80 25 L88 28 L84 35 L75 50 Z" stroke="#133966" stroke-width="2.5" fill="#fcfaf5"/>
+        <path d="M78 20 Q 86 18 88 26 L80 25 Z" stroke="#133966" stroke-width="2" fill="#133966"/>
+        <path d="M68 45 L62 25 L75 35 Z" fill="#133966" opacity="0.4"/>
+        <path d="M22 55 Q 12 65 18 78" stroke="#133966" stroke-width="2.5" fill="none"/>
+      </svg>
+    </footer>
+
+  </div>
+
+  <!-- MODERN MATCHING MODAL WINDOW -->
+  <div class="matching-modal-overlay" id="matchingModalOverlay" role="dialog" aria-labelledby="matchingModalTitle" aria-hidden="true">
+    <div class="matching-modal-card">
+      <div class="matching-modal-header">
+        <h2 id="matchingModalTitle">🏛️ Αντιστοίχιση Προσώπων & Ρόλων</h2>
+        <button class="modal-close-icon" id="closeMatchingModalBtn" aria-label="Κλείσιμο">&times;</button>
+      </div>
+
+      <div class="matching-modal-body">
+        <div class="matching-instruction-banner">
+          👉 <strong>Πώς παίζεται:</strong> Κάνε κλικ σε ένα <strong>Πρόσωπο</strong> στα αριστερά και μετά κάνε κλικ στον αντίστοιχο <strong>Ρόλο</strong> στα δεξιά για να τα συνδέσεις!
+        </div>
+
+        <div class="matching-grid">
+          <!-- Left Column: Hero Cards -->
+          <div class="matching-col">
+            <div class="column-title">🛡️ Πρόσωπα</div>
+            <div class="matching-items-list" id="heroesListContainer"></div>
+          </div>
+
+          <!-- Right Column: Role Cards -->
+          <div class="matching-col">
+            <div class="column-title">📜 Ρόλοι & Χαρακτηρισμοί</div>
+            <div class="matching-items-list" id="rolesListContainer"></div>
+          </div>
+        </div>
+
+        <!-- Feedback Result Area -->
+        <div class="modal-feedback-box" id="modalFeedbackBox" role="alert">
+          <div class="modal-feedback-header" id="modalFeedbackHeader"></div>
+          <div class="modal-feedback-message" id="modalFeedbackMessage"></div>
+        </div>
+      </div>
+
+      <!-- Action Footer -->
+      <div class="matching-modal-footer">
+        <button type="button" class="btn-check-quiz" id="checkMatchingBtn">Έλεγχος</button>
+        <button type="button" class="btn-reset-quiz" id="resetMatchingBtn">Επανεκκίνηση</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- INSTRUCTIONS MODAL -->
+  <div class="instructions-modal-overlay" id="instructionsModal" role="dialog" aria-labelledby="instructionsTitle" aria-hidden="true">
+    <div class="instructions-modal-card">
+      <div class="instructions-modal-header">
+        <h2 id="instructionsTitle">📖 Οδηγίες Χρήσης & Μελέτης</h2>
+        <button class="modal-close-icon" id="closeInstructionsBtn" aria-label="Κλείσιμο">&times;</button>
+      </div>
+      <div class="instructions-modal-body">
+        <p>Μελέτησε προσεκτικά το απόσπασμα της Ραψωδίας Β της Ιλιάδας και παρατήρησε τον εννοιολογικό χάρτη.</p>
+        <p>Διάβασε προσεκτικά τη Ραψωδία Β της Ιλιάδας, όπου παρουσιάζονται οι συμμετέχοντες στον Τρωικό Πόλεμο και ο ρόλος τους στην εκστρατεία.</p>
+        
+        <p class="instruction-subtitle">Στη συνέχεια, παρατήρησε τον εννοιολογικό χάρτη που έχει στο κέντρο τη φράση:</p>
+        <p style="text-align: center; font-weight: 800; color: var(--navy-dark); font-size: 1.15rem; margin: 10px 0;">«Συμμετέχοντες στον Τρωικό Πόλεμο»</p>
+        
+        <p class="instruction-subtitle">Γύρω από την κεντρική έννοια εμφανίζονται βασικοί κόμβοι, όπως:</p>
+        <ul>
+          <li><strong>Ραψωδία Β</strong></li>
+          <li><strong>Ήρωες και ρόλοι</strong></li>
+        </ul>
+
+        <p>Από τον κόμβο «Ήρωες και ρόλοι» αναπτύσσονται υποκόμβοι, που αντιστοιχούν σε συγκεκριμένα πρόσωπα του έπους και στους αντίστοιχους ρόλους ή χαρακτηρισμούς τους.</p>
+        
+        <p class="instruction-subtitle">Σου δίνονται τα παρακάτω πρόσωπα της Ραψωδίας Β:</p>
+        <ul>
+          <li>Αγαμέμνων</li>
+          <li>Μενέλαος</li>
+          <li>Οδυσσέας</li>
+          <li>Νέστορας</li>
+          <li>Αχιλλέας</li>
+          <li>Θερσίτης</li>
+          <li>Ανώνυμος Αχαιός</li>
+        </ul>
+
+        <p class="instruction-subtitle">και οι αντίστοιχοι ρόλοι ή χαρακτηρισμοί τους:</p>
+        <ol type="a">
+          <li>Βασιλιάς των Μυκηνών και αρχηγός των Αχαιών.</li>
+          <li>Βασιλιάς της Σπάρτης.</li>
+          <li>Βασιλιάς της Πύλου, σοφός και έμπειρος σύμβουλος.</li>
+          <li>Βασιλιάς της Ιθάκης και πολυμήχανος ήρωας.</li>
+          <li>Αρχηγός των Μυρμιδόνων και κορυφαίος πολεμιστής των Αχαιών.</li>
+          <li>Απλός στρατιώτης που εκφράζει δημόσια την αντίθεσή του προς τον Αγαμέμνονα.</li>
+          <li>Παρεμβαίνει για να ενθαρρύνει τη συνέχιση της εκστρατείας.</li>
+        </ol>
+
+        <p class="instruction-subtitle">Αξιοποιώντας τις πληροφορίες του κειμένου:</p>
+        <ol>
+          <li>Συμπλήρωσε τους υποκόμβους της ενότητας «Ήρωες και ρόλοι» με τα πρόσωπα που συμμετέχουν στα γεγονότα της Ραψωδίας Β.</li>
+          <li>Για κάθε πρόσωπο πρόσθεσε τον αντίστοιχο ρόλο ή χαρακτηρισμό του, σύμφωνα με το περιεχόμενο του αποσπάσματος.</li>
+          <li>Έλεγξε ότι κάθε πληροφορία έχει τοποθετηθεί στον σωστό κόμβο του εννοιολογικού χάρτη.</li>
+        </ol>
+
+        <p>Αν ολοκληρώσεις σωστά τη δραστηριότητα, θα λάβεις άμεση επιβράβευση. Αν υπάρχουν λάθη, μπορείς να μελετήσεις ξανά το κείμενο και να επαναλάβεις τη δραστηριότητα, όσες φορές επιθυμείς, μέχρι να πετύχεις το καλύτερο αποτέλεσμα.</p>
+        
+        <p>Με τον τρόπο αυτό θα κατανοήσεις όχι μόνο ποιοι συμμετέχουν στα γεγονότα, αλλά και ποιος είναι ο ιδιαίτερος ρόλος κάθε ήρωα μέσα στην αφήγηση.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+      /* 1. Toggle Subnodes in Left Branch */
+      const nodeTextCard = document.getElementById("nodeTextCard");
+      const nodePeopleCard = document.getElementById("nodePeopleCard");
+
+      function setupCardToggle(cardElement) {
+        cardElement.addEventListener("click", (e) => {
+          if (e.target.tagName === 'A') return;
+          const isActive = cardElement.classList.contains("active");
+          cardElement.classList.toggle("active");
+          cardElement.setAttribute("aria-expanded", !isActive);
+        });
+
+        cardElement.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            cardElement.click();
+          }
+        });
+      }
+
+      setupCardToggle(nodeTextCard);
+      setupCardToggle(nodePeopleCard);
+
+      /* 2. Modern Matching Activity Data & Logic */
+      const characters = [
+        { id: "agamemnon", name: "Αγαμέμνων", icon: "👑", correctRoleId: "role_a" },
+        { id: "menelaos", name: "Μενέλαος", icon: "🛡️", correctRoleId: "role_b" },
+        { id: "odysseas", name: "Οδυσσέας", icon: "⛵", correctRoleId: "role_c" },
+        { id: "nestoras", name: "Νέστορας", icon: "📜", correctRoleId: "role_d" },
+        { id: "achilleas", name: "Αχιλλέας", icon: "⚔️", correctRoleId: "role_e" },
+        { id: "thersitis", name: "Θερσίτης", icon: "🗣️", correctRoleId: "role_f" },
+        { id: "achaios", name: "Ανώνυμος Αχαιός", icon: "🎖️", correctRoleId: "role_g" }
+      ];
+
+      const roles = [
+        { id: "role_a", text: "Βασιλιάς των Μυκηνών και αρχηγός των Αχαιών." },
+        { id: "role_b", text: "Βασιλιάς της Σπάρτης." },
+        { id: "role_c", text: "Βασιλιάς της Ιθάκης και πολυμήχανος ήρωας." },
+        { id: "role_d", text: "Βασιλιάς της Πύλου, σοφός και έμπειρος σύμβουλος." },
+        { id: "role_e", text: "Αρχηγός των Μυρμιδόνων και κορυφαίος πολεμιστής των Αχαιών." },
+        { id: "role_f", text: "Απλός πολεμιστής που εκφράζει δημόσια την αντίθεσή του προς τον Αγαμέμνονα." },
+        { id: "role_g", text: "Παρεμβαίνει για να ενθαρρύνει τη συνέχιση της εκστρατείας." }
+      ];
+
+      let currentSelections = {}; // maps heroId -> roleId
+      let activeHeroId = null;
+      let checkPerformed = false;
+      let shuffledRolesCache = null;
+
+      const heroesListContainer = document.getElementById("heroesListContainer");
+      const rolesListContainer = document.getElementById("rolesListContainer");
+
+      function renderMatchingBoard() {
+        heroesListContainer.innerHTML = "";
+        rolesListContainer.innerHTML = "";
+
+        if (!shuffledRolesCache) {
+          shuffledRolesCache = [...roles].sort(() => Math.random() - 0.5);
+        }
+
+        // Render Hero Cards
+        characters.forEach(hero => {
+          const heroCard = document.createElement("div");
+          heroCard.className = "hero-card";
+          heroCard.id = `hero_card_${hero.id}`;
+          heroCard.dataset.heroId = hero.id;
+
+          const pairedRoleId = currentSelections[hero.id];
+          if (pairedRoleId) {
+            heroCard.classList.add("paired");
+          }
+          if (activeHeroId === hero.id) {
+            heroCard.classList.add("selected");
+          }
+
+          // If check was performed, evaluate correctness state
+          if (checkPerformed) {
+            if (pairedRoleId === hero.correctRoleId) {
+              heroCard.classList.add("is-correct-card");
+            } else {
+              heroCard.classList.add("is-incorrect-card");
+            }
+          }
+
+          heroCard.innerHTML = `
+            <div style="display:flex; align-items:center; gap:12px;">
+              <div class="hero-avatar-badge">${hero.icon}</div>
+              <span>${hero.name}</span>
+            </div>
+            <span class="paired-tag">${checkPerformed ? (pairedRoleId === hero.correctRoleId ? "✓ Σωστό" : "✘ Λάθος") : "✓ Συνδέθηκε"}</span>
+          `;
+
+          heroCard.addEventListener("click", () => handleHeroClick(hero.id));
+          heroesListContainer.appendChild(heroCard);
+        });
+
+        // Render Role Cards
+        shuffledRolesCache.forEach(role => {
+          const roleCard = document.createElement("div");
+          roleCard.className = "role-card";
+          roleCard.id = `role_card_${role.id}`;
+          roleCard.dataset.roleId = role.id;
+
+          // Check if any hero is paired with this role
+          const pairedHeroId = Object.keys(currentSelections).find(hId => currentSelections[hId] === role.id);
+          if (pairedHeroId) {
+            roleCard.classList.add("paired");
+            const pairedHero = characters.find(c => c.id === pairedHeroId);
+
+            if (checkPerformed) {
+              if (role.id === pairedHero.correctRoleId) {
+                roleCard.classList.add("is-correct-card");
+              } else {
+                roleCard.classList.add("is-incorrect-card");
+              }
+            }
+
+            roleCard.innerHTML = `
+              <div class="matched-hero-pill">${pairedHero.icon} ${pairedHero.name}</div>
+              <div>${role.text}</div>
+            `;
+          } else {
+            if (checkPerformed) {
+              roleCard.classList.add("is-incorrect-card");
+            }
+            roleCard.innerHTML = `<div>${role.text}</div>`;
+          }
+
+          roleCard.addEventListener("click", () => handleRoleClick(role.id));
+          rolesListContainer.appendChild(roleCard);
+        });
+      }
+
+      function handleHeroClick(heroId) {
+        checkPerformed = false;
+        document.getElementById("modalFeedbackBox").className = "modal-feedback-box";
+        document.getElementById("modalFeedbackBox").style.display = "none";
+
+        if (activeHeroId === heroId) {
+          activeHeroId = null;
+        } else {
+          activeHeroId = heroId;
+        }
+        renderMatchingBoard();
+      }
+
+      function handleRoleClick(roleId) {
+        if (!activeHeroId) return;
+
+        checkPerformed = false;
+        document.getElementById("modalFeedbackBox").className = "modal-feedback-box";
+        document.getElementById("modalFeedbackBox").style.display = "none";
+
+        // If another hero already had this role, unbind it
+        Object.keys(currentSelections).forEach(hId => {
+          if (currentSelections[hId] === roleId) {
+            delete currentSelections[hId];
+          }
+        });
+
+        // Pair active hero with this role
+        currentSelections[activeHeroId] = roleId;
+        activeHeroId = null;
+        renderMatchingBoard();
+      }
+
+      /* 3. Check Button ("Έλεγχος") Logic */
+      const checkMatchingBtn = document.getElementById("checkMatchingBtn");
+      const resetMatchingBtn = document.getElementById("resetMatchingBtn");
+      const modalFeedbackBox = document.getElementById("modalFeedbackBox");
+      const modalFeedbackHeader = document.getElementById("modalFeedbackHeader");
+      const modalFeedbackMessage = document.getElementById("modalFeedbackMessage");
+
+      checkMatchingBtn.addEventListener("click", () => {
+        checkPerformed = true;
+        let allCorrect = true;
+        let countPaired = Object.keys(currentSelections).length;
+
+        characters.forEach(hero => {
+          const pairedRoleId = currentSelections[hero.id];
+          if (!pairedRoleId || pairedRoleId !== hero.correctRoleId) {
+            allCorrect = false;
+          }
+        });
+
+        if (countPaired < characters.length) {
+          allCorrect = false;
+        }
+
+        renderMatchingBoard();
+
+        if (allCorrect) {
+          modalFeedbackBox.className = "modal-feedback-box success";
+          modalFeedbackHeader.innerHTML = "<span>✔</span> Επιτυχής ολοκλήρωση";
+          modalFeedbackMessage.textContent = "Συγχαρητήρια! Ολοκλήρωσες επιτυχώς τον εννοιολογικό χάρτη. Τώρα μπορείς να αναγνωρίζεις τα βασικά πρόσωπα της Ραψωδίας Β, να διακρίνεις τον ιδιαίτερο ρόλο του καθενός και να κατανοείς πώς συμβάλλουν στην εξέλιξη των γεγονότων του Τρωικού Πολέμου.";
+        } else {
+          modalFeedbackBox.className = "modal-feedback-box error";
+          modalFeedbackHeader.innerHTML = "<span>✘</span> Αν χρειάζεται περισσότερη προσπάθεια";
+          modalFeedbackMessage.textContent = "Μην απογοητεύεσαι! Επανάλαβε τη μελέτη του αποσπάσματος και παρατήρησε ξανά τον εννοιολογικό χάρτη. Εστιάζοντας στις πληροφορίες που συνοδεύουν κάθε πρόσωπο, θα μπορέσεις να κάνεις τις σωστές αντιστοιχίσεις και να κατανοήσεις καλύτερα τη δομή και το περιεχόμενο της Ραψωδίας Β.";
+        }
+
+        modalFeedbackBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      });
+
+      resetMatchingBtn.addEventListener("click", () => {
+        currentSelections = {};
+        activeHeroId = null;
+        checkPerformed = false;
+        shuffledRolesCache = null;
+        modalFeedbackBox.className = "modal-feedback-box";
+        modalFeedbackBox.style.display = "none";
+        renderMatchingBoard();
+      });
+
+      /* 4. Modals Toggle Logic */
+      const matchingModalOverlay = document.getElementById("matchingModalOverlay");
+      const openMatchingModalBtn = document.getElementById("openMatchingModalBtn");
+      const closeMatchingModalBtn = document.getElementById("closeMatchingModalBtn");
+
+      openMatchingModalBtn.addEventListener("click", () => {
+        matchingModalOverlay.classList.add("open");
+        matchingModalOverlay.setAttribute("aria-hidden", "false");
+        renderMatchingBoard();
+      });
+
+      closeMatchingModalBtn.addEventListener("click", () => {
+        matchingModalOverlay.classList.remove("open");
+        matchingModalOverlay.setAttribute("aria-hidden", "true");
+      });
+
+      matchingModalOverlay.addEventListener("click", (e) => {
+        if (e.target === matchingModalOverlay) {
+          matchingModalOverlay.classList.remove("open");
+        }
+      });
+
+      // Instructions Modal
+      const instructionsModal = document.getElementById("instructionsModal");
+      const openInstructionsBtn = document.getElementById("openInstructionsBtn");
+      const closeInstructionsBtn = document.getElementById("closeInstructionsBtn");
+
+      openInstructionsBtn.addEventListener("click", () => {
+        instructionsModal.classList.add("open");
+        instructionsModal.setAttribute("aria-hidden", "false");
+      });
+
+      closeInstructionsBtn.addEventListener("click", () => {
+        instructionsModal.classList.remove("open");
+        instructionsModal.setAttribute("aria-hidden", "true");
+      });
+
+      instructionsModal.addEventListener("click", (e) => {
+        if (e.target === instructionsModal) {
+          instructionsModal.classList.remove("open");
+        }
+      });
+
+      // ESC key to close active modal
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          matchingModalOverlay.classList.remove("open");
+          instructionsModal.classList.remove("open");
+        }
+      });
+
+    });
+  </script>
+</body>
+</html>
